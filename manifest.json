@@ -1,0 +1,12 @@
+{
+  "manifest_version": 3,
+  "version": "1.0",
+  "name": "codeforces minimal dake mode",
+  "description": "chrome web extension to make codeforces pages dark",
+  "content_scripts": [
+    {
+      "matches": ["https://codeforces.com/*"],
+      "css": ["css/styles.css"]
+    }
+  ]
+}
