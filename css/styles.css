@@ -1,19 +1,29 @@
 html,
 body {
-  background-color: #1e1e1e !important;
+  background-color: #111111 !important;
 }
 
 div {
   color: #eeeeee !important;
 }
 
-div.ttypography {
+html body div.ttypography {
   color: #eeeeee !important;
+  margin-top: 0em !important;
 }
 
 .roundbox {
   background-color: #1e1e1e !important;
+  border: none !important;
+}
+
+html body .roundbox .tag-box {
   border: 1px solid #444 !important;
+  padding: 2px 6px;
+  margin-left: -1px !important;
+  margin-right: -1px !important;
+  background-color: #1e1e1e;
+  border-radius: 8px;
 }
 
 .roundbox .caption {
@@ -25,35 +35,51 @@ div.ttypography {
 }
 html body div.ttypography .MathJax {
   color: #fff !important;
+  font-weight: 200 !important;
 }
 
 a {
+  border-radius: 6px;
   color: #cccccc !important;
   text-decoration: none !important;
 }
 
-a:hover,
-a:hover:visited {
+html body a:hover {
   color: #eeeeee !important;
+}
+
+a:visited,
+a:active {
+  color: #cccccc !important;
+}
+
+a:focus {
+  outline: 2px solid #ccc !important;
+  outline-offset: 1px;
 }
 
 .problem-statement .test-example-line-even {
   background-color: #252525 !important;
 }
-.problem-statement .test-example-line-even:hover {
+
+/* .problem-statement .test-example-line-even:hover {
   background-color: #355600 !important;
-}
+} */
 
 .problem-statement .test-example-line-odd {
   background-color: #888888 !important;
 }
 
-.problem-statement .test-example-line-odd:hover {
+/* .problem-statement .test-example-line-odd:hover {
   background-color: #355600 !important;
+} */
+
+.lang-chooser div a {
+  color: #558afd !important;
 }
 
 .lang-chooser div a:hover {
-  color: #558afd !important;
+  color: #80a7fe !important;
 }
 
 .second-level-menu-list li.backLava,
@@ -83,7 +109,81 @@ select:hover {
 input.search {
   background-color: #444444 !important;
   color: #eee !important;
-  border-radius: 0.25rem;
+  border-radius: 4px;
   border: none !important;
   font-size: small;
+}
+
+.problemindexholder {
+  padding: 0.75em;
+  margin-top: 1em;
+  background-color: #1e1e1e;
+  border-radius: 8px;
+}
+
+.menu-box {
+  border: 1px solid #444 !important;
+}
+
+html body #sidebar {
+  padding-top: 16px !important;
+}
+
+.sidebox {
+  padding-top: 4px;
+  padding-bottom: 1px;
+  border-radius: 8px !important;
+}
+
+.title {
+  font-weight: bold;
+}
+
+html body .roundbox .dark {
+  background-color: #444444 !important;
+  border: 1px solid #1e1e1e !important;
+}
+
+html body .roundbox .dark .contest-state-regular {
+  color: #ccc !important;
+}
+
+.sidebar-menu ul li {
+  border: none !important;
+}
+
+.sidebar-menu ul li {
+  background-color: #1e1e1e !important;
+}
+
+.avatar a img {
+  border-radius: 6px;
+}
+
+.datatable {
+  background-color: #111111 !important;
+}
+
+th {
+  background-color: #1e1e1e !important;
+  border: 1px solid #444 !important;
+}
+
+td {
+  background-color: #1e1e1e !important;
+  border: 1px solid #444 !important;
+}
+
+.datatable .dark {
+  background-color: #111111 !important;
+  border: 1px solid #444 !important;
+}
+
+.datatable .lt,
+.datatable .rt,
+.datatable .lb,
+.datatable .rb,
+.datatable .irt,
+.datatable .ilt {
+  background: none !important;
 }
