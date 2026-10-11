@@ -262,7 +262,9 @@ div:has(.irt) {
 
 h4,
 h3,
-h2 {
+h3,
+h2,
+h1 {
   color: #eee !important;
 }
 
@@ -330,4 +332,69 @@ li.current {
 .problem-statement .sample-tests .output {
   border-radius: 6px !important;
   overflow: hidden !important;
+}
+
+div.ttypography table,
+div.ttypography thead th {
+  color: #eee !important;
+}
+
+html body table.bordertable {
+  border-radius: 4px !important;
+  border: 1px solid transparent !important;
+}
+
+._EduCoursesViewPage_courses {
+  color: #eee !important;
+}
+
+div.ttypography .tt {
+  color: #111 !important;
+  border: none !important;
+  background-color: #ccc !important;
+}
+
+table,
+.table-form {
+  color: #eee !important;
+}
+
+.table-form tr:first-child td:first-child {
+  border-top-left-radius: 6px !important;
+  border-top: 1px solid #444 !important;
+}
+.table-form tr:first-child td:last-child {
+  border-top-right-radius: 6px !important;
+}
+
+html body .comments label.show-archived,
+html body .comments label.show-archived * {
+  color: #eee !important;
+}
+
+.markItUpEditor,
+.markItUpContainer {
+  background-color: #242424 !important;
+  color: #eee !important;
+  border-radius: 2px !important;
+}
+
+.comment-table table tr td {
+  border: none !important;
+}
+
+.SumoSelect > .optWrapper {
+  background-color: #1e1e1e !important;
+  border: 1px solid #444 !important;
+}
+
+.SumoSelect > .optWrapper > .options li.opt {
+  border-bottom: 1px solid #444 !important;
+}
+.SumoSelect > .optWrapper > .options li.opt:hover {
+  background-color: #444 !important;
+}
+
+ul li ._catalogNode ._catalogBlogEntry ._name i[class^="icon-"] {
+  color: #ccc !important;
 }
