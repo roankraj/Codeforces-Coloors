@@ -27,11 +27,11 @@ html body .roundbox .tag-box {
 }
 
 .roundbox .caption {
-  color: #558afd !important;
+  color: #5183f0 !important;
 }
 
 .contest-state-phase {
-  color: #558afd !important;
+  color: #5183f0 !important;
 }
 html body div.ttypography .MathJax {
   color: #fff !important;
@@ -45,7 +45,7 @@ a {
 }
 
 html body a:not(:has(img)):hover {
-  filter: brightness(1.4) !important;
+  filter: brightness(1.36) !important;
 }
 
 a:visited,
@@ -58,28 +58,21 @@ a:focus {
   outline-offset: 1px;
 }
 
+.problem-statement .test-example-line-even,
+.problem-statement .test-example-line-odd {
+  padding-left: 0.25em;
+}
+
 .problem-statement .test-example-line-even {
   background-color: #252525 !important;
 }
 
-/* .problem-statement .test-example-line-even:hover {
-  background-color: #355600 !important;
-} */
-
 .problem-statement .test-example-line-odd {
-  background-color: #888888 !important;
+  background-color: #444444 !important;
 }
-
-/* .problem-statement .test-example-line-odd:hover {
-  background-color: #355600 !important;
-} */
 
 .lang-chooser div a {
   color: #558afd !important;
-}
-
-.lang-chooser div a:hover {
-  color: #80a7fe !important;
 }
 
 .second-level-menu-list li.backLava,
@@ -212,7 +205,6 @@ th:first-child {
 
 th:last-child {
   border-top-right-radius: 6px !important;
-  /* border-bottom-right-radius: 6px !important; */
 }
 
 td:first-child {
@@ -220,12 +212,10 @@ td:first-child {
 }
 
 tr:last-child td:first-child {
-  /* border-top-left-radius: 6px !important; */
   border-bottom-left-radius: 6px !important;
 }
 
 tr:last-child td:last-child {
-  /* border-top-right-radius: 6px !important; */
   border-bottom-right-radius: 6px !important;
 }
 
@@ -238,14 +228,6 @@ div:has(.irt) {
   background-color: #111111 !important;
 }
 
-/* .roundbox.sidebox div {
-  border-bottom: 1px solid #444 !important ;
-}
-
-.roundbox.sidebox div:last-child {
-  border-bottom: none !important ;
-} */
-
 .setting-value div p,
 .setting-value input {
   background-color: #444 !important;
@@ -257,4 +239,95 @@ div:has(.irt) {
   border: 1px solid #a4a4a4 !important;
   color: #eaeaea !important ;
   padding: 5px 5px !important;
+}
+
+._catalogNode {
+  background-color: #1e1e1e !important;
+  padding: 2px !important;
+  margin-bottom: 14px;
+  border-radius: 6px !important;
+}
+
+#pageContent > div[style*="margin-bottom:2em;"] {
+  background-color: #1e1e1e !important;
+  padding: 12px !important;
+  padding-bottom: 4px !important;
+  /* margin-bottom: 6px; */
+  border-radius: 6px !important;
+}
+
+.content {
+  border-left: 4px solid #444 !important;
+}
+
+h4,
+h3,
+h2 {
+  color: #eee !important;
+}
+
+div.title-photo > div:first-child {
+  border: 1px solid #444 !important;
+  border-radius: 4px;
+}
+
+.bottom-links {
+  background-color: transparent !important;
+}
+
+.handleBox.ac_input {
+  background-color: #444444 !important;
+  color: #eee !important;
+  border-radius: 4px;
+  border: none !important;
+  font-size: small;
+}
+
+.pagination span.active {
+  border: 1px solid #ccc !important;
+  border-radius: 2px !important;
+  background-color: #ccc !important;
+}
+
+.pagination ul li span.active a {
+  color: #111 !important;
+}
+
+input[name="minDifficulty"],
+input[name="maxDifficulty"] {
+  background-color: #444444 !important;
+  color: #eee !important;
+  border-radius: 4px;
+  border: none !important;
+  font-size: small;
+  padding: 1px;
+}
+
+html body .topic .title * {
+  font-size: 2.4rem !important;
+  color: #4d7ce4 !important;
+}
+
+li.current {
+  border-bottom: 3px solid #4875d7 !important;
+}
+
+.roundbox.sidebox table td,
+.roundbox.sidebox table th {
+  border: none !important;
+}
+
+.problem-statement .sample-tests pre {
+  background-color: transparent !important;
+  padding: 0 !important;
+}
+
+.problem-statement .sample-tests .input {
+  margin-bottom: 8px !important;
+}
+
+.problem-statement .sample-tests .input,
+.problem-statement .sample-tests .output {
+  border-radius: 6px !important;
+  overflow: hidden !important;
 }
