@@ -9,7 +9,7 @@ div {
 
 html body div.ttypography {
   color: #eeeeee !important;
-  margin-top: 0em !important;
+  /* margin-top: 0em !important; */
 }
 
 .roundbox {
@@ -453,3 +453,47 @@ div#pageContent > div[style="margin-top:0em;"] > div[style*="margin-top:"] {
   padding-bottom: 4px !important;
   border-radius: 6px !important;
 }
+
+input._CatalogViewFrame_filter {
+  background-color: #444444 !important;
+  color: #eee !important;
+  border-radius: 4px;
+  border: none !important;
+  font-size: small;
+}
+
+table.comment-table td,
+table.comment-table th {
+  border: none !important;
+}
+
+.comment-table {
+  padding: 8px !important;
+  border-radius: 2px !important;
+}
+
+div#pageContent
+  > div[style="margin-bottom:2em;"]
+  > div[style="margin:3em 1em;"] {
+  margin: 1em 1em !important;
+}
+
+/*correct attempt on contest page */
+.problems .accepted-problem td.id,
+.problems .accepted-problem td.act {
+}
+
+/* wrong attempt on contest page */
+.problems .rejected-problem td.act,
+.problems .rejected-problem td.id {
+}
+
+/* light blue color of accepted attempt on submissions page  */
+.highlighted-row td {
+}
+
+/* blue color of wrong answer on test 3 */
+.verdict-rejected {
+}
+
+/* solved 2 out of 6 light blue also*/
