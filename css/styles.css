@@ -398,3 +398,58 @@ html body .comments label.show-archived * {
 ul li ._catalogNode ._catalogBlogEntry ._name i[class^="icon-"] {
   color: #ccc !important;
 }
+
+div.popup .content {
+  background-color: #1e1e1e !important;
+  color: #eee !important;
+}
+
+.userbox input {
+  color: #eee !important;
+}
+
+rect.day {
+  rx: 1px !important;
+  ry: 1px !important;
+}
+
+rect.day[fill="#EBEDF0"] {
+  fill: #292929 !important;
+}
+
+rect.day:not([fill="#EBEDF0"]) {
+  filter: brightness(0.9);
+}
+
+canvas {
+  filter: brightness(0.88);
+}
+
+.spoiler-content {
+  border: none !important;
+  background-color: #292929 !important;
+}
+
+img[alt="Codeforces"] {
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+img[alt="Telegram"] {
+  visibility: hidden !important;
+  opacity: 0 !important;
+}
+
+div#pageContent > div[style="margin-top:0;"] {
+  background-color: #1e1e1e !important;
+  padding: 12px !important;
+  padding-bottom: 4px !important;
+  border-radius: 6px !important;
+}
+
+div#pageContent > div[style="margin-top:0em;"] > div[style*="margin-top:"] {
+  background-color: #1e1e1e !important;
+  padding: 12px !important;
+  padding-bottom: 4px !important;
+  border-radius: 6px !important;
+}

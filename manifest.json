@@ -6,7 +6,9 @@
   "content_scripts": [
     {
       "matches": ["https://codeforces.com/*"],
-      "css": ["css/styles.css"]
+      "css": ["css/styles.css"],
+      "js": ["js/content.js"],
+      "run_at": "document_start"
     }
   ]
 }
