@@ -75,11 +75,14 @@ a:focus {
   color: #558afd !important;
 }
 
-.second-level-menu-list li.backLava,
-.second-level-menu-list li.backLava .leftLava,
-.second-level-menu-list li.backLava .bottomLava,
-.second-level-menu-list li.backLava .cornerLava {
-  background: none !important;
+.second-level-menu-list li.backLava {
+  background: url("https://res.cloudinary.com/mt8ekld4/image/upload/v1791866712/lava-right-dark.webp")
+    no-repeat top right !important;
+}
+
+.second-level-menu-list li.backLava .leftLava {
+  background: url("https://res.cloudinary.com/mt8ekld4/image/upload/v1791866712/lava-left-dark.webp")
+    no-repeat top left !important;
 }
 
 input[type="submit"],
@@ -498,6 +501,34 @@ div#pageContent
 
 /* solved 2 out of 6 light blue also*/
 
+.submit-form.submitFrameForm table tbody tr:first-child td:last-child {
+  border-top: 1px solid #444 !important;
+}
+
+.ace-chrome {
+  background-color: #1e1e1e !important;
+}
+
+.ace-chrome .ace_gutter-active-line {
+  background-color: #252525 !important;
+}
+
+.ace-chrome .ace_gutter {
+  background-color: #1e1e1e !important;
+}
+
+.ace_gutter-cell {
+  color: #ccc !important;
+}
+
+.ace-chrome .ace_marker-layer .ace_active-line {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.shiftUp {
+  top: 0px !important;
+}
+
 /* prettiefy code */
 
 @media screen {
@@ -605,4 +636,154 @@ div#pageContent
     background: var(--pp-bg) !important;
     border-color: var(--pp-border) !important;
   }
+}
+
+/* ace color palette */
+
+/* Ace "chrome" theme -> VS Code Dark+ look
+   Editor and gutter share one background (#1e1e1e), like VS Code.
+   All text colors are >= 4.5:1 against #1e1e1e.
+   Load with Stylus / Tampermonkey etc. (!important beats the site's own rules). */
+
+/* ---------- Editor surface + gutter (same bg) ---------- */
+.ace-chrome {
+  background-color: #1e1e1e !important;
+  color: #d4d4d4 !important;
+}
+.ace-chrome .ace_gutter {
+  background: #1e1e1e !important;
+  color: #858585 !important;
+  border: 0 !important;
+}
+.ace-chrome .ace_gutter-active-line {
+  background-color: #282828 !important; /* matches active-line highlight so it reads as one band */
+  color: #c6c6c6 !important;
+}
+.ace-chrome .ace_cursor {
+  color: #aeafad !important;
+}
+.ace-chrome .ace_invisible {
+  color: #404040 !important;
+}
+.ace-chrome .ace_print-margin {
+  background: #333333 !important;
+}
+
+/* ---------- Layers / highlights ---------- */
+.ace-chrome .ace_marker-layer .ace_selection {
+  background: #264f78 !important;
+}
+.ace-chrome .ace_marker-layer .ace_active-line {
+  background: #282828 !important;
+}
+.ace-chrome .ace_marker-layer .ace_selected-word {
+  background: rgba(173, 214, 255, 0.15) !important;
+  border: 1px solid transparent !important;
+}
+.ace-chrome .ace_marker-layer .ace_bracket {
+  background: rgba(0, 100, 0, 0.1) !important;
+  border: 1px solid #888888 !important;
+}
+.ace-chrome .ace_marker-layer .ace_step {
+  background: #5a5a00 !important;
+}
+.ace-chrome .ace_marker-layer .ace_stack {
+  background: #2f5f1a !important;
+}
+.ace-chrome .ace_indent-guide {
+  background: none !important;
+  box-shadow: inset -1px 0 0 #404040;
+}
+.ace-chrome .ace_fold {
+  background-color: #4b4b4b !important;
+  border-color: #1e1e1e !important;
+}
+
+/* ---------- Tokens (VS Code Dark+) ---------- */
+/* control keywords, #include / #define  -> purple */
+.ace-chrome .ace_keyword,
+.ace-chrome .ace_meta.ace_preprocessor {
+  color: #c586c0 !important;
+}
+
+/* int, long, const, static, class, template, this, <html tags> -> blue */
+.ace-chrome .ace_storage,
+.ace-chrome .ace_meta.ace_tag,
+.ace-chrome .ace_variable.ace_language,
+.ace-chrome .ace_constant.ace_language {
+  color: #569cd6 !important;
+}
+
+/* symbol operators (+ == << ...) -> default text */
+.ace-chrome .ace_keyword.ace_operator {
+  color: #d4d4d4 !important;
+}
+
+/* strings, <bits/stdc++.h> include paths -> orange */
+.ace-chrome .ace_string,
+.ace-chrome .ace_constant.ace_other {
+  color: #ce9178 !important;
+}
+.ace-chrome .ace_string.ace_regex {
+  color: #d16969 !important;
+}
+.ace-chrome .ace_constant.ace_language.ace_escape,
+.ace-chrome .ace_constant.ace_character.ace_escape,
+.ace-chrome .ace_constant.ace_escape {
+  color: #d7ba7d !important;
+}
+
+/* comments -> green */
+.ace-chrome .ace_comment,
+.ace-chrome .ace_comment.ace_doc,
+.ace-chrome .ace_comment.ace_doc.ace_tag {
+  color: #6a9955 !important;
+}
+
+/* numbers -> light green */
+.ace-chrome .ace_constant.ace_numeric {
+  color: #b5cea8 !important;
+}
+
+/* functions -> yellow */
+.ace-chrome .ace_entity.ace_name.ace_function,
+.ace-chrome .ace_support.ace_function {
+  color: #dcdcaa !important;
+}
+
+/* types / classes -> teal */
+.ace-chrome .ace_support.ace_type,
+.ace-chrome .ace_support.ace_class,
+.ace-chrome .ace_entity.ace_name.ace_type {
+  color: #4ec9b0 !important;
+}
+
+/* variables -> light blue */
+.ace-chrome .ace_variable {
+  color: #9cdcfe !important;
+}
+
+/* library / built-in constants -> bright blue */
+.ace-chrome .ace_constant.ace_library,
+.ace-chrome .ace_constant.ace_buildin,
+.ace-chrome .ace_support.ace_constant {
+  color: #4fc1ff !important;
+}
+
+/* markup extras */
+.ace-chrome .ace_heading {
+  color: #569cd6 !important;
+  font-weight: bold;
+}
+.ace-chrome .ace_list {
+  color: #c586c0 !important;
+}
+.ace-chrome .ace_xml-pe {
+  color: #9a9a9a !important;
+}
+
+.ace-chrome .ace_invalid {
+  background-color: transparent !important;
+  color: #f44747 !important;
+  text-decoration: underline wavy #f44747;
 }

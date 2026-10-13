@@ -9,7 +9,7 @@ const observer = new MutationObserver((mutations, obs) => {
       cfLogo.src.includes("codeforces-logo-with-telegram-555x130.png")
     ) {
       cfLogo.src =
-        "https://res.cloudinary.com/mt8ekld4/image/upload/v1791795490/codeforces-logo-with-telegram-555x130-invert.png";
+        "https://res.cloudinary.com/mt8ekld4/image/upload/v1791866063/output_image.webp";
       cfLogo.style.setProperty("visibility", "visible", "important");
       cfLogo.style.setProperty("opacity", "1", "important");
       cfReplaced = true;
