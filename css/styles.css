@@ -71,6 +71,11 @@ a:focus {
   background-color: #444444 !important;
 }
 
+.problem-statement .test-example-line-even[style^="b"],
+.problem-statement .test-example-line-odd[style^="b"] {
+  background-color: #595951 !important;
+}
+
 .lang-chooser div a {
   color: #558afd !important;
 }
@@ -333,7 +338,7 @@ li.current {
 
 .problem-statement .sample-tests .input,
 .problem-statement .sample-tests .output {
-  border-radius: 6px !important;
+  border-radius: 2px !important;
   overflow: hidden !important;
 }
 
@@ -482,24 +487,42 @@ div#pageContent
 }
 
 /*correct attempt on contest page */
-.problems .accepted-problem td.id,
-.problems .accepted-problem td.act {
+
+html body table.problems .rejected-problem td.act {
+  background-color: #403939 !important;
 }
 
-/* wrong attempt on contest page */
-.problems .rejected-problem td.act,
-.problems .rejected-problem td.id {
+html body table.problems .rejected-problem td.id {
+  border-left: 6px solid #403939 !important;
 }
 
-/* light blue color of accepted attempt on submissions page */
-.highlighted-row td {
+html body table.problems .accepted-problem td.act {
+  background-color: #332d2d !important;
+}
+
+html body table.problems .accepted-problem td.id {
+  border-left: 6px solid #332d2d !important;
+}
+
+html body .datatable table td[style="background-color: rgb(221, 238, 255);"] {
+  background-color: #212426 !important;
+}
+
+html body table.status-frame-datatable tbody .highlighted-row td {
+  background-color: #2c3033 !important;
 }
 
 /* blue text color of wrong answer on test 3 on submission page */
 .verdict-rejected {
+  color: #4875d7 !important;
 }
 
 /* solved 2 out of 6 light blue also*/
+
+a[href^="/contest/"],
+a[href$="/virtual"] {
+  color: #4875d7 !important;
+}
 
 .submit-form.submitFrameForm table tbody tr:first-child td:last-child {
   border-top: 1px solid #444 !important;
@@ -529,6 +552,62 @@ div#pageContent
   top: 0px !important;
 }
 
+form._UserTalkFilterFrame_filterForm table tbody tr:first-child td:last-child {
+  border: 1px solid #444 !important;
+}
+
+html
+  body
+  div#pageContent
+  div.second-level-menu
+  ul.second-level-menu-list
+  a[href^="/contest/"] {
+  color: #ccc !important;
+}
+
+textarea[name="input"],
+textarea[name="output"] {
+  color: #eee !important;
+  background-color: #1e1e1e !important;
+}
+
+/* Firefox */
+textarea[name="input"],
+textarea[name="output"] {
+  scrollbar-width: thin;
+  scrollbar-color: #ccc #444; /* thumb, track */
+}
+
+/* Chrome / Edge / Safari */
+textarea[name="input"]::-webkit-scrollbar,
+textarea[name="output"]::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+textarea[name="input"]::-webkit-scrollbar-track,
+textarea[name="output"]::-webkit-scrollbar-track {
+  background: #444;
+}
+
+textarea[name="input"]::-webkit-scrollbar-thumb,
+textarea[name="output"]::-webkit-scrollbar-thumb {
+  background: #ccc;
+  border: 2px solid #444;
+  border-radius: 8px;
+}
+
+textarea[name="input"]::-webkit-scrollbar-thumb:hover,
+textarea[name="output"]::-webkit-scrollbar-thumb:hover {
+  background: #d5d5d5;
+}
+
+input#tabSizeInput {
+  background-color: #444;
+  color: #eee;
+  border: 2px solid transparent !important;
+  border-radius: 2px;
+}
 /* prettiefy code */
 
 @media screen {
