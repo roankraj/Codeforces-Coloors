@@ -488,12 +488,121 @@ div#pageContent
 .problems .rejected-problem td.id {
 }
 
-/* light blue color of accepted attempt on submissions page  */
+/* light blue color of accepted attempt on submissions page */
 .highlighted-row td {
 }
 
-/* blue color of wrong answer on test 3 */
+/* blue text color of wrong answer on test 3 on submission page */
 .verdict-rejected {
 }
 
 /* solved 2 out of 6 light blue also*/
+
+/* prettiefy code */
+
+@media screen {
+  :root {
+    --pp-bg: #292929;
+    --pp-border: #555;
+    --pp-pln: #e4e4e4; /* plain text        11.4:1 */
+    --pp-str: #eba17c; /* strings, attr val  6.9:1 */
+    --pp-kwd: #7cb8f7; /* keywords, tags     7.0:1 */
+    --pp-com: #8fc17a; /* comments           7.0:1 */
+    --pp-typ: #5fdcc4; /* types              8.7:1 */
+    --pp-lit: #c8e3b2; /* literals          10.5:1 */
+    --pp-pun: #b8c0c8; /* punctuation        7.9:1 */
+    --pp-atn: #a8e2ff; /* attr names, vars  10.4:1 */
+    --pp-dec: #dc92d6; /* declarations       6.3:1 */
+    --pp-fun: #f2e3a2; /* function names    11.3:1 */
+  }
+
+  /* prettyprint */
+  .prettyprint .pln {
+    color: var(--pp-pln) !important;
+  }
+  .prettyprint .str,
+  .prettyprint .atv {
+    color: var(--pp-str) !important;
+    font-weight: normal !important;
+  }
+  .prettyprint .kwd,
+  .prettyprint .tag {
+    color: var(--pp-kwd) !important;
+    font-weight: normal !important;
+  }
+  .prettyprint .com {
+    color: var(--pp-com) !important;
+    font-weight: normal !important;
+    font-style: italic;
+  }
+  .prettyprint .typ {
+    color: var(--pp-typ) !important;
+    font-weight: normal !important;
+  }
+  .prettyprint .lit {
+    color: var(--pp-lit) !important;
+  }
+  .prettyprint .pun,
+  .prettyprint .opn,
+  .prettyprint .clo {
+    color: var(--pp-pun) !important;
+  }
+  .prettyprint .atn,
+  .prettyprint .var {
+    color: var(--pp-atn) !important;
+  }
+  .prettyprint .dec {
+    color: var(--pp-dec) !important;
+  }
+  .prettyprint .fun {
+    color: var(--pp-fun) !important;
+  }
+
+  /* lstlisting (same palette) */
+  .lstlisting .pln {
+    color: var(--pp-pln) !important;
+  }
+  .lstlisting .str,
+  .lstlisting .atv {
+    color: var(--pp-str) !important;
+    font-weight: normal !important;
+  }
+  .lstlisting .kwd,
+  .lstlisting .tag {
+    color: var(--pp-kwd) !important;
+    font-weight: normal !important;
+  }
+  .lstlisting .com {
+    color: var(--pp-com) !important;
+    font-weight: normal !important;
+    font-style: italic;
+  }
+  .lstlisting .typ {
+    color: var(--pp-typ) !important;
+    font-weight: normal !important;
+  }
+  .lstlisting .lit {
+    color: var(--pp-lit) !important;
+  }
+  .lstlisting .pun,
+  .lstlisting .opn,
+  .lstlisting .clo {
+    color: var(--pp-pun) !important;
+  }
+  .lstlisting .atn,
+  .lstlisting .var {
+    color: var(--pp-atn) !important;
+  }
+  .lstlisting .dec {
+    color: var(--pp-dec) !important;
+  }
+  .lstlisting .fun {
+    color: var(--pp-fun) !important;
+  }
+
+  /* code block frame */
+  pre.prettyprint {
+    background: var(--pp-bg) !important;
+    border-color: var(--pp-border) !important;
+  }
+}
