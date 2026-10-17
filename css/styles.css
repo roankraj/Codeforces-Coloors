@@ -9,7 +9,6 @@ div {
 
 html body div.ttypography {
   color: #eeeeee !important;
-  /* margin-top: 0em !important; */
 }
 
 .roundbox {
@@ -56,6 +55,11 @@ a:active {
 a:focus {
   outline: 2px solid #ccc !important;
   outline-offset: 1px;
+}
+
+.problem-statement div p,
+.problem-statement .test-example-line {
+  color: #fff !important;
 }
 
 .problem-statement .test-example-line-even,
@@ -111,7 +115,7 @@ input.search {
   background-color: #444444 !important;
   color: #eee !important;
   border-radius: 4px;
-  border: none !important;
+  border: 2px solid transparent !important;
   font-size: small;
 }
 
@@ -120,6 +124,98 @@ input.search {
   margin-top: 1em;
   background-color: #1e1e1e;
   border-radius: 8px;
+}
+
+.problemindexholder div.ttypography table td {
+  border: none !important;
+}
+
+.problemindexholder div.ttypography table tr:first-child td:first-child {
+  border-top-left-radius: 6px !important;
+}
+
+.problemindexholder div.ttypography table tr:first-child td:last-child {
+  border-top-right-radius: 6px !important;
+}
+
+form._EduCourseEnrollPage_enroll table td {
+  border: none !important;
+}
+
+form._EduCourseEnrollPage_enroll table tr:first-child td:first-child {
+  border-top-left-radius: 6px !important;
+}
+
+form._EduCourseEnrollPage_enroll table tr:first-child td:last-child {
+  border-top-right-radius: 6px !important;
+}
+
+form._EduCourseEnrollPage_enroll table tbody tr:first-child td {
+  padding-top: 1em !important;
+}
+
+form._EduCourseEnrollPage_enroll table tbody tr:last-child td {
+  padding-bottom: 1em !important;
+}
+
+form._EduCourseEnrollPage_enroll table tbody tr td:last-child {
+  padding-right: 1em !important;
+}
+
+textarea#terms {
+  border-radius: 2px !important;
+}
+
+form.customtest table td {
+  border: none !important;
+}
+
+form.customtest table tr:first-child td:first-child {
+  border-top-left-radius: 6px !important;
+}
+
+form.customtest table tr:first-child td:last-child {
+  border-top-right-radius: 6px !important;
+}
+
+#pageContent > div[style="margin:3em 1em;"] {
+  margin: 2em 1em !important;
+}
+
+#pageContent > div[style="margin:3em 1em;"] table,
+#pageContent > div[style="margin:3em 1em;"] table td {
+  border: none !important;
+}
+
+#pageContent > div[style="margin:3em 1em;"] table td {
+  padding: 1em !important;
+}
+
+#pageContent > div[style="margin:3em 1em;"] table:not([class]) {
+  padding: 1em !important;
+}
+
+#pageContent
+  > div[style="margin:3em 1em;"]
+  table
+  tbody
+  tr:first-child
+  td:first-child {
+  border-top-left-radius: 6px;
+}
+
+#pageContent
+  > div[style="margin:3em 1em;"]
+  table
+  tbody
+  tr:first-child
+  td:last-child {
+  border-top-right-radius: 6px;
+}
+
+div.ttypography pre,
+div.ttypography code {
+  color: #fff !important;
 }
 
 .menu-box {
@@ -256,12 +352,26 @@ div:has(.irt) {
   border-radius: 6px !important;
 }
 
-#pageContent > div[style*="margin-bottom:2em;"] {
+#pageContent
+  > div[style*="margin-bottom:2em;"]:not(:has(div[style*="margin:3em 1em;"])) {
   background-color: #1e1e1e !important;
   padding: 12px !important;
   padding-bottom: 4px !important;
   /* margin-bottom: 6px; */
   border-radius: 6px !important;
+}
+
+#pageContent
+  > div[style*="margin-bottom:2em;"]:has(div[style*="margin:3em 1em;"]) {
+  background-color: #1e1e1e !important;
+  padding: 1px !important;
+  border-radius: 6px !important;
+}
+
+#pageContent
+  > div[style*="margin-bottom:2em;"]:has(div[style*="margin:3em 1em;"])
+  .comment-table {
+  border: none !important;
 }
 
 .content {
@@ -289,7 +399,7 @@ div.title-photo > div:first-child {
   background-color: #444444 !important;
   color: #eee !important;
   border-radius: 4px;
-  border: none !important;
+  border: 2px solid transparent !important;
   font-size: small;
 }
 
@@ -308,7 +418,7 @@ input[name="maxDifficulty"] {
   background-color: #444444 !important;
   color: #eee !important;
   border-radius: 4px;
-  border: none !important;
+  border: 2px solid transparent !important;
   font-size: small;
   padding: 1px;
 }
@@ -322,8 +432,8 @@ li.current {
   border-bottom: 3px solid #4875d7 !important;
 }
 
-.roundbox.sidebox table td,
-.roundbox.sidebox table th {
+.roundbox.sidebox div table td,
+.roundbox.sidebox div table th {
   border: none !important;
 }
 
@@ -359,7 +469,7 @@ html body table.bordertable {
 div.ttypography .tt {
   color: #111 !important;
   border: none !important;
-  background-color: #ccc !important;
+  background-color: #d5d5d5 !important;
 }
 
 table,
@@ -367,7 +477,7 @@ table,
   color: #eee !important;
 }
 
-.table-form tr:first-child td:first-child {
+.table-form tr:first-child td:first-child:not(:has[class="field"]) {
   border-top-left-radius: 6px !important;
   border-top: 1px solid #444 !important;
 }
@@ -466,7 +576,7 @@ input._CatalogViewFrame_filter {
   background-color: #444444 !important;
   color: #eee !important;
   border-radius: 4px;
-  border: none !important;
+  border: 2px solid transparent !important;
   font-size: small;
 }
 
@@ -475,15 +585,85 @@ table.comment-table th {
   border: none !important;
 }
 
+form#settings-form table td {
+  border: none !important;
+}
+
 .comment-table {
   padding: 8px !important;
   border-radius: 2px !important;
+  border: 1px dashed #ccc !important;
 }
 
 div#pageContent
   > div[style="margin-bottom:2em;"]
   > div[style="margin:3em 1em;"] {
   margin: 1em 1em !important;
+}
+
+form#settings-form .table-form input:not(.submit) {
+  background-color: #444 !important;
+  color: #eee !important;
+  border: 2px solid transparent !important;
+  border-radius: 4px;
+}
+
+form.contestRegistration table td {
+  border: none !important;
+}
+
+form.contestRegistration table tr:last-child td {
+  padding-bottom: 1em !important;
+}
+
+form.contestRegistration table tr:first-child td {
+  padding-top: 1em !important;
+}
+
+input#searchByNameOrIdQueryBox {
+  background-color: #444444 !important;
+  color: #eee !important;
+  border-radius: 4px;
+  border: 1px solid transparent !important;
+  font-size: small;
+}
+
+form.submit-form.submitFrameForm table td {
+  border: none !important;
+}
+
+form.submit-form.submitFrameForm table tr:first-child td {
+  padding-top: 1em !important;
+}
+
+form.submit-form.submitFrameForm table tr:last-child td {
+  padding-bottom: 1em !important;
+}
+
+form.submit-form.submitFrameForm table tr td:last-child {
+  padding-right: 1em !important;
+}
+
+form.submit-form.submitFrameForm table tr:first-child td:first-child {
+  border-top-left-radius: 6px !important;
+}
+
+form.submit-form.submitFrameForm table tr:first-child td:last-child {
+  border-top-right-radius: 6px !important;
+}
+
+div#editor {
+  border-radius: 2px !important;
+}
+
+textarea[name="input"],
+textarea[name="output"] {
+  border-radius: 2px !important;
+  overflow: auto !important;
+}
+
+table.problems tr td a {
+  color: #eee !important;
 }
 
 /*correct attempt on contest page */
@@ -517,16 +697,28 @@ html body table.status-frame-datatable tbody .highlighted-row td {
   color: #4875d7 !important;
 }
 
-/* solved 2 out of 6 light blue also*/
-
 a[href^="/contest/"],
 a[href$="/virtual"] {
   color: #4875d7 !important;
 }
 
-.submit-form.submitFrameForm table tbody tr:first-child td:last-child {
-  border-top: 1px solid #444 !important;
+input[name="submittedProblemCode"] {
+  background-color: #444;
+  color: #eee;
+  border: 2px solid transparent !important;
+  border-radius: 2px;
 }
+
+span.filter input {
+  background-color: #444 !important;
+  color: #eee !important;
+  border: 2px solid transparent !important;
+  border-radius: 2px !important;
+}
+
+/* .submit-form.submitFrameForm table tbody tr:first-child td:last-child {
+  border-top: 1px solid #444 !important;
+} */
 
 .ace-chrome {
   background-color: #1e1e1e !important;
@@ -608,6 +800,35 @@ input#tabSizeInput {
   border: 2px solid transparent !important;
   border-radius: 2px;
 }
+
+html body div[style="margin-top: 1em; text-align: left; font-size: 1.2rem;"] {
+  color: #222 !important;
+}
+
+/* a[href^="/contestRegistration/"] {
+  text-decoration: underline !important;
+} */
+
+/* send message inner box  */
+div.wysiwyg iframe {
+  filter: brightness(0.9);
+}
+
+/* drafts popup */
+.drafts-popup {
+  background-color: #1e1e1e !important;
+  border: 1px solid #444 !important;
+}
+
+.drafts-entry-body {
+  background-color: #444 !important;
+  color: #eee !important;
+}
+
+.send-talk-form table td {
+  border: none !important;
+}
+
 /* prettiefy code */
 
 @media screen {
