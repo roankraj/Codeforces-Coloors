@@ -37,24 +37,28 @@ html body div.ttypography .MathJax {
   font-weight: 200 !important;
 }
 
-a {
+a:not(.rated-user) {
   border-radius: 2px;
   color: #cccccc !important;
   text-decoration: none !important;
+}
+
+a:focus-visible {
+  outline: 2px solid #ccc !important;
+  outline-offset: 1px;
 }
 
 html body a:not(:has(img)):hover {
   filter: brightness(1.36) !important;
 }
 
-a:visited,
-a:active {
-  color: #cccccc !important;
+.comment-indent span {
+  opacity: 0.2 !important;
 }
 
-a:focus {
-  outline: 2px solid #ccc !important;
-  outline-offset: 1px;
+a.rated-user.user-black,
+.user-black {
+  color: #222 !important;
 }
 
 .problem-statement div p,
@@ -716,9 +720,32 @@ span.filter input {
   border-radius: 2px !important;
 }
 
-/* .submit-form.submitFrameForm table tbody tr:first-child td:last-child {
-  border-top: 1px solid #444 !important;
-} */
+.roundbox.sidebox .rtable tbody th,
+.roundbox.sidebox .rtable tbody td {
+  border: none !important;
+}
+
+a.red-link {
+  color: #eee !important;
+}
+
+.comment-table.highlight-blue {
+  background-color: #1e1e1e !important;
+  border: 1px dashed #80a8ff !important;
+  outline: 1px dashed #80a8ff !important;
+}
+
+.header-bell__img {
+  background-image: url("https://res.cloudinary.com/mt8ekld4/image/upload/v1792255333/bell_inactive-20x20-111111-bright.webp") !important;
+}
+
+div#tooltip {
+  color: revert !important;
+}
+
+div.alert-warning {
+  color: #111 !important;
+}
 
 .ace-chrome {
   background-color: #1e1e1e !important;
