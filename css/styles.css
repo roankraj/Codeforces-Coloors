@@ -56,11 +56,6 @@ html body a:not(:has(img)):hover {
   opacity: 0.2 !important;
 }
 
-a.rated-user.user-black,
-.user-black {
-  color: #222 !important;
-}
-
 .problem-statement div p,
 .problem-statement .test-example-line {
   color: #fff !important;
@@ -81,7 +76,7 @@ a.rated-user.user-black,
 
 .problem-statement .test-example-line-even[style^="b"],
 .problem-statement .test-example-line-odd[style^="b"] {
-  background-color: #595951 !important;
+  background-color: #6b6b85 !important;
 }
 
 .lang-chooser div a {
@@ -129,6 +124,10 @@ input.search {
   background-color: #1e1e1e;
   border-radius: 8px;
 }
+
+/* .problemindexholder div.section-title {
+  color: #fff !important;
+} */
 
 .problemindexholder div.ttypography table td {
   border: none !important;
@@ -237,7 +236,7 @@ html body #sidebar {
 }
 
 .title {
-  font-weight: bold;
+  color: #fff !important;
 }
 
 html body .roundbox .dark {
@@ -339,12 +338,12 @@ div:has(.irt) {
 .setting-value div p,
 .setting-value input {
   background-color: #444 !important;
+  border: 1px solid transparent !important;
 }
 
 .setting-value input {
   border: 2px solid #444;
   border-radius: 2px !important;
-  border: 1px solid #a4a4a4 !important;
   color: #eaeaea !important ;
   padding: 5px 5px !important;
 }
@@ -1113,4 +1112,25 @@ div.wysiwyg iframe {
   background-color: transparent !important;
   color: #f44747 !important;
   text-decoration: underline wavy #f44747;
+}
+
+.source-popup pre[style="background-color: #eff0f1;"],
+.source-popup pre.input,
+.source-popup pre.output,
+.source-popup pre.checker,
+.source-popup pre.answer {
+  background-color: #181818 !important;
+  border: none !important;
+  border-radius: 4px !important;
+  padding: 8px !important;
+}
+
+.source-popup .copier-small {
+  padding: 1px 2px !important;
+  border-radius: 2px !important;
+}
+
+.source-popup .copier-small:hover {
+  color: #1e1e1e !important;
+  background-color: #eee !important;
 }
