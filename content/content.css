@@ -2,7 +2,7 @@
    Switch with <html data-theme="dark"> or <html data-theme="pink">.
    With no data-theme set, dark is used.
 
-   Every theme-dependent value is a variable defined in the two blocks below.
+   Every theme-dependent value is a variable defined in the two blocks below.p
    Everything after them is theme-agnostic and only reads variables.
    Variable families are deliberately kept separate and never reference each other:
      --*        UI surfaces, text, links, borders
@@ -138,10 +138,10 @@
 }
 
 /* ======================================================================
-   THEME: PINK
+   THEME: LOVE
    ====================================================================== */
 
-:root[data-theme="pink"] {
+:root[data-theme="love"] {
   /* ----- surfaces ----- */
   --bg: #fffffc;
   --bg-raised: #f4bbd3;
@@ -247,6 +247,118 @@
   --ace-library: #084c94;
   --ace-xml-pe: #654555;
   --ace-invalid: #a30012;
+}
+
+/* ======================================================================
+   THEME: NIGHT
+   ====================================================================== */
+
+:root[data-theme="night"] {
+  /* ----- surfaces ----- */
+  --bg: hsl(223, 45%, 8%);
+  --bg-raised: hsl(221, 40%, 13.5%);
+  --bg-control: #202b40;
+  --bg-field: #293750;
+  --bg-muted: #202a3c;
+  --bg-editor: #151d2c;
+  --bg-code: hsl(218, 41.8%, 10%);
+  --bg-tt: hsl(218, 100%, 94%);
+  --bg-sample-hl: hsl(218, 36.5%, 36.3%);
+  --bg-row-rejected: #203b38;
+  --bg-row-accepted: #382b3b;
+  --bg-row-hl: #1b2738;
+  --bg-row-hl-strong: hsl(217, 35%, 20%);
+
+  /* ----- text ----- */
+  --text: #eaeaea;
+  --text-strong: #fefefe;
+  --text-muted: #a6b4cc;
+  --text-notice: #101522;
+  --text-tt: #101522;
+  --text-alert: #101522;
+  --text-pagination-active: #101522;
+
+  /* ----- links ----- */
+  --soft: hsl(218, 100%, 73%);
+  --soft-hover: #b9d1ff;
+  --link-red: #eee;
+  --link-reply: #d5d5d5;
+
+  /* ----- borders ----- */
+  --border: #34435e;
+  --border-control: #3b4b67;
+  --dash-width: 2px;
+
+  /* ----- accents ----- */
+  --accent: #8ab4ff;
+  --accent-link: #75e0f0;
+  --accent-heading: #a7bfff;
+  --accent-active: #78aaff;
+  --accent-soft: hsl(218, 30%, 78.5%);
+
+  /* ----- activity heatmap ----- */
+  --hm-0: #222c40;
+  --hm-1: hsl(115, 54%, 69%);
+  --hm-2: hsl(115, 54%, 63.5%);
+  --hm-3: hsl(115, 54%, 52%);
+  --hm-4: hsl(115, 54%, 38%);
+  --hm-filter: brightness(0.85);
+
+  /* ----- prettyprint / lstlisting ----- */
+  --pp-bg: #151e2e;
+  --pp-border: #34435e;
+  --pp-pln: #e6edf8;
+  --pp-str: #ffb68d;
+  --pp-kwd: #8ab4ff;
+  --pp-com: #8bd5ca;
+  --pp-typ: #75e0f0;
+  --pp-lit: #e6d38b;
+  --pp-pun: #b9c9e8;
+  --pp-atn: #89ddff;
+  --pp-dec: #d6a6ff;
+  --pp-fun: #f2c6a0;
+
+  /* ----- ace: surface + gutter ----- */
+  --ace-bg: #151e2e;
+  --ace-text: #e6edf8;
+  --ace-gutter-bg: #151e2e;
+  --ace-gutter-text: #a6b4cc;
+  --ace-gutter-cell: #c0cee5;
+  --ace-gutter-active-bg: #263650;
+  --ace-gutter-active-text: #ffffff;
+  --ace-cursor: #75e0f0;
+  --ace-invisible: #596982;
+  --ace-print-margin: #34435e;
+
+  /* ----- ace: layers ----- */
+  --ace-selection: #344e78;
+  --ace-active-line: #263650;
+  --ace-selected-word: #8ab4ff33;
+  --ace-bracket-bg: #65d6a522;
+  --ace-bracket-border: #75e0f0;
+  --ace-step: #62571f;
+  --ace-stack: #254d48;
+  --ace-indent-guide: #34435e;
+  --ace-fold: #657797;
+  --ace-fold-border: #263650;
+
+  /* ----- ace: tokens ----- */
+  --ace-keyword: #c3a6ff;
+  --ace-list: #c3a6ff;
+  --ace-storage: #8ab4ff;
+  --ace-heading: #89ddff;
+  --ace-operator: #b9c9e8;
+  --ace-string: #ffb68d;
+  --ace-regex: #ff9eae;
+  --ace-escape: #e6d38b;
+  --ace-comment: #8bd5ca;
+  --ace-numeric: #a6da95;
+  --ace-function: #f2c6a0;
+  --ace-type: #75e0f0;
+  --ace-variable: #b9d1ff;
+  --ace-library: #89ddff;
+  --ace-xml-pe: #a6b4cc;
+  --ace-invalid: #ff6b81;
 }
 
 /* ======================================================================

@@ -29,7 +29,7 @@ const observer = new MutationObserver((mutations, obs) => {
 
   const blogHeadingAll = document.querySelectorAll('a[href*="/blog/"]');
   blogHeadingAll.forEach((blogHeading) => {
-    blogHeading.style.setProperty("color", "--text", "important");
+    blogHeading.style.setProperty("color", "var(--soft)", "important");
   });
 
   const pageContent = document.getElementById("pageContent");
@@ -43,4 +43,4 @@ observer.observe(document.documentElement, {
   subtree: true,
 });
 
-document.documentElement.setAttribute("data-theme", "dark");
+document.documentElement.setAttribute("data-theme", "night");
