@@ -43,4 +43,4 @@ observer.observe(document.documentElement, {
   subtree: true,
 });
 
-document.documentElement.setAttribute("data-theme", "night");
+document.documentElement.setAttribute("data-theme", "dark");
