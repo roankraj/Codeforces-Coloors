@@ -1,6 +1,31 @@
 let cfReplaced = false;
 let teleReplaced = false;
 
+let focusModeChanges = false;
+
+function toggleFocus(focus) {
+  const main = document.querySelector("html body .content-with-sidebar");
+  const sidebar = document.querySelector("#sidebar");
+
+  if (focus) {
+    if (main) {
+      main.style.setProperty("margin", "1em 11em", "important");
+    }
+    if (sidebar) {
+      sidebar.style.setProperty("opacity", "0", "important");
+      sidebar.style.setProperty("pointer-events", "none", "important");
+    }
+  } else {
+    if (main) {
+      main.style.setProperty("margin", "1em 22em 1em 1em", "important");
+    }
+    if (sidebar) {
+      sidebar.style.setProperty("opacity", "1", "important");
+      sidebar.style.setProperty("pointer-events", "auto", "important");
+    }
+  }
+}
+
 const observer = new MutationObserver((mutations, obs) => {
   if (!cfReplaced) {
     const cfLogo = document.querySelector('img[alt="Codeforces"]');
@@ -33,7 +58,39 @@ const observer = new MutationObserver((mutations, obs) => {
   });
 
   const pageContent = document.getElementById("pageContent");
-  if (cfReplaced && teleReplaced && pageContent) {
+
+  if (pageContent) {
+    if (!pageContent.classList.contains("content-with-sidebar")) {
+      focusModeChanges = true;
+    } else {
+      const main = document.querySelector(".content-with-sidebar");
+      const sidebar = document.querySelector("#sidebar");
+
+      if (main && sidebar) {
+        chrome.storage.local.get(["focus"], function (result) {
+          const focus = result.focus ?? false;
+
+          if (focus) {
+            main.style.setProperty("margin", "1em 11em", "important");
+            if (sidebar) {
+              sidebar.style.setProperty("opacity", "0", "important");
+              sidebar.style.setProperty("pointer-events", "none", "important");
+            }
+          } else {
+            main.style.setProperty("margin", "1em 22em 1em 1em", "important");
+            if (sidebar) {
+              sidebar.style.setProperty("opacity", "1", "important");
+              sidebar.style.setProperty("pointer-events", "auto", "important");
+            }
+          }
+        });
+
+        focusModeChanges = true;
+      }
+    }
+  }
+
+  if (cfReplaced && teleReplaced && pageContent && focusModeChanges) {
     obs.disconnect();
   }
 });
@@ -43,4 +100,22 @@ observer.observe(document.documentElement, {
   subtree: true,
 });
 
-document.documentElement.setAttribute("data-theme", "dark");
+chrome.storage.onChanged.addListener(function (changes, storageArea) {
+  if (storageArea === "local" && changes.theme) {
+    const newValue = changes.theme.newValue || "dark";
+
+    document.documentElement.setAttribute("data-theme", newValue);
+  }
+
+  if (storageArea === "local" && changes.focus) {
+    const newValue = changes.focus.newValue || false;
+
+    toggleFocus(newValue);
+  }
+});
+
+chrome.storage.local.get("theme", function (result) {
+  const theme = result.theme || "dark";
+
+  document.documentElement.setAttribute("data-theme", theme);
+});

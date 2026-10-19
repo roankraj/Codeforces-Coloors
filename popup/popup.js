@@ -5,6 +5,8 @@
   const text = document.getElementById("dd-text");
   const swatches = document.getElementById("dd-swatches");
   const opts = [...list.querySelectorAll(".dd-opt")];
+  const utils = document.querySelector(".utils");
+  const focusMode = document.querySelector('[data-util="focus-mode"]');
 
   // Create colour circles for each theme
   opts.forEach(function (opt) {
@@ -23,6 +25,12 @@
     opt.prepend(dots);
   });
 
+  async function setOptStorage(opt) {
+    const theme = opt.dataset.value || "dark";
+
+    await chrome.storage.local.set({ theme });
+  }
+
   // Select a theme and update the dropdown button
   function select(opt) {
     opts.forEach(function (o) {
@@ -40,12 +48,19 @@
     root.classList.remove("open");
   }
 
-  // Set the initial theme
-  select(
-    opts.find(function (opt) {
-      return opt.dataset.value === "dark";
-    }) || opts[0],
-  );
+  // Set the initial settings
+  chrome.storage.local.get(["theme", "focus"], function (result) {
+    const theme = result.theme || "dark";
+    const focus = result.focus || false;
+
+    focusMode.checked = focus;
+
+    select(
+      opts.find(function (opt) {
+        return opt.dataset.value === theme;
+      }) || opts[0],
+    );
+  });
 
   // Open or close the dropdown
   btn.addEventListener("click", function () {
@@ -59,6 +74,7 @@
   opts.forEach(function (opt) {
     opt.addEventListener("click", function () {
       select(opt);
+      setOptStorage(opt);
     });
   });
 
@@ -67,6 +83,15 @@
     if (!root.contains(e.target)) {
       list.hidden = true;
       root.classList.remove("open");
+    }
+  });
+
+  // Utilites
+  focusMode.addEventListener("change", async function () {
+    if (focusMode.checked) {
+      await chrome.storage.local.set({ focus: true });
+    } else {
+      await chrome.storage.local.set({ focus: false });
     }
   });
 })();
