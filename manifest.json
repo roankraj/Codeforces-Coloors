@@ -4,16 +4,20 @@
   "name": "codeforces minimal dake mode",
   "description": "chrome web extension to make codeforces pages dark",
   "icons": {
-    "16": "icon-16.png",
-    "32": "icon-32.png",
-    "64": "icon-64.png",
-    "128": "icon-128.png"
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "64": "icons/icon-64.png",
+    "128": "icons/icon-128.png"
+  },
+  "permissions": ["storage"],
+  "action": {
+    "default_popup": "popup/popup.html"
   },
   "content_scripts": [
     {
       "matches": ["https://codeforces.com/*"],
-      "css": ["styles.css"],
-      "js": ["content.js"],
+      "css": ["content/content.css"],
+      "js": ["content/content.js"],
       "run_at": "document_start"
     }
   ]

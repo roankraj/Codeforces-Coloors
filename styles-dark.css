@@ -120,14 +120,15 @@ input.search {
 
 .problemindexholder {
   padding: 0.75em;
+  padding-top: 0.125em;
   margin-top: 1em;
   background-color: #1e1e1e;
   border-radius: 8px;
 }
 
-/* .problemindexholder div.section-title {
+.problemindexholder div.section-title {
   color: #fff !important;
-} */
+}
 
 .problemindexholder div.ttypography table td {
   border: none !important;
@@ -595,7 +596,7 @@ form#settings-form table td {
 .comment-table {
   padding: 8px !important;
   border-radius: 2px !important;
-  border: 1px dashed #ccc !important;
+  border: 2px dashed #ccc !important;
 }
 
 div#pageContent
@@ -725,13 +726,16 @@ span.filter input {
 }
 
 a.red-link {
+  color: #ededed !important;
+}
+
+.SumoSelect > .CaptionCont > span.placeholde {
   color: #eee !important;
 }
 
 .comment-table.highlight-blue {
   background-color: #1e1e1e !important;
-  border: 1px dashed #80a8ff !important;
-  outline: 1px dashed #80a8ff !important;
+  border: 2px dashed #80a8ff !important;
 }
 
 .header-bell__img {
@@ -740,6 +744,11 @@ a.red-link {
 
 div#tooltip {
   color: revert !important;
+}
+
+.roundbox.sidebox span.countdown,
+.roundbox.sidebox div.smaller {
+  color: #999 !important;
 }
 
 div.alert-warning {
