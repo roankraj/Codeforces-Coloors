@@ -1,9 +1,0 @@
-html body .content-with-sidebar {
-  margin-right: 0 !important;
-  margin: 1em 11em !important;
-}
-
-#sidebar {
-  opacity: 0 !important;
-  pointer-events: none !important;
-}
