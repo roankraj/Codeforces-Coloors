@@ -8,6 +8,8 @@ const cfLogos = {
   blue: "https://res.cloudinary.com/mt8ekld4/image/upload/v1792477560/codeforces-logo-blue.webp",
   light:
     "https://codeforces.com/codeforces.org/s/69489/images/codeforces-logo-with-telegram-555x130.png",
+  black:
+    "https://res.cloudinary.com/mt8ekld4/image/upload/v1792491999/codeforces-logo-black.webp",
 };
 
 function toggleFocus(focus) {

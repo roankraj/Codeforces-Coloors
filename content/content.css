@@ -149,6 +149,123 @@
 }
 
 /* ======================================================================
+   THEME: BLACK
+   ====================================================================== */
+
+:root[data-theme="black"] {
+  /* ----- surfaces ----- */
+  --bg: #000; /* page */
+  --bg-raised: #151515; /* boxes, cards, tables, popups */
+  --bg-control: #222; /* buttons, selects, even sample lines */
+  --bg-field: #3d3d3d; /* text fields, hover fill, odd sample lines */
+  --bg-muted: #292929; /* spoilers */
+  --bg-editor: #242424; /* markItUp comment editor */
+  --bg-code: #181818; /* code blocks in source popup */
+  --bg-tt: #d5d5d5; /* inline .tt snippets */
+  --bg-sample-hl: hsl(240, 18%, 41.4%); /* highlighted sample test line */
+  --bg-row-rejected: #403939; /* contest problem row */
+  --bg-row-accepted: #332d2d; /* contest problem row */
+  --bg-row-hl: #212426; /* highlighted datatable row */
+  --bg-row-hl-strong: #2c3033; /* highlighted status row */
+
+  /* ----- text ----- */
+  --text: #eeeeee;
+  --text-strong: #ffffff; /* problem statement, titles */
+  --text-muted: #999999; /* countdown, small print in sideboxes */
+  --text-notice: #222222; /* notice box under the page */
+  --text-tt: #111111; /* on --bg-tt */
+  --text-alert: #111111; /* on .alert-warning */
+  --text-pagination-active: #111111; /* on the active page chip */
+
+  /* ----- links ----- */
+  --soft: #cccccc; /* links, focus ring, active pagination, scrollbar thumb */
+  --soft-hover: #d5d5d5;
+  --link-red: #ededed;
+  --link-reply: #cccccc; /* reply / info links in comments */
+
+  /* ----- borders ----- */
+  --border: #323232;
+  --border-control: #333;
+  --dash-width: 2px; /* dashed comment outline */
+
+  /* ----- accents ----- */
+  --accent: #5183f0; /* captions, contest phase */
+  --accent-link: #558afd; /* language chooser */
+  --accent-heading: #4d7ce4; /* topic titles */
+  --accent-active: #4875d7; /* current tab, contest links, verdicts */
+  --accent-soft: #80a8ff; /* highlighted comment outline */
+
+  /* ----- activity heatmap ----- */
+  --hm-0: #292929;
+  --hm-1: #91da9e;
+  --hm-2: #40c463;
+  --hm-3: #30a14e;
+  --hm-4: #216e39;
+  --hm-filter: brightness(0.9); /* applied to non-empty cells */
+
+  /* ----- prettyprint / lstlisting ----- */
+  --pp-bg: #292929;
+  --pp-border: #555555;
+  --pp-pln: #e4e4e4; /* plain text         11.4:1 */
+  --pp-str: #eba17c; /* strings, attr val   6.9:1 */
+  --pp-kwd: #7cb8f7; /* keywords, tags      7.0:1 */
+  --pp-com: #8fc17a; /* comments            7.0:1 */
+  --pp-typ: #5fdcc4; /* types               8.7:1 */
+  --pp-lit: #c8e3b2; /* literals           10.5:1 */
+  --pp-pun: #b8c0c8; /* punctuation         7.9:1 */
+  --pp-atn: #a8e2ff; /* attr names, vars   10.4:1 */
+  --pp-dec: #dc92d6; /* declarations        6.3:1 */
+  --pp-fun: #f2e3a2; /* function names     11.3:1 */
+
+  /* ----- ace: surface + gutter ----- */
+  --ace-bg: #1e1e1e;
+  --ace-text: #d4d4d4;
+  --ace-gutter-bg: #1e1e1e;
+  --ace-gutter-text: #858585;
+  --ace-gutter-cell: #cccccc; /* line numbers (.ace_gutter-cell) */
+  --ace-gutter-active-bg: #282828; /* same as active line so it reads as one band */
+  --ace-gutter-active-text: #c6c6c6;
+  --ace-cursor: #aeafad;
+  --ace-invisible: #404040;
+  --ace-print-margin: #333333;
+
+  /* ----- ace: layers ----- */
+  --ace-selection: #264f78;
+  --ace-active-line: #282828;
+  --ace-selected-word: #add6ff26;
+  --ace-bracket-bg: #0064001a;
+  --ace-bracket-border: #888888;
+  --ace-step: #5a5a00;
+  --ace-stack: #2f5f1a;
+  --ace-indent-guide: #404040;
+  --ace-fold: #4b4b4b;
+  --ace-fold-border: #1e1e1e;
+
+  /* ----- ace: tokens (VS Code Dark+) ----- */
+  --ace-keyword: #c586c0; /* control keywords, #include / #define */
+  --ace-list: #c586c0;
+  --ace-storage: #569cd6; /* int, const, class, this, html tags */
+  --ace-heading: #569cd6;
+  --ace-operator: #d4d4d4;
+  --ace-string: #ce9178; /* strings, include paths */
+  --ace-regex: #d16969;
+  --ace-escape: #d7ba7d;
+  --ace-comment: #6a9955;
+  --ace-numeric: #b5cea8;
+  --ace-function: #dcdcaa;
+  --ace-type: #4ec9b0;
+  --ace-variable: #9cdcfe;
+  --ace-library: #4fc1ff; /* built-in constants */
+  --ace-xml-pe: #9a9a9a;
+  --ace-invalid: #f44747;
+
+  /* secondary images */
+  --lava-right: url("https://res.cloudinary.com/mt8ekld4/image/upload/v1791866712/lava-right-dark.webp");
+  --lava-left: url("https://res.cloudinary.com/mt8ekld4/image/upload/v1791866712/lava-left-dark.webp");
+  --bell: url("https://res.cloudinary.com/mt8ekld4/image/upload/v1792254829/bell_inactive-20x20-dark.webp");
+}
+
+/* ======================================================================
    THEME: LOVE
    ====================================================================== */
 
@@ -295,8 +412,8 @@
   --text-pagination-active: #101522;
 
   /* ----- links ----- */
-  --soft: hsl(218, 100%, 73%);
-  --soft-hover: #b9d1ff;
+  --soft: hsl(176, 100%, 71%);
+  --soft-hover: hsl(176, 100%, 100%);
   --link-red: #eee;
   --link-reply: #d5d5d5;
 
@@ -310,7 +427,7 @@
   --accent-link: #75e0f0;
   --accent-heading: #a7bfff;
   --accent-active: #78aaff;
-  --accent-soft: hsl(218, 30%, 78.5%);
+  --accent-soft: #b8c4d9;
 
   /* ----- activity heatmap ----- */
   --hm-0: #222c40;
