@@ -290,7 +290,7 @@
   --text-strong: #2c0703;
   --text-muted: #555555;
   --text-notice: #d6d2d2;
-  --text-tt: #f1e4f3;
+  --text-tt: #472836;
   --text-alert: #f1e4f3;
   --text-pagination-active: #f1e4f3;
 
@@ -675,6 +675,7 @@
 
   /* contest links, and the blue wrong-answer verdict on the submission page */
   a[href^="/contest/"],
+  a[href^="/gym/"],
   a[href$="/virtual"],
   .verdict-rejected {
     color: var(--accent-active) !important;
@@ -758,6 +759,13 @@
 
   .comment-table.highlight-blue {
     border: var(--dash-width) dashed var(--accent-soft) !important;
+  }
+
+  div._CatalogViewFrame_catalog > div._catalogNode,
+  .problemindexholder,
+  #pageContent > div[style*="margin-bottom:2em;"],
+  div#pageContent > div[style="margin-top:0;"] {
+    border: 1px solid var(--border-control);
   }
 
   /* ===== Cards & spacing ===== */

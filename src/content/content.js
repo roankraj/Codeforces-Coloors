@@ -43,7 +43,15 @@ const observer = new MutationObserver((mutations, obs) => {
       cfLogo.src.includes("codeforces-logo-with-telegram-555x130.png")
     ) {
       chrome.storage.local.get(["theme"], function (result) {
-        const theme = result.theme || "dark";
+        let theme = result.theme || "dark";
+
+        if (theme === "device") {
+          const isDark = window.matchMedia(
+            "(prefers-color-scheme: dark)",
+          ).matches;
+
+          theme = isDark ? "dark" : "light";
+        }
 
         cfLogo.src = cfLogos[theme] || cfLogos.dark;
 
@@ -137,7 +145,13 @@ chrome.storage.onChanged.addListener(function (changes, storageArea) {
 });
 
 chrome.storage.local.get("theme", function (result) {
-  const theme = result.theme || "dark";
+  let theme = result.theme || "dark";
+
+  if (theme === "device") {
+    const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+    theme = isDark ? "dark" : "light";
+  }
 
   document.documentElement.setAttribute("data-theme", theme);
 });
