@@ -1,8 +1,12 @@
-/* Codeforces themes: dark + pink
-   Switch with <html data-theme="dark"> or <html data-theme="pink">.
+/* Codeforces themes: dark + love + blue + light
+   Switch with <html data-theme="dark" | "love" | "blue" | "light">.
    With no data-theme set, dark is used.
 
-   Every theme-dependent value is a variable defined in the two blocks below.p
+   "light" is the site's own look: every rule below the theme blocks lives inside
+   one  :root:not([data-theme="light"]) { ... }  wrapper, so with light nothing
+   from this file applies and Codeforces' original CSS shows through.
+
+   Every theme-dependent value is a variable defined in the theme blocks below.
    Everything after them is theme-agnostic and only reads variables.
    Variable families are deliberately kept separate and never reference each other:
      --*        UI surfaces, text, links, borders
@@ -10,7 +14,9 @@
      --ace-*    Ace editor
      --hm-*     activity heatmap
    Colors are hex only (8-digit hex where alpha is needed).
-   Uses CSS nesting in one place (Chrome 112+, Firefox 117+, Safari 16.5+). */
+   Uses CSS nesting (Chrome 120+, Firefox 117+, Safari 17.2+).
+   Inside the wrapper, a leading `&` means <html>; every other selector is
+   automatically a descendant of it. */
 
 /* ======================================================================
    SHARED (not themed)
@@ -135,6 +141,11 @@
   --ace-library: #4fc1ff; /* built-in constants */
   --ace-xml-pe: #9a9a9a;
   --ace-invalid: #f44747;
+
+  /* secondary images */
+  --lava-right: url("https://res.cloudinary.com/mt8ekld4/image/upload/v1791866712/lava-right-dark.webp");
+  --lava-left: url("https://res.cloudinary.com/mt8ekld4/image/upload/v1791866712/lava-left-dark.webp");
+  --bell: url("https://res.cloudinary.com/mt8ekld4/image/upload/v1792254829/bell_inactive-20x20-dark.webp");
 }
 
 /* ======================================================================
@@ -247,13 +258,18 @@
   --ace-library: #084c94;
   --ace-xml-pe: #654555;
   --ace-invalid: #a30012;
+
+  /* secondary images */
+  --lava-right: url("https://codeforces.com/codeforces.org/s/69489/images/menu/lava-right.png");
+  --lava-left: url("https://codeforces.com/codeforces.org/s/69489/images/menu/lava-left.png");
+  --bell: url("https://codeforces.com/codeforces.org/s/69489/images/icons/bell_inactive-20x20.png");
 }
 
 /* ======================================================================
-   THEME: NIGHT
+   THEME: BLUE
    ====================================================================== */
 
-:root[data-theme="night"] {
+:root[data-theme="blue"] {
   /* ----- surfaces ----- */
   --bg: hsl(223, 45%, 8%);
   --bg-raised: hsl(221, 40%, 13.5%);
@@ -359,925 +375,946 @@
   --ace-library: #89ddff;
   --ace-xml-pe: #a6b4cc;
   --ace-invalid: #ff6b81;
+
+  /* secondary images */
+  --lava-right: url("https://res.cloudinary.com/mt8ekld4/image/upload/v1791866712/lava-right-dark.webp");
+  --lava-left: url("https://res.cloudinary.com/mt8ekld4/image/upload/v1791866712/lava-left-dark.webp");
+  --bell: url("https://res.cloudinary.com/mt8ekld4/image/upload/v1792254829/bell_inactive-20x20-dark.webp");
+}
+
+/* ======================================================================
+   THEME: LIGHT
+   ====================================================================== */
+
+:root[data-theme="light"] {
+  --soft: #000;
 }
 
 /* ======================================================================
    RULES (theme-agnostic, variables only)
+   Everything from here to the closing brace at the very end of the file is
+   inside the wrapper. A leading `&` means <html>.
    ====================================================================== */
 
-/* ===== Backgrounds ===== */
+:root:not([data-theme="light"]) {
+  /* ===== Backgrounds ===== */
 
-html,
-body,
-.datatable,
-.datatable .dark,
-div:has(.llt),
-div:has(.irt) {
-  background-color: var(--bg) !important;
-}
+  &,
+  body,
+  .datatable,
+  .datatable .dark,
+  div:has(.llt),
+  div:has(.irt) {
+    background-color: var(--bg) !important;
+  }
 
-.roundbox,
-html body .roundbox .tag-box,
-._catalogNode,
-.problemindexholder,
-.sidebar-menu ul li,
-th,
-td,
-div.popup .content,
-.drafts-popup,
-.SumoSelect > .optWrapper,
-.comment-table.highlight-blue,
-#pageContent > div[style*="margin-bottom:2em;"],
-div#pageContent > div[style="margin-top:0;"],
-div#pageContent > div[style="margin-top:0em;"] > div[style*="margin-top:"],
-textarea:is([name="input"], [name="output"]) {
-  background-color: var(--bg-raised) !important;
-}
+  .roundbox,
+  & body .roundbox .tag-box,
+  ._catalogNode,
+  .problemindexholder,
+  .sidebar-menu ul li,
+  th,
+  td,
+  div.popup .content,
+  .drafts-popup,
+  .SumoSelect > .optWrapper,
+  .comment-table.highlight-blue,
+  #pageContent > div[style*="margin-bottom:2em;"],
+  div#pageContent > div[style="margin-top:0;"],
+  div#pageContent > div[style="margin-top:0em;"] > div[style*="margin-top:"],
+  textarea:is([name="input"], [name="output"]) {
+    background-color: var(--bg-raised) !important;
+  }
 
-html body .roundbox .dark,
-.setting-value div p,
-.setting-value input,
-.drafts-entry-body,
-.SumoSelect > .optWrapper > .options li.opt:hover {
-  background-color: var(--bg-field) !important;
-}
+  & body .roundbox .dark,
+  .setting-value div p,
+  .setting-value input,
+  .drafts-entry-body,
+  .SumoSelect > .optWrapper > .options li.opt:hover {
+    background-color: var(--bg-field) !important;
+  }
 
-.spoiler-content {
-  background-color: var(--bg-muted) !important;
-}
+  .spoiler-content {
+    background-color: var(--bg-muted) !important;
+  }
 
-.bottom-links {
-  background-color: transparent !important;
-}
+  .bottom-links {
+    background-color: transparent !important;
+  }
 
-/* ===== Text ===== */
+  /* ===== Text ===== */
 
-div,
-h1,
-h2,
-h3,
-h4,
-table,
-.table-form,
-._EduCoursesViewPage_courses,
-html body div.ttypography,
-div.ttypography table,
-div.ttypography thead th,
-html body .comments label.show-archived,
-html body .comments label.show-archived *,
-.userbox input,
-div.popup .content,
-.drafts-entry-body {
-  color: var(--text) !important;
-}
+  div,
+  h1,
+  h2,
+  h3,
+  h4,
+  table,
+  .table-form,
+  ._EduCoursesViewPage_courses,
+  & body div.ttypography,
+  div.ttypography table,
+  div.ttypography thead th,
+  & body .comments label.show-archived,
+  & body .comments label.show-archived *,
+  .userbox input,
+  div.popup .content,
+  .drafts-entry-body {
+    color: var(--text) !important;
+  }
 
-/* problem-related text */
-.title,
-.problemindexholder div.section-title,
-.problem-statement div p,
-.problem-statement .test-example-line,
-div.ttypography pre,
-div.ttypography code,
-html body div.ttypography .MathJax {
-  color: var(--text-strong) !important;
-}
+  /* problem-related text */
+  .title,
+  .problemindexholder div.section-title,
+  .problem-statement div p,
+  .problem-statement .test-example-line,
+  div.ttypography pre,
+  div.ttypography code,
+  & body div.ttypography .MathJax {
+    color: var(--text-strong) !important;
+  }
 
-html body div.ttypography .MathJax {
-  font-weight: 200 !important;
-}
+  & body div.ttypography .MathJax {
+    font-weight: 200 !important;
+  }
 
-html body .roundbox .dark .contest-state-regular,
-ul li ._catalogNode ._catalogBlogEntry ._name i[class^="icon-"],
-html
-  body
-  div#pageContent
-  div.second-level-menu
-  ul.second-level-menu-list
-  a[href^="/contest/"] {
-  color: var(--soft) !important;
-}
+  & body .roundbox .dark .contest-state-regular,
+  ul li ._catalogNode ._catalogBlogEntry ._name i[class^="icon-"],
+  &
+    body
+    div#pageContent
+    div.second-level-menu
+    ul.second-level-menu-list
+    a[href^="/contest/"] {
+    color: var(--soft) !important;
+  }
 
-.roundbox .caption,
-.contest-state-phase {
-  color: var(--accent) !important;
-}
+  .roundbox .caption,
+  .contest-state-phase {
+    color: var(--accent) !important;
+  }
 
-html body .topic .title * {
-  font-size: 2.4rem !important;
-  color: var(--accent-heading) !important;
-}
+  & body .topic .title * {
+    font-size: 2.4rem !important;
+    color: var(--accent-heading) !important;
+  }
 
-.lang-chooser div a {
-  color: var(--accent-link) !important;
-}
+  .lang-chooser div a {
+    color: var(--accent-link) !important;
+  }
 
-div.ttypography .tt {
-  color: var(--text-tt) !important;
-  background-color: var(--bg-tt) !important;
-  border: none !important;
-}
-
-html body .comment-table .reply a,
-html body .comment-table .info .item a {
-  color: var(--link-reply) !important;
-}
-
-div.alert-warning {
-  color: var(--text-alert) !important;
-}
-
-.pagination ul li span.active a {
-  color: var(--text-pagination-active) !important;
-}
-
-html body div[style="margin-top: 1em; text-align: left; font-size: 1.2rem;"] {
-  color: var(--text-notice) !important;
-}
-
-.roundbox.sidebox span.countdown,
-.roundbox.sidebox div.smaller {
-  color: var(--text-muted) !important;
-}
-
-div#tooltip {
-  color: revert !important;
-}
-
-.comment-indent span {
-  opacity: 0.2 !important;
-}
-
-/* ===== Links ===== */
-
-a:not(.rated-user) {
-  border-radius: var(--r-sm);
-  color: var(--soft) !important;
-  text-decoration: none !important;
-}
-
-a:focus-visible {
-  outline: 2px solid var(--soft) !important;
-  outline-offset: 1px;
-}
-
-html body a:not(:has(img)):hover {
-  filter: brightness(1.36) !important;
-}
-
-/* contest links, and the blue wrong-answer verdict on the submission page */
-a[href^="/contest/"],
-a[href$="/virtual"],
-.verdict-rejected {
-  color: var(--accent-active) !important;
-}
-
-a.red-link {
-  color: var(--link-red) !important;
-}
-
-table.problems tr td a {
-  color: var(--text) !important;
-}
-
-li.current {
-  border-bottom: 3px solid var(--accent-active) !important;
-}
-
-.SumoSelect > .CaptionCont > span.placeholder {
-  color: var(--text) !important;
-}
-
-/* ===== Borders ===== */
-
-.roundbox,
-.sidebar-menu ul li,
-.problemindexholder div.ttypography table td,
-form._EduCourseEnrollPage_enroll table td,
-form.customtest table td,
-form.contestRegistration table td,
-form.submit-form.submitFrameForm table td,
-form#settings-form table td,
-.send-talk-form table td,
-.roundbox.sidebox div table :is(td, th),
-.roundbox.sidebox .rtable tbody :is(th, td),
-.comment-table table tr td,
-table.comment-table :is(td, th),
-#pageContent
-  > div[style*="margin-bottom:2em;"]:has(div[style*="margin:3em 1em;"])
-  .comment-table,
-.spoiler-content,
-.roundbox form table tbody td,
-.roundbox form table tbody th,
-div.bottom-links table tr td,
-div.bottom-links table tr th {
-  border: none !important;
-}
-
-.menu-box,
-.drafts-popup,
-.SumoSelect > .optWrapper,
-html body .roundbox .tag-box,
-div.title-photo > div:first-child,
-form._UserTalkFilterFrame_filterForm table tbody tr:first-child td:last-child {
-  border: 1px solid var(--border) !important;
-}
-
-html body .roundbox .dark {
-  border: 1px solid var(--bg-raised) !important;
-}
-
-.SumoSelect > .optWrapper > .options li.opt {
-  border-bottom: 1px solid var(--border) !important;
-}
-
-.content {
-  border-left: 4px solid var(--border) !important;
-}
-
-html body table.bordertable {
-  border: 1px solid transparent !important;
-}
-
-.comment-table {
-  padding: 8px !important;
-  border: var(--dash-width) dashed var(--soft) !important;
-}
-
-.comment-table.highlight-blue {
-  border: var(--dash-width) dashed var(--accent-soft) !important;
-}
-
-/* ===== Cards & spacing ===== */
-
-html body #sidebar {
-  padding-top: 16px !important;
-}
-
-.sidebox {
-  padding-top: 4px;
-  padding-bottom: 1px;
-}
-
-html body .roundbox .tag-box {
-  padding: 2px 6px;
-  margin-inline: -1px !important;
-}
-
-.problemindexholder {
-  margin-top: 1em;
-  padding: 0.125em 0.75em 0.75em;
-}
-
-._catalogNode {
-  padding: 2px !important;
-  margin-bottom: 14px;
-}
-
-/* page-content wrappers */
-#pageContent
-  > div[style*="margin-bottom:2em;"]:not(:has(div[style*="margin:3em 1em;"])),
-div#pageContent > div[style="margin-top:0;"],
-div#pageContent > div[style="margin-top:0em;"] > div[style*="margin-top:"] {
-  padding: 12px 12px 4px !important;
-}
-
-#pageContent
-  > div[style*="margin-bottom:2em;"]:has(div[style*="margin:3em 1em;"]) {
-  padding: 1px !important;
-}
-
-#pageContent > div[style="margin:3em 1em;"] {
-  margin: 2em 1em !important;
-
-  & table,
-  & table td {
+  div.ttypography .tt {
+    color: var(--text-tt) !important;
+    background-color: var(--bg-tt) !important;
     border: none !important;
   }
-  & table td,
-  & table:not([class]) {
-    padding: 1em !important;
+
+  & body .comment-table .reply a,
+  & body .comment-table .info .item a {
+    color: var(--link-reply) !important;
   }
-  & table tbody tr:first-child td:first-child {
-    border-top-left-radius: var(--r-lg);
+
+  div.alert-warning {
+    color: var(--text-alert) !important;
   }
-  & table tbody tr:first-child td:last-child {
-    border-top-right-radius: var(--r-lg);
+
+  .pagination ul li span.active a {
+    color: var(--text-pagination-active) !important;
   }
-}
 
-div#pageContent
-  > div[style="margin-bottom:2em;"]
-  > div[style="margin:3em 1em;"] {
-  margin: 1em !important;
-}
+  & body div[style="margin-top: 1em; text-align: left; font-size: 1.2rem;"] {
+    color: var(--text-notice) !important;
+  }
 
-.shiftUp {
-  top: 0 !important;
-}
+  .roundbox.sidebox span.countdown,
+  .roundbox.sidebox div.smaller {
+    color: var(--text-muted) !important;
+  }
 
-/* ===== Tables ===== */
+  div#tooltip {
+    color: revert !important;
+  }
 
-table {
-  border-collapse: separate !important;
-  border-spacing: 0 !important;
-}
+  .comment-indent span {
+    opacity: 0.2 !important;
+  }
 
-th,
-td {
-  border: solid var(--border) !important;
-  border-width: 0 1px 1px 0 !important;
-}
+  /* ===== Links ===== */
 
-th {
-  border-top-width: 1px !important;
-}
+  a:not(.rated-user) {
+    border-radius: var(--r-sm);
+    color: var(--soft) !important;
+    text-decoration: none !important;
+  }
 
-th:first-child,
-td:first-child {
-  border-left-width: 1px !important;
-}
+  a:focus-visible {
+    outline: 2px solid var(--soft) !important;
+    outline-offset: 1px;
+  }
 
-th:first-child {
-  border-top-left-radius: var(--r-lg) !important;
-}
+  & body a:not(:has(img)):hover {
+    filter: brightness(1.36) !important;
+  }
 
-th:last-child {
-  border-top-right-radius: var(--r-lg) !important;
-}
+  /* contest links, and the blue wrong-answer verdict on the submission page */
+  a[href^="/contest/"],
+  a[href$="/virtual"],
+  .verdict-rejected {
+    color: var(--accent-active) !important;
+  }
 
-tr:last-child td:first-child {
-  border-bottom-left-radius: var(--r-lg) !important;
-}
+  a.red-link {
+    color: var(--link-red) !important;
+  }
 
-tr:last-child td:last-child {
-  border-bottom-right-radius: var(--r-lg) !important;
-}
+  table.problems tr td a {
+    color: var(--text) !important;
+  }
 
-/* login box */
-div.roundbox[style="width: 30em;margin: 2em auto;"] {
-  padding: 0.5em 0.375em;
-  border-radius: var(--r-lg) !important;
-}
+  li.current {
+    border-bottom: 3px solid var(--accent-active) !important;
+  }
 
-.datatable td,
-.datatable th {
-  padding: 10px !important;
-}
+  .SumoSelect > .CaptionCont > span.placeholder {
+    color: var(--text) !important;
+  }
 
-.datatable :is(.lt, .rt, .lb, .rb, .irt, .ilt) {
-  background: none !important;
-}
+  /* ===== Borders ===== */
 
-/* top corners of tables that start with a td row */
-:is(
-    .problemindexholder div.ttypography,
-    form._EduCourseEnrollPage_enroll,
-    form.customtest,
-    form.submit-form.submitFrameForm
-  )
-  table
-  tr:first-child
+  .roundbox,
+  .sidebar-menu ul li,
+  .problemindexholder div.ttypography table td,
+  form._EduCourseEnrollPage_enroll table td,
+  form.customtest table td,
+  form.contestRegistration table td,
+  form.submit-form.submitFrameForm table td,
+  form#settings-form table td,
+  .send-talk-form table td,
+  .roundbox.sidebox div table :is(td, th),
+  .roundbox.sidebox .rtable tbody :is(th, td),
+  .comment-table table tr td,
+  table.comment-table :is(td, th),
+  #pageContent
+    > div[style*="margin-bottom:2em;"]:has(div[style*="margin:3em 1em;"])
+    .comment-table,
+  .spoiler-content,
+  .roundbox form table tbody td,
+  .roundbox form table tbody th,
+  div.bottom-links table tr td,
+  div.bottom-links table tr th {
+    border: none !important;
+  }
+
+  .menu-box,
+  .drafts-popup,
+  .SumoSelect > .optWrapper,
+  & body .roundbox .tag-box,
+  div.title-photo > div:first-child,
+  form._UserTalkFilterFrame_filterForm
+    table
+    tbody
+    tr:first-child
+    td:last-child {
+    border: 1px solid var(--border) !important;
+  }
+
+  & body .roundbox .dark {
+    border: 1px solid var(--bg-raised) !important;
+  }
+
+  .SumoSelect > .optWrapper > .options li.opt {
+    border-bottom: 1px solid var(--border) !important;
+  }
+
+  .content {
+    border-left: 4px solid var(--border) !important;
+  }
+
+  & body table.bordertable {
+    border: 1px solid transparent !important;
+  }
+
+  .comment-table {
+    padding: 8px !important;
+    border: var(--dash-width) dashed var(--soft) !important;
+  }
+
+  .comment-table.highlight-blue {
+    border: var(--dash-width) dashed var(--accent-soft) !important;
+  }
+
+  /* ===== Cards & spacing ===== */
+
+  & body #sidebar {
+    padding-top: 16px !important;
+  }
+
+  .sidebox {
+    padding-top: 4px;
+    padding-bottom: 1px;
+  }
+
+  & body .roundbox .tag-box {
+    padding: 2px 6px;
+    margin-inline: -1px !important;
+  }
+
+  .problemindexholder {
+    margin-top: 1em;
+    padding: 0.125em 0.75em 0.75em;
+  }
+
+  ._catalogNode {
+    padding: 2px !important;
+    margin-bottom: 14px;
+  }
+
+  /* page-content wrappers */
+  #pageContent
+    > div[style*="margin-bottom:2em;"]:not(:has(div[style*="margin:3em 1em;"])),
+  div#pageContent > div[style="margin-top:0;"],
+  div#pageContent > div[style="margin-top:0em;"] > div[style*="margin-top:"] {
+    padding: 12px 12px 4px !important;
+  }
+
+  #pageContent
+    > div[style*="margin-bottom:2em;"]:has(div[style*="margin:3em 1em;"]) {
+    padding: 1px !important;
+  }
+
+  #pageContent > div[style="margin:3em 1em;"] {
+    margin: 2em 1em !important;
+
+    & table,
+    & table td {
+      border: none !important;
+    }
+    & table td,
+    & table:not([class]) {
+      padding: 1em !important;
+    }
+    & table tbody tr:first-child td:first-child {
+      border-top-left-radius: var(--r-lg);
+    }
+    & table tbody tr:first-child td:last-child {
+      border-top-right-radius: var(--r-lg);
+    }
+  }
+
+  div#pageContent
+    > div[style="margin-bottom:2em;"]
+    > div[style="margin:3em 1em;"] {
+    margin: 1em !important;
+  }
+
+  .shiftUp {
+    top: 0 !important;
+  }
+
+  /* ===== Tables ===== */
+
+  table {
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+  }
+
+  th,
+  td {
+    border: solid var(--border) !important;
+    border-width: 0 1px 1px 0 !important;
+  }
+
+  th {
+    border-top-width: 1px !important;
+  }
+
+  th:first-child,
   td:first-child {
-  border-top-left-radius: var(--r-lg) !important;
-}
+    border-left-width: 1px !important;
+  }
 
-:is(
-    .problemindexholder div.ttypography,
-    form._EduCourseEnrollPage_enroll,
-    form.customtest,
-    form.submit-form.submitFrameForm
-  )
-  table
-  tr:first-child
-  td:last-child,
-.table-form tr:first-child td:last-child {
-  border-top-right-radius: var(--r-lg) !important;
-}
+  th:first-child {
+    border-top-left-radius: var(--r-lg) !important;
+  }
 
-/* form paddings */
-:is(
-    form._EduCourseEnrollPage_enroll,
-    form.submit-form.submitFrameForm,
-    form.contestRegistration
-  )
-  table
-  tr:first-child
-  td {
-  padding-top: 1em !important;
-}
+  th:last-child {
+    border-top-right-radius: var(--r-lg) !important;
+  }
 
-:is(
-    form._EduCourseEnrollPage_enroll,
-    form.submit-form.submitFrameForm,
-    form.contestRegistration
-  )
-  table
-  tr:last-child
-  td {
-  padding-bottom: 1em !important;
-}
+  tr:last-child td:first-child {
+    border-bottom-left-radius: var(--r-lg) !important;
+  }
 
-:is(form._EduCourseEnrollPage_enroll, form.submit-form.submitFrameForm)
-  table
-  tr
-  td:last-child {
-  padding-right: 1em !important;
-}
+  tr:last-child td:last-child {
+    border-bottom-right-radius: var(--r-lg) !important;
+  }
 
-/* contest problems list */
-html body table.problems .rejected-problem td.act {
-  background-color: var(--bg-row-rejected) !important;
-}
+  /* login box */
+  div.roundbox[style="width: 30em;margin: 2em auto;"] {
+    padding: 0.5em 0.375em;
+    border-radius: var(--r-lg) !important;
+  }
 
-html body table.problems .rejected-problem td.id {
-  border-left: 6px solid var(--bg-row-rejected) !important;
-}
+  .datatable td,
+  .datatable th {
+    padding: 10px !important;
+  }
 
-html body table.problems .accepted-problem td.act {
-  background-color: var(--bg-row-accepted) !important;
-}
+  .datatable :is(.lt, .rt, .lb, .rb, .irt, .ilt) {
+    background: none !important;
+  }
 
-html body table.problems .accepted-problem td.id {
-  border-left: 6px solid var(--bg-row-accepted) !important;
-}
-
-/* the rgb() below is a selector matching the site's inline style, not a theme color */
-html body .datatable table td[style="background-color: rgb(221, 238, 255);"] {
-  background-color: var(--bg-row-hl) !important;
-}
-
-html body table.status-frame-datatable tbody .highlighted-row td {
-  background-color: var(--bg-row-hl-strong) !important;
-}
-
-/* ===== Buttons & fields ===== */
-
-input[type="submit"],
-input[type="file"]::file-selector-button,
-select {
-  background: var(--bg-control) !important;
-  border: 1px solid var(--border-control) !important;
-  cursor: pointer;
-  color: var(--text) !important;
-  padding: 0.375rem 0.75rem !important;
-  border-radius: var(--r-md);
-}
-
-input[type="submit"]:hover,
-input[type="file"]::file-selector-button:hover,
-select:hover {
-  background: var(--bg-field) !important;
-}
-
-input.search,
-.handleBox.ac_input,
-input:is([name="minDifficulty"], [name="maxDifficulty"]),
-input._CatalogViewFrame_filter,
-input#searchByNameOrIdQueryBox,
-form#settings-form .table-form input:not(.submit),
-input[name="submittedProblemCode"],
-span.filter input,
-input#tabSizeInput {
-  background-color: var(--bg-field) !important;
-  color: var(--text) !important;
-  border: 2px solid transparent !important;
-  border-radius: var(--r-md);
-}
-
-input.search,
-.handleBox.ac_input,
-input:is([name="minDifficulty"], [name="maxDifficulty"]),
-input._CatalogViewFrame_filter,
-input#searchByNameOrIdQueryBox {
-  font-size: small;
-}
-
-input:is([name="minDifficulty"], [name="maxDifficulty"]) {
-  padding: 1px;
-}
-
-input#searchByNameOrIdQueryBox {
-  border-width: 1px !important;
-}
-
-.setting-value div p,
-.setting-value input {
-  border: 1px solid transparent !important;
-}
-
-.setting-value input {
-  color: var(--text) !important;
-  padding: 5px !important;
-}
-
-.markItUpEditor,
-.markItUpContainer {
-  background-color: var(--bg-editor) !important;
-  color: var(--text) !important;
-}
-
-.pagination span.active {
-  background-color: var(--soft) !important;
-  border: 1px solid var(--soft) !important;
-}
-
-textarea:is([name="input"], [name="output"]) {
-  color: var(--text) !important;
-  overflow: auto !important;
-}
-
-/* Firefox */
-textarea:is([name="input"], [name="output"]) {
-  scrollbar-width: thin;
-  scrollbar-color: var(--soft) var(--border); /* thumb, track */
-}
-
-/* Chrome / Edge / Safari */
-textarea:is([name="input"], [name="output"])::-webkit-scrollbar {
-  width: 10px;
-  height: 10px;
-}
-
-textarea:is([name="input"], [name="output"])::-webkit-scrollbar-track {
-  background: var(--border);
-}
-
-textarea:is([name="input"], [name="output"])::-webkit-scrollbar-thumb {
-  background: var(--soft);
-  border: 2px solid var(--border);
-  border-radius: var(--r-xl);
-}
-
-textarea:is([name="input"], [name="output"])::-webkit-scrollbar-thumb:hover {
-  background: var(--soft-hover);
-}
-
-/* ===== Problem statement ===== */
-
-.problem-statement :is(.test-example-line-even, .test-example-line-odd) {
-  padding-left: 0.25em;
-}
-
-.problem-statement .test-example-line-even {
-  background-color: var(--bg-control) !important;
-}
-
-.problem-statement .test-example-line-odd {
-  background-color: var(--bg-field) !important;
-}
-
-.problem-statement
-  :is(.test-example-line-even, .test-example-line-odd)[style^="b"] {
-  background-color: var(--bg-sample-hl) !important;
-}
-
-.problem-statement .sample-tests pre {
-  background-color: transparent !important;
-  padding: 0 !important;
-}
-
-.problem-statement .sample-tests .input {
-  margin-bottom: 8px !important;
-}
-
-.problem-statement .sample-tests :is(.input, .output) {
-  overflow: hidden !important;
-}
-
-/* ===== Activity heatmap ===== */
-
-rect.day {
-  rx: 1px !important;
-  ry: 1px !important;
-}
-
-rect.day[fill="#EBEDF0"] {
-  fill: var(--hm-0) !important;
-}
-
-rect.day[fill="#91DA9E"] {
-  fill: var(--hm-1) !important;
-}
-
-rect.day[fill="#40C463"] {
-  fill: var(--hm-2) !important;
-}
-
-rect.day[fill="#30A14E"] {
-  fill: var(--hm-3) !important;
-}
-
-rect.day[fill="#216E39"] {
-  fill: var(--hm-4) !important;
-}
-
-rect.day:not([fill="#EBEDF0"]) {
-  filter: var(--hm-filter);
-}
-
-/* ===== Source popup ===== */
-
-.source-popup
+  /* top corners of tables that start with a td row */
   :is(
-    pre[style="background-color: #eff0f1;"],
-    pre.input,
-    pre.output,
-    pre.checker,
-    pre.answer
-  ) {
-  background-color: var(--bg-code) !important;
-  border: none !important;
-  padding: 8px !important;
-}
+      .problemindexholder div.ttypography,
+      form._EduCourseEnrollPage_enroll,
+      form.customtest,
+      form.submit-form.submitFrameForm
+    )
+    table
+    tr:first-child
+    td:first-child {
+    border-top-left-radius: var(--r-lg) !important;
+  }
 
-.source-popup .copier-small {
-  padding: 1px 2px !important;
-}
-
-.source-popup .copier-small:hover {
-  color: var(--bg-raised) !important;
-  background-color: var(--text) !important;
-}
-
-/* ===== Radius scale ===== */
-
-textarea#terms,
-div#editor,
-textarea:is([name="input"], [name="output"]),
-.markItUpEditor,
-.markItUpContainer,
-.problem-statement .sample-tests :is(.input, .output),
-.comment-table,
-.pagination span.active,
-.source-popup .copier-small,
-td a {
-  border-radius: var(--r-sm) !important;
-}
-
-input[name="submittedProblemCode"],
-span.filter input,
-input#tabSizeInput,
-.setting-value input {
-  border-radius: var(--r-sm) !important;
-}
-
-html body img,
-html body table.bordertable,
-div.title-photo > div:first-child,
-.source-popup
   :is(
-    pre[style="background-color: #eff0f1;"],
-    pre.input,
-    pre.output,
-    pre.checker,
-    pre.answer
-  ) {
-  border-radius: var(--r-md) !important;
-}
+      .problemindexholder div.ttypography,
+      form._EduCourseEnrollPage_enroll,
+      form.customtest,
+      form.submit-form.submitFrameForm
+    )
+    table
+    tr:first-child
+    td:last-child,
+  .table-form tr:first-child td:last-child {
+    border-top-right-radius: var(--r-lg) !important;
+  }
 
-#pageContent > div[style*="margin-bottom:2em;"],
-div#pageContent > div[style="margin-top:0;"],
-div#pageContent > div[style="margin-top:0em;"] > div[style*="margin-top:"],
-._catalogNode {
-  border-radius: var(--r-lg) !important;
-}
+  /* form paddings */
+  :is(
+      form._EduCourseEnrollPage_enroll,
+      form.submit-form.submitFrameForm,
+      form.contestRegistration
+    )
+    table
+    tr:first-child
+    td {
+    padding-top: 1em !important;
+  }
 
-.sidebox,
-.problemindexholder,
-html body .roundbox .tag-box {
-  border-radius: var(--r-xl) !important;
-}
+  :is(
+      form._EduCourseEnrollPage_enroll,
+      form.submit-form.submitFrameForm,
+      form.contestRegistration
+    )
+    table
+    tr:last-child
+    td {
+    padding-bottom: 1em !important;
+  }
 
-/* ===== Prettyprint ===== */
+  :is(form._EduCourseEnrollPage_enroll, form.submit-form.submitFrameForm)
+    table
+    tr
+    td:last-child {
+    padding-right: 1em !important;
+  }
 
-@media screen {
-  /* prettyprint + lstlisting share one palette */
-  :is(.prettyprint, .lstlisting) {
-    & .pln {
-      color: var(--pp-pln) !important;
+  /* contest problems list */
+  & body table.problems .rejected-problem td.act {
+    background-color: var(--bg-row-rejected) !important;
+  }
+
+  & body table.problems .rejected-problem td.id {
+    border-left: 6px solid var(--bg-row-rejected) !important;
+  }
+
+  & body table.problems .accepted-problem td.act {
+    background-color: var(--bg-row-accepted) !important;
+  }
+
+  & body table.problems .accepted-problem td.id {
+    border-left: 6px solid var(--bg-row-accepted) !important;
+  }
+
+  /* the rgb() below is a selector matching the site's inline style, not a theme color */
+  & body .datatable table td[style="background-color: rgb(221, 238, 255);"] {
+    background-color: var(--bg-row-hl) !important;
+  }
+
+  & body table.status-frame-datatable tbody .highlighted-row td {
+    background-color: var(--bg-row-hl-strong) !important;
+  }
+
+  /* ===== Buttons & fields ===== */
+
+  input[type="submit"],
+  input[type="file"]::file-selector-button,
+  select {
+    background: var(--bg-control) !important;
+    border: 1px solid var(--border-control) !important;
+    cursor: pointer;
+    color: var(--text) !important;
+    padding: 0.375rem 0.75rem !important;
+    border-radius: var(--r-md);
+  }
+
+  input[type="submit"]:hover,
+  input[type="file"]::file-selector-button:hover,
+  select:hover {
+    background: var(--bg-field) !important;
+  }
+
+  input.search,
+  .handleBox.ac_input,
+  input:is([name="minDifficulty"], [name="maxDifficulty"]),
+  input._CatalogViewFrame_filter,
+  input#searchByNameOrIdQueryBox,
+  form#settings-form .table-form input:not(.submit),
+  input[name="submittedProblemCode"],
+  span.filter input,
+  input#tabSizeInput {
+    background-color: var(--bg-field) !important;
+    color: var(--text) !important;
+    border: 2px solid transparent !important;
+    border-radius: var(--r-md);
+  }
+
+  input.search,
+  .handleBox.ac_input,
+  input:is([name="minDifficulty"], [name="maxDifficulty"]),
+  input._CatalogViewFrame_filter,
+  input#searchByNameOrIdQueryBox {
+    font-size: small;
+  }
+
+  input:is([name="minDifficulty"], [name="maxDifficulty"]) {
+    padding: 1px;
+  }
+
+  input#searchByNameOrIdQueryBox {
+    border-width: 1px !important;
+  }
+
+  .setting-value div p,
+  .setting-value input {
+    border: 1px solid transparent !important;
+  }
+
+  .setting-value input {
+    color: var(--text) !important;
+    padding: 5px !important;
+  }
+
+  .markItUpEditor,
+  .markItUpContainer {
+    background-color: var(--bg-editor) !important;
+    color: var(--text) !important;
+  }
+
+  .pagination span.active {
+    background-color: var(--soft) !important;
+    border: 1px solid var(--soft) !important;
+  }
+
+  textarea:is([name="input"], [name="output"]) {
+    color: var(--text) !important;
+    overflow: auto !important;
+  }
+
+  /* Firefox */
+  textarea:is([name="input"], [name="output"]) {
+    scrollbar-width: thin;
+    scrollbar-color: var(--soft) var(--border); /* thumb, track */
+  }
+
+  /* Chrome / Edge / Safari */
+  textarea:is([name="input"], [name="output"])::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  textarea:is([name="input"], [name="output"])::-webkit-scrollbar-track {
+    background: var(--border);
+  }
+
+  textarea:is([name="input"], [name="output"])::-webkit-scrollbar-thumb {
+    background: var(--soft);
+    border: 2px solid var(--border);
+    border-radius: var(--r-xl);
+  }
+
+  textarea:is([name="input"], [name="output"])::-webkit-scrollbar-thumb:hover {
+    background: var(--soft-hover);
+  }
+
+  /* ===== Problem statement ===== */
+
+  .problem-statement :is(.test-example-line-even, .test-example-line-odd) {
+    padding-left: 0.25em;
+  }
+
+  .problem-statement .test-example-line-even {
+    background-color: var(--bg-control) !important;
+  }
+
+  .problem-statement .test-example-line-odd {
+    background-color: var(--bg-field) !important;
+  }
+
+  .problem-statement
+    :is(.test-example-line-even, .test-example-line-odd)[style^="b"] {
+    background-color: var(--bg-sample-hl) !important;
+  }
+
+  .problem-statement .sample-tests pre {
+    background-color: transparent !important;
+    padding: 0 !important;
+  }
+
+  .problem-statement .sample-tests .input {
+    margin-bottom: 8px !important;
+  }
+
+  .problem-statement .sample-tests :is(.input, .output) {
+    overflow: hidden !important;
+  }
+
+  /* ===== Activity heatmap ===== */
+
+  rect.day {
+    rx: 1px !important;
+    ry: 1px !important;
+  }
+
+  rect.day[fill="#EBEDF0"] {
+    fill: var(--hm-0) !important;
+  }
+
+  rect.day[fill="#91DA9E"] {
+    fill: var(--hm-1) !important;
+  }
+
+  rect.day[fill="#40C463"] {
+    fill: var(--hm-2) !important;
+  }
+
+  rect.day[fill="#30A14E"] {
+    fill: var(--hm-3) !important;
+  }
+
+  rect.day[fill="#216E39"] {
+    fill: var(--hm-4) !important;
+  }
+
+  rect.day:not([fill="#EBEDF0"]) {
+    filter: var(--hm-filter);
+  }
+
+  /* ===== Source popup ===== */
+
+  .source-popup
+    :is(
+      pre[style="background-color: #eff0f1;"],
+      pre.input,
+      pre.output,
+      pre.checker,
+      pre.answer
+    ) {
+    background-color: var(--bg-code) !important;
+    border: none !important;
+    padding: 8px !important;
+  }
+
+  .source-popup .copier-small {
+    padding: 1px 2px !important;
+  }
+
+  .source-popup .copier-small:hover {
+    color: var(--bg-raised) !important;
+    background-color: var(--text) !important;
+  }
+
+  /* ===== Radius scale ===== */
+
+  textarea#terms,
+  div#editor,
+  textarea:is([name="input"], [name="output"]),
+  .markItUpEditor,
+  .markItUpContainer,
+  .problem-statement .sample-tests :is(.input, .output),
+  .comment-table,
+  .pagination span.active,
+  .source-popup .copier-small,
+  td a {
+    border-radius: var(--r-sm) !important;
+  }
+
+  input[name="submittedProblemCode"],
+  span.filter input,
+  input#tabSizeInput,
+  .setting-value input {
+    border-radius: var(--r-sm) !important;
+  }
+
+  & body img,
+  & body table.bordertable,
+  div.title-photo > div:first-child,
+  .source-popup
+    :is(
+      pre[style="background-color: #eff0f1;"],
+      pre.input,
+      pre.output,
+      pre.checker,
+      pre.answer
+    ) {
+    border-radius: var(--r-md) !important;
+  }
+
+  #pageContent > div[style*="margin-bottom:2em;"],
+  div#pageContent > div[style="margin-top:0;"],
+  div#pageContent > div[style="margin-top:0em;"] > div[style*="margin-top:"],
+  ._catalogNode {
+    border-radius: var(--r-lg) !important;
+  }
+
+  .sidebox,
+  .problemindexholder,
+  & body .roundbox .tag-box {
+    border-radius: var(--r-xl) !important;
+  }
+
+  /* ===== Prettyprint ===== */
+
+  @media screen {
+    /* prettyprint + lstlisting share one palette */
+    :is(.prettyprint, .lstlisting) {
+      & .pln {
+        color: var(--pp-pln) !important;
+      }
+      & :is(.str, .atv) {
+        color: var(--pp-str) !important;
+      }
+      & :is(.kwd, .tag) {
+        color: var(--pp-kwd) !important;
+      }
+      & .com {
+        color: var(--pp-com) !important;
+        font-style: italic;
+      }
+      & .typ {
+        color: var(--pp-typ) !important;
+      }
+      & .lit {
+        color: var(--pp-lit) !important;
+      }
+      & :is(.pun, .opn, .clo) {
+        color: var(--pp-pun) !important;
+      }
+      & :is(.atn, .var) {
+        color: var(--pp-atn) !important;
+      }
+      & .dec {
+        color: var(--pp-dec) !important;
+      }
+      & .fun {
+        color: var(--pp-fun) !important;
+      }
+      & :is(.str, .atv, .kwd, .tag, .com, .typ) {
+        font-weight: normal !important;
+      }
     }
-    & :is(.str, .atv) {
-      color: var(--pp-str) !important;
-    }
-    & :is(.kwd, .tag) {
-      color: var(--pp-kwd) !important;
-    }
-    & .com {
-      color: var(--pp-com) !important;
-      font-style: italic;
-    }
-    & .typ {
-      color: var(--pp-typ) !important;
-    }
-    & .lit {
-      color: var(--pp-lit) !important;
-    }
-    & :is(.pun, .opn, .clo) {
-      color: var(--pp-pun) !important;
-    }
-    & :is(.atn, .var) {
-      color: var(--pp-atn) !important;
-    }
-    & .dec {
-      color: var(--pp-dec) !important;
-    }
-    & .fun {
-      color: var(--pp-fun) !important;
-    }
-    & :is(.str, .atv, .kwd, .tag, .com, .typ) {
-      font-weight: normal !important;
+
+    /* code block frame */
+    pre.prettyprint {
+      background: var(--pp-bg) !important;
+      border-color: var(--pp-border) !important;
     }
   }
 
-  /* code block frame */
-  pre.prettyprint {
-    background: var(--pp-bg) !important;
-    border-color: var(--pp-border) !important;
+  /* ===== Ace "chrome" theme ===== */
+
+  /* surface + gutter */
+  .ace-chrome {
+    background-color: var(--ace-bg) !important;
+    color: var(--ace-text) !important;
   }
-}
+  .ace-chrome .ace_gutter {
+    background: var(--ace-gutter-bg) !important;
+    color: var(--ace-gutter-text) !important;
+    border: 0 !important;
+  }
+  .ace_gutter-cell {
+    color: var(--ace-gutter-cell) !important;
+  }
+  .ace-chrome .ace_gutter-active-line {
+    background-color: var(--ace-gutter-active-bg) !important;
+    color: var(--ace-gutter-active-text) !important;
+  }
+  .ace-chrome .ace_cursor {
+    color: var(--ace-cursor) !important;
+  }
+  .ace-chrome .ace_invisible {
+    color: var(--ace-invisible) !important;
+  }
+  .ace-chrome .ace_print-margin {
+    background: var(--ace-print-margin) !important;
+  }
 
-/* ===== Ace "chrome" theme ===== */
+  /* layers / highlights */
+  .ace-chrome .ace_marker-layer .ace_selection {
+    background: var(--ace-selection) !important;
+  }
+  .ace-chrome .ace_marker-layer .ace_active-line {
+    background: var(--ace-active-line) !important;
+  }
+  .ace-chrome .ace_marker-layer .ace_selected-word {
+    background: var(--ace-selected-word) !important;
+    border: 1px solid transparent !important;
+  }
+  .ace-chrome .ace_marker-layer .ace_bracket {
+    background: var(--ace-bracket-bg) !important;
+    border: 1px solid var(--ace-bracket-border) !important;
+  }
+  .ace-chrome .ace_marker-layer .ace_step {
+    background: var(--ace-step) !important;
+  }
+  .ace-chrome .ace_marker-layer .ace_stack {
+    background: var(--ace-stack) !important;
+  }
+  .ace-chrome .ace_indent-guide {
+    background: none !important;
+    box-shadow: inset -1px 0 0 var(--ace-indent-guide);
+  }
+  .ace-chrome .ace_fold {
+    background-color: var(--ace-fold) !important;
+    border-color: var(--ace-fold-border) !important;
+  }
 
-/* surface + gutter */
-.ace-chrome {
-  background-color: var(--ace-bg) !important;
-  color: var(--ace-text) !important;
-}
-.ace-chrome .ace_gutter {
-  background: var(--ace-gutter-bg) !important;
-  color: var(--ace-gutter-text) !important;
-  border: 0 !important;
-}
-.ace_gutter-cell {
-  color: var(--ace-gutter-cell) !important;
-}
-.ace-chrome .ace_gutter-active-line {
-  background-color: var(--ace-gutter-active-bg) !important;
-  color: var(--ace-gutter-active-text) !important;
-}
-.ace-chrome .ace_cursor {
-  color: var(--ace-cursor) !important;
-}
-.ace-chrome .ace_invisible {
-  color: var(--ace-invisible) !important;
-}
-.ace-chrome .ace_print-margin {
-  background: var(--ace-print-margin) !important;
-}
+  /* tokens */
+  /* control keywords, #include / #define */
+  .ace-chrome .ace_keyword,
+  .ace-chrome .ace_meta.ace_preprocessor {
+    color: var(--ace-keyword) !important;
+  }
 
-/* layers / highlights */
-.ace-chrome .ace_marker-layer .ace_selection {
-  background: var(--ace-selection) !important;
-}
-.ace-chrome .ace_marker-layer .ace_active-line {
-  background: var(--ace-active-line) !important;
-}
-.ace-chrome .ace_marker-layer .ace_selected-word {
-  background: var(--ace-selected-word) !important;
-  border: 1px solid transparent !important;
-}
-.ace-chrome .ace_marker-layer .ace_bracket {
-  background: var(--ace-bracket-bg) !important;
-  border: 1px solid var(--ace-bracket-border) !important;
-}
-.ace-chrome .ace_marker-layer .ace_step {
-  background: var(--ace-step) !important;
-}
-.ace-chrome .ace_marker-layer .ace_stack {
-  background: var(--ace-stack) !important;
-}
-.ace-chrome .ace_indent-guide {
-  background: none !important;
-  box-shadow: inset -1px 0 0 var(--ace-indent-guide);
-}
-.ace-chrome .ace_fold {
-  background-color: var(--ace-fold) !important;
-  border-color: var(--ace-fold-border) !important;
-}
+  .ace-chrome .ace_list {
+    color: var(--ace-list) !important;
+  }
 
-/* tokens */
-/* control keywords, #include / #define */
-.ace-chrome .ace_keyword,
-.ace-chrome .ace_meta.ace_preprocessor {
-  color: var(--ace-keyword) !important;
-}
+  /* int, long, const, static, class, template, this, <html tags> */
+  .ace-chrome .ace_storage,
+  .ace-chrome .ace_meta.ace_tag,
+  .ace-chrome .ace_variable.ace_language,
+  .ace-chrome .ace_constant.ace_language {
+    color: var(--ace-storage) !important;
+  }
 
-.ace-chrome .ace_list {
-  color: var(--ace-list) !important;
-}
+  .ace-chrome .ace_heading {
+    color: var(--ace-heading) !important;
+    font-weight: bold;
+  }
 
-/* int, long, const, static, class, template, this, <html tags> */
-.ace-chrome .ace_storage,
-.ace-chrome .ace_meta.ace_tag,
-.ace-chrome .ace_variable.ace_language,
-.ace-chrome .ace_constant.ace_language {
-  color: var(--ace-storage) !important;
-}
+  /* symbol operators (+ == << ...) */
+  .ace-chrome .ace_keyword.ace_operator {
+    color: var(--ace-operator) !important;
+  }
 
-.ace-chrome .ace_heading {
-  color: var(--ace-heading) !important;
-  font-weight: bold;
-}
+  /* strings, <bits/stdc++.h> include paths */
+  .ace-chrome .ace_string,
+  .ace-chrome .ace_constant.ace_other {
+    color: var(--ace-string) !important;
+  }
+  .ace-chrome .ace_string.ace_regex {
+    color: var(--ace-regex) !important;
+  }
+  .ace-chrome .ace_constant.ace_language.ace_escape,
+  .ace-chrome .ace_constant.ace_character.ace_escape,
+  .ace-chrome .ace_constant.ace_escape {
+    color: var(--ace-escape) !important;
+  }
 
-/* symbol operators (+ == << ...) */
-.ace-chrome .ace_keyword.ace_operator {
-  color: var(--ace-operator) !important;
-}
+  /* comments */
+  .ace-chrome .ace_comment,
+  .ace-chrome .ace_comment.ace_doc,
+  .ace-chrome .ace_comment.ace_doc.ace_tag {
+    color: var(--ace-comment) !important;
+  }
 
-/* strings, <bits/stdc++.h> include paths */
-.ace-chrome .ace_string,
-.ace-chrome .ace_constant.ace_other {
-  color: var(--ace-string) !important;
-}
-.ace-chrome .ace_string.ace_regex {
-  color: var(--ace-regex) !important;
-}
-.ace-chrome .ace_constant.ace_language.ace_escape,
-.ace-chrome .ace_constant.ace_character.ace_escape,
-.ace-chrome .ace_constant.ace_escape {
-  color: var(--ace-escape) !important;
-}
+  /* numbers */
+  .ace-chrome .ace_constant.ace_numeric {
+    color: var(--ace-numeric) !important;
+  }
 
-/* comments */
-.ace-chrome .ace_comment,
-.ace-chrome .ace_comment.ace_doc,
-.ace-chrome .ace_comment.ace_doc.ace_tag {
-  color: var(--ace-comment) !important;
-}
+  /* functions */
+  .ace-chrome .ace_entity.ace_name.ace_function,
+  .ace-chrome .ace_support.ace_function {
+    color: var(--ace-function) !important;
+  }
 
-/* numbers */
-.ace-chrome .ace_constant.ace_numeric {
-  color: var(--ace-numeric) !important;
-}
+  /* types / classes */
+  .ace-chrome .ace_support.ace_type,
+  .ace-chrome .ace_support.ace_class,
+  .ace-chrome .ace_entity.ace_name.ace_type {
+    color: var(--ace-type) !important;
+  }
 
-/* functions */
-.ace-chrome .ace_entity.ace_name.ace_function,
-.ace-chrome .ace_support.ace_function {
-  color: var(--ace-function) !important;
-}
+  /* variables */
+  .ace-chrome .ace_variable {
+    color: var(--ace-variable) !important;
+  }
 
-/* types / classes */
-.ace-chrome .ace_support.ace_type,
-.ace-chrome .ace_support.ace_class,
-.ace-chrome .ace_entity.ace_name.ace_type {
-  color: var(--ace-type) !important;
-}
+  /* library / built-in constants */
+  .ace-chrome .ace_constant.ace_library,
+  .ace-chrome .ace_constant.ace_buildin,
+  .ace-chrome .ace_support.ace_constant {
+    color: var(--ace-library) !important;
+  }
 
-/* variables */
-.ace-chrome .ace_variable {
-  color: var(--ace-variable) !important;
-}
+  .ace-chrome .ace_xml-pe {
+    color: var(--ace-xml-pe) !important;
+  }
 
-/* library / built-in constants */
-.ace-chrome .ace_constant.ace_library,
-.ace-chrome .ace_constant.ace_buildin,
-.ace-chrome .ace_support.ace_constant {
-  color: var(--ace-library) !important;
-}
+  .ace-chrome .ace_invalid {
+    background-color: transparent !important;
+    color: var(--ace-invalid) !important;
+    text-decoration: underline wavy var(--ace-invalid);
+  }
 
-.ace-chrome .ace_xml-pe {
-  color: var(--ace-xml-pe) !important;
-}
-
-.ace-chrome .ace_invalid {
-  background-color: transparent !important;
-  color: var(--ace-invalid) !important;
-  text-decoration: underline wavy var(--ace-invalid);
-}
-
-/* ======================================================================
-   ASSETS (all themes)
+  /* ======================================================================
+   ASSETS (every theme except light)
    ====================================================================== */
 
-.second-level-menu-list li.backLava {
-  background: url("https://res.cloudinary.com/mt8ekld4/image/upload/v1791866712/lava-right-dark.webp")
-    no-repeat top right !important;
-}
+  .second-level-menu-list li.backLava {
+    background: var(--lava-right) no-repeat top right !important;
+  }
 
-.second-level-menu-list li.backLava .leftLava {
-  background: url("https://res.cloudinary.com/mt8ekld4/image/upload/v1791866712/lava-left-dark.webp")
-    no-repeat top left !important;
-}
+  .second-level-menu-list li.backLava .leftLava {
+    background: var(--lava-left) no-repeat top left !important;
+  }
 
-.header-bell__img {
-  background-image: url("https://res.cloudinary.com/mt8ekld4/image/upload/v1792255333/bell_inactive-20x20-111111-bright.webp") !important;
-}
+  .header-bell__img {
+    background-image: var(--bell) !important;
+  }
 
-img:is([alt="Codeforces"], [alt="Telegram"]) {
-  visibility: hidden !important;
-  opacity: 0 !important;
-}
+  /* hidden until the content script swaps in the themed logo
+   (the script puts the site's own logo back for light, where this rule is off) */
+  img:is([alt="Codeforces"], [alt="Telegram"]) {
+    visibility: hidden !important;
+    opacity: 0 !important;
+  }
 
-/* ======================================================================
+  /* ======================================================================
    DARK-ONLY EXTRAS
-   Brightness dimming, not wanted on the light pink theme.
+   Brightness dimming, not wanted on the light pink theme ("love").
    ====================================================================== */
 
-:root:not([data-theme="pink"]) canvas {
-  filter: brightness(0.88);
-}
+  &:not([data-theme="love"]) canvas {
+    filter: brightness(0.88);
+  }
 
-/* send message inner box */
-:root:not([data-theme="pink"]) div.wysiwyg iframe {
-  filter: brightness(0.9);
-}
+  /* send message inner box */
+  &:not([data-theme="love"]) div.wysiwyg iframe {
+    filter: brightness(0.9);
+  }
+} /* end of :root:not([data-theme="light"]) wrapper */

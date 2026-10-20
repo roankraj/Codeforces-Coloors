@@ -1,7 +1,14 @@
 let cfReplaced = false;
 let teleReplaced = false;
-
 let focusModeChanges = false;
+
+const cfLogos = {
+  dark: "https://res.cloudinary.com/mt8ekld4/image/upload/v1791866063/output_image.webp",
+  love: "https://res.cloudinary.com/mt8ekld4/image/upload/v1792477573/codeforces-logo-love.webp",
+  blue: "https://res.cloudinary.com/mt8ekld4/image/upload/v1792477560/codeforces-logo-blue.webp",
+  light:
+    "https://codeforces.com/codeforces.org/s/69489/images/codeforces-logo-with-telegram-555x130.png",
+};
 
 function toggleFocus(focus) {
   const main = document.querySelector("html body .content-with-sidebar");
@@ -9,7 +16,7 @@ function toggleFocus(focus) {
 
   if (focus) {
     if (main) {
-      main.style.setProperty("margin", "1em 11em", "important");
+      main.style.setProperty("margin", "1em 11.625em", "important");
     }
     if (sidebar) {
       sidebar.style.setProperty("opacity", "0", "important");
@@ -33,10 +40,14 @@ const observer = new MutationObserver((mutations, obs) => {
       cfLogo &&
       cfLogo.src.includes("codeforces-logo-with-telegram-555x130.png")
     ) {
-      cfLogo.src =
-        "https://res.cloudinary.com/mt8ekld4/image/upload/v1791866063/output_image.webp";
-      cfLogo.style.setProperty("visibility", "visible", "important");
-      cfLogo.style.setProperty("opacity", "1", "important");
+      chrome.storage.local.get(["theme"], function (result) {
+        const theme = result.theme || "dark";
+
+        cfLogo.src = cfLogos[theme] || cfLogos.dark;
+
+        cfLogo.style.setProperty("visibility", "visible", "important");
+        cfLogo.style.setProperty("opacity", "1", "important");
+      });
       cfReplaced = true;
     }
   }
@@ -45,7 +56,7 @@ const observer = new MutationObserver((mutations, obs) => {
     const teleLogo = document.querySelector('img[alt="Telegram"]');
     if (teleLogo && teleLogo.src.includes("telegram-100x100.png")) {
       teleLogo.src =
-        "https://res.cloudinary.com/mt8ekld4/image/upload/v1791795490/telegram-100x100-dark.webp";
+        "https://res.cloudinary.com/mt8ekld4/image/upload/v1792477395/tele-trans-100.png";
       teleLogo.style.setProperty("visibility", "visible", "important");
       teleLogo.style.setProperty("opacity", "1", "important");
       teleReplaced = true;
@@ -102,9 +113,18 @@ observer.observe(document.documentElement, {
 
 chrome.storage.onChanged.addListener(function (changes, storageArea) {
   if (storageArea === "local" && changes.theme) {
-    const newValue = changes.theme.newValue || "dark";
+    let newValue = changes.theme.newValue || "dark";
+
+    if (newValue === "device") {
+      const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+
+      newValue = isDark ? "dark" : "light";
+    }
 
     document.documentElement.setAttribute("data-theme", newValue);
+
+    const cfLogo = document.querySelector('img[alt="Codeforces"]');
+    if (cfLogo) cfLogo.src = cfLogos[newValue] || cfLogos.dark;
   }
 
   if (storageArea === "local" && changes.focus) {

@@ -20,5 +20,17 @@
       "js": ["content/content.js"],
       "run_at": "document_start"
     }
-  ]
+  ],
+  "commands": {
+    "toggle-focus-mode": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+F",
+        "mac": "Command+Shift+F"
+      },
+      "description": "Toggle Focus Mode"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
 }
