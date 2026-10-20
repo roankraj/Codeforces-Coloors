@@ -576,7 +576,9 @@
   & body .comments label.show-archived *,
   .userbox input,
   div.popup .content,
-  .drafts-entry-body {
+  .drafts-entry-body,
+  body > p,
+  body > ul > li {
     color: var(--text) !important;
   }
 
@@ -695,6 +697,10 @@
 
   .SumoSelect > .CaptionCont > span.placeholder {
     color: var(--text) !important;
+  }
+
+  body > ul > li > a:not(.rated-user) {
+    text-decoration: underline !important;
   }
 
   /* ===== Borders ===== */
