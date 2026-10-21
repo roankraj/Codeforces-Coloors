@@ -3,13 +3,12 @@ let teleReplaced = false;
 let focusModeChanges = false;
 
 const cfLogos = {
-  dark: "https://res.cloudinary.com/mt8ekld4/image/upload/v1791866063/output_image.webp",
-  love: "https://res.cloudinary.com/mt8ekld4/image/upload/v1792477573/codeforces-logo-love.webp",
-  blue: "https://res.cloudinary.com/mt8ekld4/image/upload/v1792477560/codeforces-logo-blue.webp",
+  dark: chrome.runtime.getURL("img/cf/codeforces-logo-dark.webp"),
+  love: chrome.runtime.getURL("img/cf/codeforces-logo-love.webp"),
+  blue: chrome.runtime.getURL("img/cf/codeforces-logo-blue.webp"),
   light:
     "https://codeforces.com/codeforces.org/s/69489/images/codeforces-logo-with-telegram-555x130.png",
-  black:
-    "https://res.cloudinary.com/mt8ekld4/image/upload/v1792491999/codeforces-logo-black.webp",
+  black: chrome.runtime.getURL("img/cf/codeforces-logo-black.webp"),
 };
 
 function toggleFocus(focus) {
@@ -65,8 +64,8 @@ const observer = new MutationObserver((mutations, obs) => {
   if (!teleReplaced) {
     const teleLogo = document.querySelector('img[alt="Telegram"]');
     if (teleLogo && teleLogo.src.includes("telegram-100x100.png")) {
-      teleLogo.src =
-        "https://res.cloudinary.com/mt8ekld4/image/upload/v1792477395/tele-trans-100.png";
+      teleLogo.src = chrome.runtime.getURL("img/tele/tele-trans-100.png");
+
       teleLogo.style.setProperty("visibility", "visible", "important");
       teleLogo.style.setProperty("opacity", "1", "important");
       teleReplaced = true;

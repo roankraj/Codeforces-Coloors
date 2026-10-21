@@ -143,9 +143,9 @@
   --ace-invalid: #f44747;
 
   /* secondary images */
-  --lava-right: url("https://res.cloudinary.com/mt8ekld4/image/upload/v1791866712/lava-right-dark.webp");
-  --lava-left: url("https://res.cloudinary.com/mt8ekld4/image/upload/v1791866712/lava-left-dark.webp");
-  --bell: url("https://res.cloudinary.com/mt8ekld4/image/upload/v1792254829/bell_inactive-20x20-dark.webp");
+  --lava-right: url("chrome-extension://__MSG_@@extension_id__/img/lava/lava-right-dark.webp");
+  --lava-left: url("chrome-extension://__MSG_@@extension_id__/img/lava/lava-left-dark.webp");
+  --bell: url("chrome-extension://__MSG_@@extension_id__/img/bell/bell_inactive-20x20-dark.webp");
 }
 
 /* ======================================================================
@@ -260,9 +260,9 @@
   --ace-invalid: #f44747;
 
   /* secondary images */
-  --lava-right: url("https://res.cloudinary.com/mt8ekld4/image/upload/v1791866712/lava-right-dark.webp");
-  --lava-left: url("https://res.cloudinary.com/mt8ekld4/image/upload/v1791866712/lava-left-dark.webp");
-  --bell: url("https://res.cloudinary.com/mt8ekld4/image/upload/v1792254829/bell_inactive-20x20-dark.webp");
+  --lava-right: url("chrome-extension://__MSG_@@extension_id__/img/lava/lava-right-dark.webp");
+  --lava-left: url("chrome-extension://__MSG_@@extension_id__/img/lava/lava-left-dark.webp");
+  --bell: url("chrome-extension://__MSG_@@extension_id__/img/bell/bell_inactive-20x20-dark.webp");
 }
 
 /* ======================================================================
@@ -494,9 +494,9 @@
   --ace-invalid: #ff6b81;
 
   /* secondary images */
-  --lava-right: url("https://res.cloudinary.com/mt8ekld4/image/upload/v1791866712/lava-right-dark.webp");
-  --lava-left: url("https://res.cloudinary.com/mt8ekld4/image/upload/v1791866712/lava-left-dark.webp");
-  --bell: url("https://res.cloudinary.com/mt8ekld4/image/upload/v1792254829/bell_inactive-20x20-dark.webp");
+  --lava-right: url("chrome-extension://__MSG_@@extension_id__/img/lava/lava-right-dark.webp");
+  --lava-left: url("chrome-extension://__MSG_@@extension_id__/img/lava/lava-left-dark.webp");
+  --bell: url("chrome-extension://__MSG_@@extension_id__/img/bell/bell_inactive-20x20-dark.webp");
 }
 
 /* ======================================================================
