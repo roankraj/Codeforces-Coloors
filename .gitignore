@@ -64,3 +64,5 @@ pip-log.txt
 *.log
 *.sqlite
 *.sqlite3
+
+*.zip
