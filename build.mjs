@@ -14,12 +14,18 @@ await esbuild.build({
   ],
   outbase: "src",
   outdir: "dist",
+  bundle: true,
+  format: "iife",
+  loader: {
+    ".png": "dataurl",
+    ".webp": "dataurl",
+    ".svg": "dataurl",
+  },
   minify: true,
 });
 
 await cp("src/manifest.json", "dist/manifest.json");
 await cp("src/icons", "dist/icons", { recursive: true });
-await cp("src/img", "dist/img", { recursive: true }); // added
 await cp("src/popup/popup.html", "dist/popup/popup.html");
 
 console.log("Build complete!");

@@ -1,15 +1,4 @@
-let cfReplaced = false;
-let teleReplaced = false;
 let focusModeChanges = false;
-
-const cfLogos = {
-  dark: chrome.runtime.getURL("img/cf/codeforces-logo-dark.webp"),
-  love: chrome.runtime.getURL("img/cf/codeforces-logo-love.webp"),
-  blue: chrome.runtime.getURL("img/cf/codeforces-logo-blue.webp"),
-  light:
-    "https://codeforces.com/codeforces.org/s/69489/images/codeforces-logo-with-telegram-555x130.png",
-  black: chrome.runtime.getURL("img/cf/codeforces-logo-black.webp"),
-};
 
 function toggleFocus(focus) {
   const main = document.querySelector("html body .content-with-sidebar");
@@ -35,48 +24,6 @@ function toggleFocus(focus) {
 }
 
 const observer = new MutationObserver((mutations, obs) => {
-  if (!cfReplaced) {
-    const cfLogo = document.querySelector('img[alt="Codeforces"]');
-    if (
-      cfLogo &&
-      cfLogo.src.includes("codeforces-logo-with-telegram-555x130.png")
-    ) {
-      chrome.storage.local.get(["theme"], function (result) {
-        let theme = result.theme || "dark";
-
-        if (theme === "device") {
-          const isDark = window.matchMedia(
-            "(prefers-color-scheme: dark)",
-          ).matches;
-
-          theme = isDark ? "dark" : "light";
-        }
-
-        cfLogo.src = cfLogos[theme] || cfLogos.dark;
-
-        cfLogo.style.setProperty("visibility", "visible", "important");
-        cfLogo.style.setProperty("opacity", "1", "important");
-      });
-      cfReplaced = true;
-    }
-  }
-
-  if (!teleReplaced) {
-    const teleLogo = document.querySelector('img[alt="Telegram"]');
-    if (teleLogo && teleLogo.src.includes("telegram-100x100.png")) {
-      teleLogo.src = chrome.runtime.getURL("img/tele/tele-trans-100.png");
-
-      teleLogo.style.setProperty("visibility", "visible", "important");
-      teleLogo.style.setProperty("opacity", "1", "important");
-      teleReplaced = true;
-    }
-  }
-
-  const blogHeadingAll = document.querySelectorAll('a[href*="/blog/"]');
-  blogHeadingAll.forEach((blogHeading) => {
-    blogHeading.style.setProperty("color", "var(--soft)", "important");
-  });
-
   const pageContent = document.getElementById("pageContent");
 
   if (pageContent) {
@@ -110,7 +57,7 @@ const observer = new MutationObserver((mutations, obs) => {
     }
   }
 
-  if (cfReplaced && teleReplaced && pageContent && focusModeChanges) {
+  if (pageContent && focusModeChanges) {
     obs.disconnect();
   }
 });
@@ -131,9 +78,6 @@ chrome.storage.onChanged.addListener(function (changes, storageArea) {
     }
 
     document.documentElement.setAttribute("data-theme", newValue);
-
-    const cfLogo = document.querySelector('img[alt="Codeforces"]');
-    if (cfLogo) cfLogo.src = cfLogos[newValue] || cfLogos.dark;
   }
 
   if (storageArea === "local" && changes.focus) {

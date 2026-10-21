@@ -28,6 +28,12 @@
   --r-md: 4px;
   --r-lg: 6px;
   --r-xl: 8px;
+
+  --tele-logo: url("../img/tele/tele-trans-100.png");
+
+  --img-lava-right-dark: url("../img/lava/lava-right-dark.webp");
+  --img-lava-left-dark: url("../img/lava/lava-left-dark.webp");
+  --img-bell-dark: url("../img/bell/bell_inactive-20x20-dark.webp");
 }
 
 /* ======================================================================
@@ -143,9 +149,11 @@
   --ace-invalid: #f44747;
 
   /* secondary images */
-  --lava-right: url("chrome-extension://__MSG_@@extension_id__/img/lava/lava-right-dark.webp");
-  --lava-left: url("chrome-extension://__MSG_@@extension_id__/img/lava/lava-left-dark.webp");
-  --bell: url("chrome-extension://__MSG_@@extension_id__/img/bell/bell_inactive-20x20-dark.webp");
+  --lava-right: var(--img-lava-right-dark);
+  --lava-left: var(--img-lava-left-dark);
+  --bell: var(--img-bell-dark);
+
+  --cf-logo: url("../img/cf/codeforces-logo-dark.webp");
 }
 
 /* ======================================================================
@@ -260,9 +268,11 @@
   --ace-invalid: #f44747;
 
   /* secondary images */
-  --lava-right: url("chrome-extension://__MSG_@@extension_id__/img/lava/lava-right-dark.webp");
-  --lava-left: url("chrome-extension://__MSG_@@extension_id__/img/lava/lava-left-dark.webp");
-  --bell: url("chrome-extension://__MSG_@@extension_id__/img/bell/bell_inactive-20x20-dark.webp");
+  --lava-right: var(--img-lava-right-dark);
+  --lava-left: var(--img-lava-left-dark);
+  --bell: var(--img-bell-dark);
+
+  --cf-logo: url("../img/cf/codeforces-logo-black.webp");
 }
 
 /* ======================================================================
@@ -380,6 +390,8 @@
   --lava-right: url("https://codeforces.com/codeforces.org/s/69489/images/menu/lava-right.png");
   --lava-left: url("https://codeforces.com/codeforces.org/s/69489/images/menu/lava-left.png");
   --bell: url("https://codeforces.com/codeforces.org/s/69489/images/icons/bell_inactive-20x20.png");
+
+  --cf-logo: url("../img/cf/codeforces-logo-love.webp");
 }
 
 /* ======================================================================
@@ -494,9 +506,11 @@
   --ace-invalid: #ff6b81;
 
   /* secondary images */
-  --lava-right: url("chrome-extension://__MSG_@@extension_id__/img/lava/lava-right-dark.webp");
-  --lava-left: url("chrome-extension://__MSG_@@extension_id__/img/lava/lava-left-dark.webp");
-  --bell: url("chrome-extension://__MSG_@@extension_id__/img/bell/bell_inactive-20x20-dark.webp");
+  --lava-right: var(--img-lava-right-dark);
+  --lava-left: var(--img-lava-left-dark);
+  --bell: var(--img-bell-dark);
+
+  --cf-logo: url("../img/cf/codeforces-logo-blue.webp");
 }
 
 /* ======================================================================
@@ -701,6 +715,10 @@
 
   body > ul > li > a:not(.rated-user) {
     text-decoration: underline !important;
+  }
+
+  a[href*="/blog/"] {
+    -webkit-text-fill-color: var(--soft) !important;
   }
 
   /* ===== Borders ===== */
@@ -1428,11 +1446,12 @@
     background-image: var(--bell) !important;
   }
 
-  /* hidden until the content script swaps in the themed logo
-   (the script puts the site's own logo back for light, where this rule is off) */
-  img:is([alt="Codeforces"], [alt="Telegram"]) {
-    visibility: hidden !important;
-    opacity: 0 !important;
+  img[alt="Codeforces"] {
+    content: var(--cf-logo) !important;
+  }
+
+  img[alt="Telegram"] {
+    content: var(--tele-logo) !important;
   }
 
   /* ======================================================================
