@@ -25,8 +25,6 @@ git clone <your-repo-url>
 cd cf-extension
 ```
 
-Or just download the ZIP from GitHub and extract it.
-
 ### 2. Pick a folder
 
 `manifest.json` lives in `src/`, so you can either:
