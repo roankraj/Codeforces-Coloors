@@ -1466,3 +1466,25 @@
     filter: brightness(0.9);
   }
 } /* end of :root:not([data-theme="light"]) wrapper */
+
+html[data-focus-mode="true"] {
+  #sidebar {
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  div.content-with-sidebar {
+    margin: 1em 11.625em !important;
+  }
+}
+
+/* html[data-focus-mode="false"] {
+  #sidebar {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  div.content-with-sidebar {
+    margin: 1em 22em 1em 1em !important;
+  }
+} */

@@ -1,9 +1,10 @@
 chrome.commands.onCommand.addListener(async function (command) {
   if (command === "toggle-focus-mode") {
     chrome.storage.local.get("focus", async function (result) {
-      const focus = result.focus || false;
+      const focus = result.focus || "false";
+      const newFocus = focus === "true" ? "false" : "true";
 
-      await chrome.storage.local.set({ focus: !focus });
+      await chrome.storage.local.set({ focus: newFocus });
     });
   }
 });

@@ -51,9 +51,9 @@
   // Set the initial settings
   chrome.storage.local.get(["theme", "focus"], function (result) {
     const theme = result.theme || "dark";
-    const focus = result.focus || false;
+    const focus = result.focus || "false";
 
-    focusMode.checked = focus;
+    focusMode.checked = focus == "true";
 
     select(
       opts.find(function (opt) {
@@ -89,9 +89,17 @@
   // Utilites
   focusMode.addEventListener("change", async function () {
     if (focusMode.checked) {
-      await chrome.storage.local.set({ focus: true });
+      await chrome.storage.local.set({ focus: "true" });
     } else {
-      await chrome.storage.local.set({ focus: false });
+      await chrome.storage.local.set({ focus: "false" });
+    }
+  });
+
+  chrome.storage.onChanged.addListener(function (changes, storageArea) {
+    if (storageArea === "local" && changes.focus) {
+      const focus = changes.focus.newValue || "false";
+
+      if (focusMode) focusMode.checked = focus === "true";
     }
   });
 })();
