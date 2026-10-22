@@ -387,9 +387,6 @@
   --ace-invalid: #a30012;
 
   /* secondary images */
-  --lava-right: url("https://codeforces.com/codeforces.org/s/69489/images/menu/lava-right.png");
-  --lava-left: url("https://codeforces.com/codeforces.org/s/69489/images/menu/lava-left.png");
-  --bell: url("https://codeforces.com/codeforces.org/s/69489/images/icons/bell_inactive-20x20.png");
 
   --cf-logo: url("../img/cf/codeforces-logo-love.webp");
 }
@@ -1435,15 +1432,15 @@
    ASSETS (every theme except light)
    ====================================================================== */
 
-  .second-level-menu-list li.backLava {
+  &:not([data-theme="love"]) .second-level-menu-list li.backLava {
     background: var(--lava-right) no-repeat top right !important;
   }
 
-  .second-level-menu-list li.backLava .leftLava {
+  &:not([data-theme="love"]) .second-level-menu-list li.backLava .leftLava {
     background: var(--lava-left) no-repeat top left !important;
   }
 
-  .header-bell__img {
+  &:not([data-theme="love"]) .header-bell__img {
     background-image: var(--bell) !important;
   }
 
