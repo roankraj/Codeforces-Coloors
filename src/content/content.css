@@ -591,6 +591,12 @@
     background-color: transparent !important;
   }
 
+  .lang-chooser
+    div[style*="background-color: #EAF4FF; padding: 1px 3px; font-size: 1.1rem; margin-top: 3px"] {
+    border-radius: var(--r-sm);
+    background-color: var(--bg-raised) !important;
+  }
+
   /* ===== Text ===== */
 
   div,
@@ -741,7 +747,6 @@
   }
 
   /* ===== Borders ===== */
-
   .roundbox,
   .sidebar-menu ul li,
   .problemindexholder div.ttypography table td,
