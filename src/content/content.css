@@ -1,10 +1,19 @@
-/* Codeforces themes: dark + love + blue + light
-   Switch with <html data-theme="dark" | "love" | "blue" | "light">.
+/* Codeforces themes: dark + black + love + blue + light
+   Switch with <html data-theme="dark" | "black" | "love" (called pink on popup only) | "blue" | "light">.
    With no data-theme set, dark is used.
+
+   The attribute is set by content.js from the saved popup choice. Two names
+   differ from the popup: "love" is shown as "Pink", and the popup's "Device"
+   option never reaches this file, because content.js turns it into "dark" or
+   "light" (from the OS setting) before setting data-theme.
 
    "light" is the site's own look: every rule below the theme blocks lives inside
    one  :root:not([data-theme="light"]) { ... }  wrapper, so with light nothing
    from this file applies and Codeforces' original CSS shows through.
+
+   Focus Mode is separate from the themes. It is switched by
+   <html data-focus-mode="true">, and its rules sit at the very end of the file,
+   outside the wrapper, so it also works with light.
 
    Every theme-dependent value is a variable defined in the theme blocks below.
    Everything after them is theme-agnostic and only reads variables.
@@ -13,7 +22,8 @@
      --pp-*     prettyprint / lstlisting
      --ace-*    Ace editor
      --hm-*     activity heatmap
-   Colors are hex only (8-digit hex where alpha is needed).
+   Colors are hex (8-digit hex where alpha is needed), apart from a few hsl()
+   values in the black and blue themes.
    Uses CSS nesting (Chrome 120+, Firefox 117+, Safari 17.2+).
    Inside the wrapper, a leading `&` means <html>; every other selector is
    automatically a descendant of it. */
@@ -29,8 +39,10 @@
   --r-lg: 6px;
   --r-xl: 8px;
 
+  /* Telegram logo, same for every theme */
   --tele-logo: url("../img/tele/tele-trans-100.png");
 
+  /* dark-colored images, reused by dark, black and blue (see "secondary images") */
   --img-lava-right-dark: url("../img/lava/lava-right-dark.webp");
   --img-lava-left-dark: url("../img/lava/lava-left-dark.webp");
   --img-bell-dark: url("../img/bell/bell_inactive-20x20-dark.webp");
@@ -158,6 +170,8 @@
 
 /* ======================================================================
    THEME: BLACK
+   Same as dark, but with a pure black page, a darker raised surface and
+   dimmer borders. Only the surface and border values change.
    ====================================================================== */
 
 :root[data-theme="black"] {
@@ -276,7 +290,9 @@
 }
 
 /* ======================================================================
-   THEME: LOVE
+   THEME: LOVE (shown as "Pink" in the popup)
+   The only light-surfaced theme in this file. Text and the code colors are
+   dark, and every pairing is meant to stay readable on pink.
    ====================================================================== */
 
 :root[data-theme="love"] {
@@ -386,7 +402,9 @@
   --ace-xml-pe: #654555;
   --ace-invalid: #a30012;
 
-  /* secondary images */
+  /* secondary images:
+     --lava-* and --bell are intentionally not set. Love keeps the site's own
+     menu lava and bell images (see the ASSETS section), so only the logo is set. */
 
   --cf-logo: url("../img/cf/codeforces-logo-love.webp");
 }
@@ -512,6 +530,9 @@
 
 /* ======================================================================
    THEME: LIGHT
+   Almost nothing is set here on purpose: the wrapper below switches every rule
+   off for this theme, so the site's own CSS shows through. Only --soft is
+   defined.
    ====================================================================== */
 
 :root[data-theme="light"] {
@@ -1430,6 +1451,8 @@
 
   /* ======================================================================
    ASSETS (every theme except light)
+   Logos are swapped for all of them. The menu lava and the bell are swapped
+   for every theme except love, which keeps the site's originals.
    ====================================================================== */
 
   &:not([data-theme="love"]) .second-level-menu-list li.backLava {
@@ -1467,6 +1490,14 @@
   }
 } /* end of :root:not([data-theme="light"]) wrapper */
 
+/* ======================================================================
+   FOCUS MODE
+   Toggled by content.js through <html data-focus-mode="true">.
+   Not part of the theme wrapper, so it applies to every theme including light.
+   The sidebar is hidden but keeps its space (opacity, not display), and the
+   content gets equal side margins to take up the room.
+   ====================================================================== */
+
 html[data-focus-mode="true"] {
   #sidebar {
     opacity: 0 !important;
@@ -1478,7 +1509,9 @@ html[data-focus-mode="true"] {
   }
 }
 
-/* html[data-focus-mode="false"] {
+/* Unused: turning Focus Mode off just removes the rules above, so this
+   explicit "off" block isn't needed. Kept for reference.
+html[data-focus-mode="false"] {
   #sidebar {
     opacity: 1 !important;
     pointer-events: auto !important;
