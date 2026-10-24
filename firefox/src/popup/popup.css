@@ -197,3 +197,9 @@ body {
   padding: 0 6px;
   font-size: 11px;
 }
+
+@media (pointer: coarse) {
+  .shortcut {
+    display: none;
+  }
+}

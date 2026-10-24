@@ -34,6 +34,8 @@ cd cf-extension
 bun install
 ```
 
+You need [Bun](https://bun.sh) 1.2 or newer. See [Build from source](#-build-from-source-firefox-add-on) for install instructions.
+
 ### 2. Chrome, Edge, Brave and other Chromium browsers
 
 #### Pick a folder
@@ -88,33 +90,103 @@ Rebuild with `bun firefox/build.mjs`, click **Reload** on the add-on's card in `
 
 #### Making a zip
 
-`manifest.json` has to be at the root of the zip, so zip the contents of `dist/`, not the folder itself.
+`manifest.json` has to be at the root of the zip, and the paths inside must use forward slashes (`icons/icon-16.png`, not `icons\icon-16.png`). Windows PowerShell's `Compress-Archive` writes backslashes, and Firefox rejects those with "Invalid file name in archive", so use one of these instead.
 
-Windows (PowerShell):
-
-```powershell
-bun firefox/build.mjs
-cd firefox\dist
-tar -a -c -f ..\extension.zip (Get-ChildItem -Name)
-cd ..\..
-```
-
-macOS / Linux:
+Any OS with Python 3 (run from the `cf-extension` folder after building):
 
 ```bash
-bun firefox/build.mjs
+python -c "import os, zipfile; root='firefox/dist'; out='firefox/extension.zip'; z=zipfile.ZipFile(out,'w',zipfile.ZIP_DEFLATED); [z.write(os.path.join(dp,f),os.path.relpath(os.path.join(dp,f),root).replace(os.sep,'/')) for dp,ds,fs in os.walk(root) for f in fs]; z.close()"
+```
+
+macOS / Linux, if you have `zip`:
+
+```bash
 cd firefox/dist && zip -r ../extension.zip . && cd ../..
 ```
 
-The zip ends up at `firefox/extension.zip`. Check it with `tar -tf firefox/extension.zip`: you should see `manifest.json` and paths like `icons/icon-16.png`, with no `dist/` in front.
+The zip ends up at `firefox/extension.zip`. To check it, run `python -m zipfile -l firefox/extension.zip`: you should see `manifest.json` and paths like `icons/icon-16.png`, with no `dist/` in front.
 
 ### 4. Try it out
 
 Open [codeforces.com](https://codeforces.com), refresh the page once, click the extension icon and pick a theme. 🎉
 
+## 📦 Build from source (Firefox add-on)
+
+This section is for add-on reviewers, and for anyone who wants to check that the published Firefox add-on matches this source. The add-on's JavaScript and CSS are minified by the build, so the readable source is in `firefox/src/`, and the steps below recreate the submitted add-on from it.
+
+### What is and isn't generated
+
+- **Hand-written source:** everything in `firefox/src/` (`manifest.json`, `background.js`, `content/`, `popup/`, `icons/`, `img/`).
+- **Generated:** everything in `firefox/dist/`. It is created by the build and never edited by hand.
+- **No third-party libraries are bundled into the add-on.** The only dependency is [esbuild](https://esbuild.github.io), which is used at build time to bundle and minify.
+
+### Requirements
+
+| Item             | Requirement                                                                                                                                 |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Operating system | Windows 10 or later, macOS, or Linux. The build only uses Bun and esbuild, which run on all three. The submitted build was made on Windows. |
+| Build tool       | [Bun](https://bun.sh) **1.2 or newer**. Node.js and npm are not needed for the build.                                                       |
+| Dependencies     | `esbuild`, installed from `package.json`. The exact version is pinned in `bun.lock`.                                                        |
+| Disk and network | About 100 MB of free disk space. Network access is only needed to download Bun and the packages in step 2.                                  |
+
+Install Bun if you don't have it, then check the version with `bun --version`:
+
+```bash
+# macOS / Linux
+curl -fsSL https://bun.sh/install | bash
+
+# Windows (PowerShell)
+powershell -c "irm bun.sh/install.ps1 | iex"
+
+# or, anywhere you already have npm
+npm install -g bun
+```
+
+### Steps
+
+1. **Unpack the source** and open a terminal in the folder that contains `package.json` and `firefox/`.
+
+2. **Install the dependencies.** This installs the exact esbuild version recorded in `bun.lock`:
+
+   ```bash
+   bun install --frozen-lockfile
+   ```
+
+3. **Run the build script:**
+
+   ```bash
+   bun firefox/build.mjs
+   ```
+
+   It prints `Firefox build complete!` and takes a few seconds.
+
+4. **Find the result in `firefox/dist/`.** This folder is the add-on:
+
+   ```
+   firefox/dist/
+   ├── manifest.json
+   ├── background.js
+   ├── content/content.js, content.css
+   ├── popup/popup.html, popup.js, popup.css
+   └── icons/icon-16.png, icon-32.png, icon-64.png, icon-128.png
+   ```
+
+5. **Package it (optional).** The contents of `firefox/dist/` (not the folder itself) zipped with `manifest.json` at the root are what gets submitted. See [Making a zip](#making-a-zip).
+
+### What the build script does
+
+`firefox/build.mjs` runs these steps, in order:
+
+1. Deletes and recreates `firefox/dist/`.
+2. Runs esbuild on `content/content.js`, `content/content.css`, `popup/popup.js`, `popup/popup.css` and `background.js` with `bundle`, `format: "iife"` and `minify` turned on. The images (`.png`, `.webp`, `.svg`) referenced from the CSS are inlined as base64 data URLs, so the `img/` folder isn't copied to `dist/`.
+3. Copies `manifest.json`, the `icons/` folder and `popup/popup.html` into `firefox/dist/` unchanged.
+
+Everything it needs is read from `firefox/src/`, and it resolves its paths from its own location, so it works from any directory.
+
 ## 🛠️ Troubleshooting
 
 - **"Manifest file is missing or unreadable" (Chrome) or "manifest.json not found" (Firefox):** you picked the wrong folder. Select the one that has `manifest.json` right inside it. For a Firefox zip, `manifest.json` must be at the top level of the archive.
+- **Firefox: "Invalid file name in archive":** the zip uses backslashes in its paths, usually because it was made with PowerShell's `Compress-Archive`. Make it with one of the commands in [Making a zip](#making-a-zip).
 - **Theme isn't showing up:** refresh the Codeforces tab.
 - **Shortcut does nothing:** something else might be using it. Change it at `chrome://extensions/shortcuts` in Chrome, or in Firefox at `about:addons` → the gear icon → **Manage Extension Shortcuts**.
 - **Device theme doesn't follow my OS:** it only checks when the page loads or when you change the setting. Refresh the tab after switching your OS theme. In Firefox, turning on `privacy.resistFingerprinting` makes the browser always report a light theme.
@@ -137,8 +209,10 @@ cf-extension/
 │   ├── src/              # same layout as src/, with a Firefox manifest
 │   ├── build.mjs         # builds firefox/src into firefox/dist
 │   └── dist/             # generated, don't edit
-├── build.mjs
-└── package.json
+├── build.mjs             # builds src into dist (Chromium)
+├── package.json
+├── bun.lock              # pins the exact dependency versions
+└── LICENSE
 ```
 
 The two versions have the same files. The differences are in `manifest.json` (Firefox needs an add-on ID and runs the background script as an event page instead of a service worker) and in the scripts, which use the `browser` API in Firefox and `chrome` in Chromium.
