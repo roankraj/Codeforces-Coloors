@@ -1,0 +1,1528 @@
+/* Codeforces themes: dark + black + love + blue + light
+   Switch with <html data-theme="dark" | "black" | "love" (called pink on popup only) | "blue" | "light">.
+   With no data-theme set, dark is used.
+
+   The attribute is set by content.js from the saved popup choice. Two names
+   differ from the popup: "love" is shown as "Pink", and the popup's "Device"
+   option never reaches this file, because content.js turns it into "dark" or
+   "light" (from the OS setting) before setting data-theme.
+
+   "light" is the site's own look: every rule below the theme blocks lives inside
+   one  :root:not([data-theme="light"]) { ... }  wrapper, so with light nothing
+   from this file applies and Codeforces' original CSS shows through.
+
+   Focus Mode is separate from the themes. It is switched by
+   <html data-focus-mode="true">, and its rules sit at the very end of the file,
+   outside the wrapper, so it also works with light.
+
+   Every theme-dependent value is a variable defined in the theme blocks below.
+   Everything after them is theme-agnostic and only reads variables.
+   Variable families are deliberately kept separate and never reference each other:
+     --*        UI surfaces, text, links, borders
+     --pp-*     prettyprint / lstlisting
+     --ace-*    Ace editor
+     --hm-*     activity heatmap
+   Colors are hex (8-digit hex where alpha is needed), apart from a few hsl()
+   values in the black and blue themes.
+   Uses CSS nesting (Chrome 120+, Firefox 117+, Safari 17.2+).
+   Inside the wrapper, a leading `&` means <html>; every other selector is
+   automatically a descendant of it. */
+
+/* ======================================================================
+   SHARED (not themed)
+   ====================================================================== */
+
+:root {
+  /* radius scale */
+  --r-sm: 2px;
+  --r-md: 4px;
+  --r-lg: 6px;
+  --r-xl: 8px;
+
+  /* Telegram logo, same for every theme */
+  --tele-logo: url("../img/tele/tele-trans-100.png");
+
+  /* dark-colored images, reused by dark, black and blue (see "secondary images") */
+  --img-lava-right-dark: url("../img/lava/lava-right-dark.webp");
+  --img-lava-left-dark: url("../img/lava/lava-left-dark.webp");
+  --img-bell-dark: url("../img/bell/bell_inactive-20x20-dark.webp");
+}
+
+/* ======================================================================
+   THEME: DARK (default)
+   ====================================================================== */
+
+:root,
+:root[data-theme="dark"] {
+  /* ----- surfaces ----- */
+  --bg: #111111; /* page */
+  --bg-raised: #1e1e1e; /* boxes, cards, tables, popups */
+  --bg-control: #252525; /* buttons, selects, even sample lines */
+  --bg-field: #444444; /* text fields, hover fill, odd sample lines */
+  --bg-muted: #292929; /* spoilers */
+  --bg-editor: #242424; /* markItUp comment editor */
+  --bg-code: #181818; /* code blocks in source popup */
+  --bg-tt: #d5d5d5; /* inline .tt snippets */
+  --bg-sample-hl: #6b6b85; /* highlighted sample test line */
+  --bg-row-rejected: #403939; /* contest problem row */
+  --bg-row-accepted: #332d2d; /* contest problem row */
+  --bg-row-hl: #212426; /* highlighted datatable row */
+  --bg-row-hl-strong: #2c3033; /* highlighted status row */
+
+  /* ----- text ----- */
+  --text: #eeeeee;
+  --text-strong: #ffffff; /* problem statement, titles */
+  --text-muted: #999999; /* countdown, small print in sideboxes */
+  --text-notice: #222222; /* notice box under the page */
+  --text-tt: #111111; /* on --bg-tt */
+  --text-alert: #111111; /* on .alert-warning */
+  --text-pagination-active: #111111; /* on the active page chip */
+
+  /* ----- links ----- */
+  --soft: #cccccc; /* links, focus ring, active pagination, scrollbar thumb */
+  --soft-hover: #d5d5d5;
+  --link-red: #ededed;
+  --link-reply: #cccccc; /* reply / info links in comments */
+
+  /* ----- borders ----- */
+  --border: #444444;
+  --border-control: #343434;
+  --dash-width: 2px; /* dashed comment outline */
+
+  /* ----- accents ----- */
+  --accent: #5183f0; /* captions, contest phase */
+  --accent-link: #558afd; /* language chooser */
+  --accent-heading: #4d7ce4; /* topic titles */
+  --accent-active: #4875d7; /* current tab, contest links, verdicts */
+  --accent-soft: #80a8ff; /* highlighted comment outline */
+
+  /* ----- activity heatmap ----- */
+  --hm-0: #292929;
+  --hm-1: #91da9e;
+  --hm-2: #40c463;
+  --hm-3: #30a14e;
+  --hm-4: #216e39;
+  --hm-filter: brightness(0.9); /* applied to non-empty cells */
+
+  /* ----- prettyprint / lstlisting ----- */
+  --pp-bg: #292929;
+  --pp-border: #555555;
+  --pp-pln: #e4e4e4; /* plain text         11.4:1 */
+  --pp-str: #eba17c; /* strings, attr val   6.9:1 */
+  --pp-kwd: #7cb8f7; /* keywords, tags      7.0:1 */
+  --pp-com: #8fc17a; /* comments            7.0:1 */
+  --pp-typ: #5fdcc4; /* types               8.7:1 */
+  --pp-lit: #c8e3b2; /* literals           10.5:1 */
+  --pp-pun: #b8c0c8; /* punctuation         7.9:1 */
+  --pp-atn: #a8e2ff; /* attr names, vars   10.4:1 */
+  --pp-dec: #dc92d6; /* declarations        6.3:1 */
+  --pp-fun: #f2e3a2; /* function names     11.3:1 */
+
+  /* ----- ace: surface + gutter ----- */
+  --ace-bg: #1e1e1e;
+  --ace-text: #d4d4d4;
+  --ace-gutter-bg: #1e1e1e;
+  --ace-gutter-text: #858585;
+  --ace-gutter-cell: #cccccc; /* line numbers (.ace_gutter-cell) */
+  --ace-gutter-active-bg: #282828; /* same as active line so it reads as one band */
+  --ace-gutter-active-text: #c6c6c6;
+  --ace-cursor: #aeafad;
+  --ace-invisible: #404040;
+  --ace-print-margin: #333333;
+
+  /* ----- ace: layers ----- */
+  --ace-selection: #264f78;
+  --ace-active-line: #282828;
+  --ace-selected-word: #add6ff26;
+  --ace-bracket-bg: #0064001a;
+  --ace-bracket-border: #888888;
+  --ace-step: #5a5a00;
+  --ace-stack: #2f5f1a;
+  --ace-indent-guide: #404040;
+  --ace-fold: #4b4b4b;
+  --ace-fold-border: #1e1e1e;
+
+  /* ----- ace: tokens (VS Code Dark+) ----- */
+  --ace-keyword: #c586c0; /* control keywords, #include / #define */
+  --ace-list: #c586c0;
+  --ace-storage: #569cd6; /* int, const, class, this, html tags */
+  --ace-heading: #569cd6;
+  --ace-operator: #d4d4d4;
+  --ace-string: #ce9178; /* strings, include paths */
+  --ace-regex: #d16969;
+  --ace-escape: #d7ba7d;
+  --ace-comment: #6a9955;
+  --ace-numeric: #b5cea8;
+  --ace-function: #dcdcaa;
+  --ace-type: #4ec9b0;
+  --ace-variable: #9cdcfe;
+  --ace-library: #4fc1ff; /* built-in constants */
+  --ace-xml-pe: #9a9a9a;
+  --ace-invalid: #f44747;
+
+  /* secondary images */
+  --lava-right: var(--img-lava-right-dark);
+  --lava-left: var(--img-lava-left-dark);
+  --bell: var(--img-bell-dark);
+
+  --cf-logo: url("../img/cf/codeforces-logo-dark.webp");
+}
+
+/* ======================================================================
+   THEME: BLACK
+   Same as dark, but with a pure black page, a darker raised surface and
+   dimmer borders. Only the surface and border values change.
+   ====================================================================== */
+
+:root[data-theme="black"] {
+  /* ----- surfaces ----- */
+  --bg: #000; /* page */
+  --bg-raised: #151515; /* boxes, cards, tables, popups */
+  --bg-control: #222; /* buttons, selects, even sample lines */
+  --bg-field: #3d3d3d; /* text fields, hover fill, odd sample lines */
+  --bg-muted: #292929; /* spoilers */
+  --bg-editor: #242424; /* markItUp comment editor */
+  --bg-code: #181818; /* code blocks in source popup */
+  --bg-tt: #d5d5d5; /* inline .tt snippets */
+  --bg-sample-hl: hsl(240, 18%, 41.4%); /* highlighted sample test line */
+  --bg-row-rejected: #403939; /* contest problem row */
+  --bg-row-accepted: #332d2d; /* contest problem row */
+  --bg-row-hl: #212426; /* highlighted datatable row */
+  --bg-row-hl-strong: #2c3033; /* highlighted status row */
+
+  /* ----- text ----- */
+  --text: #eeeeee;
+  --text-strong: #ffffff; /* problem statement, titles */
+  --text-muted: #999999; /* countdown, small print in sideboxes */
+  --text-notice: #222222; /* notice box under the page */
+  --text-tt: #111111; /* on --bg-tt */
+  --text-alert: #111111; /* on .alert-warning */
+  --text-pagination-active: #111111; /* on the active page chip */
+
+  /* ----- links ----- */
+  --soft: #cccccc; /* links, focus ring, active pagination, scrollbar thumb */
+  --soft-hover: #d5d5d5;
+  --link-red: #ededed;
+  --link-reply: #cccccc; /* reply / info links in comments */
+
+  /* ----- borders ----- */
+  --border: #323232;
+  --border-control: #333;
+  --dash-width: 2px; /* dashed comment outline */
+
+  /* ----- accents ----- */
+  --accent: #5183f0; /* captions, contest phase */
+  --accent-link: #558afd; /* language chooser */
+  --accent-heading: #4d7ce4; /* topic titles */
+  --accent-active: #4875d7; /* current tab, contest links, verdicts */
+  --accent-soft: #80a8ff; /* highlighted comment outline */
+
+  /* ----- activity heatmap ----- */
+  --hm-0: #292929;
+  --hm-1: #91da9e;
+  --hm-2: #40c463;
+  --hm-3: #30a14e;
+  --hm-4: #216e39;
+  --hm-filter: brightness(0.9); /* applied to non-empty cells */
+
+  /* ----- prettyprint / lstlisting ----- */
+  --pp-bg: #292929;
+  --pp-border: #555555;
+  --pp-pln: #e4e4e4; /* plain text         11.4:1 */
+  --pp-str: #eba17c; /* strings, attr val   6.9:1 */
+  --pp-kwd: #7cb8f7; /* keywords, tags      7.0:1 */
+  --pp-com: #8fc17a; /* comments            7.0:1 */
+  --pp-typ: #5fdcc4; /* types               8.7:1 */
+  --pp-lit: #c8e3b2; /* literals           10.5:1 */
+  --pp-pun: #b8c0c8; /* punctuation         7.9:1 */
+  --pp-atn: #a8e2ff; /* attr names, vars   10.4:1 */
+  --pp-dec: #dc92d6; /* declarations        6.3:1 */
+  --pp-fun: #f2e3a2; /* function names     11.3:1 */
+
+  /* ----- ace: surface + gutter ----- */
+  --ace-bg: #1e1e1e;
+  --ace-text: #d4d4d4;
+  --ace-gutter-bg: #1e1e1e;
+  --ace-gutter-text: #858585;
+  --ace-gutter-cell: #cccccc; /* line numbers (.ace_gutter-cell) */
+  --ace-gutter-active-bg: #282828; /* same as active line so it reads as one band */
+  --ace-gutter-active-text: #c6c6c6;
+  --ace-cursor: #aeafad;
+  --ace-invisible: #404040;
+  --ace-print-margin: #333333;
+
+  /* ----- ace: layers ----- */
+  --ace-selection: #264f78;
+  --ace-active-line: #282828;
+  --ace-selected-word: #add6ff26;
+  --ace-bracket-bg: #0064001a;
+  --ace-bracket-border: #888888;
+  --ace-step: #5a5a00;
+  --ace-stack: #2f5f1a;
+  --ace-indent-guide: #404040;
+  --ace-fold: #4b4b4b;
+  --ace-fold-border: #1e1e1e;
+
+  /* ----- ace: tokens (VS Code Dark+) ----- */
+  --ace-keyword: #c586c0; /* control keywords, #include / #define */
+  --ace-list: #c586c0;
+  --ace-storage: #569cd6; /* int, const, class, this, html tags */
+  --ace-heading: #569cd6;
+  --ace-operator: #d4d4d4;
+  --ace-string: #ce9178; /* strings, include paths */
+  --ace-regex: #d16969;
+  --ace-escape: #d7ba7d;
+  --ace-comment: #6a9955;
+  --ace-numeric: #b5cea8;
+  --ace-function: #dcdcaa;
+  --ace-type: #4ec9b0;
+  --ace-variable: #9cdcfe;
+  --ace-library: #4fc1ff; /* built-in constants */
+  --ace-xml-pe: #9a9a9a;
+  --ace-invalid: #f44747;
+
+  /* secondary images */
+  --lava-right: var(--img-lava-right-dark);
+  --lava-left: var(--img-lava-left-dark);
+  --bell: var(--img-bell-dark);
+
+  --cf-logo: url("../img/cf/codeforces-logo-black.webp");
+}
+
+/* ======================================================================
+   THEME: LOVE (shown as "Pink" in the popup)
+   The only light-surfaced theme in this file. Text and the code colors are
+   dark, and every pairing is meant to stay readable on pink.
+   ====================================================================== */
+
+:root[data-theme="love"] {
+  /* ----- surfaces ----- */
+  --bg: #fffffc;
+  --bg-raised: #f4bbd3;
+  --bg-control: #ff758f;
+  --bg-field: #ff8fa3;
+  --bg-muted: #f7f5ff;
+  --bg-editor: #ffc4d6;
+  --bg-code: #ffa6c1;
+  --bg-tt: #d5d5d5;
+  --bg-sample-hl: #e2e3bf;
+  --bg-row-rejected: #ffc6ff;
+  --bg-row-accepted: #bdb2ff;
+  --bg-row-hl: #dcf2f9;
+  --bg-row-hl-strong: #e7c6ff;
+
+  /* ----- text ----- */
+  --text: #472836;
+  --text-strong: #2c0703;
+  --text-muted: #555555;
+  --text-notice: #d6d2d2;
+  --text-tt: #472836;
+  --text-alert: #222;
+  --text-pagination-active: #f1e4f3;
+
+  /* ----- links ----- */
+  --soft: #472836;
+  --soft-hover: #111111;
+  --link-red: #f1e4f3;
+  --link-reply: #402a2c;
+
+  /* ----- borders ----- */
+  --border: #402a2c;
+  --border-control: #38040e;
+  --dash-width: 1px;
+
+  /* ----- accents ----- */
+  --accent: #3f37c9;
+  --accent-link: #7209b7;
+  --accent-heading: #3f37c9;
+  --accent-active: #4875d7;
+  --accent-soft: #80a8ff;
+
+  /* ----- activity heatmap ----- */
+  --hm-0: #fff0f3;
+  --hm-1: #ff99aa;
+  --hm-2: #ff6680;
+  --hm-3: #f52e5f;
+  --hm-4: #a90f3a;
+  --hm-filter: none;
+
+  /* ----- prettyprint / lstlisting ----- */
+  --pp-bg: #fff1f7;
+  --pp-border: #555555;
+  --pp-pln: #472836; /* plain text         11.8:1 on --pp-bg */
+  --pp-str: #9d0537; /* strings, attr val   7.6:1 */
+  --pp-kwd: #3e35c7; /* keywords, tags      7.6:1 */
+  --pp-com: #654555; /* comments            7.6:1 */
+  --pp-typ: #00566a; /* types               7.6:1 */
+  --pp-lit: #005a36; /* literals            7.6:1 */
+  --pp-pun: #58394a; /* punctuation         9.1:1 */
+  --pp-atn: #2b3a67; /* attr names, vars   10.1:1 */
+  --pp-dec: #7209b7; /* declarations        7.9:1 */
+  --pp-fun: #724300; /* function names      7.6:1 */
+
+  /* ----- ace: surface + gutter ----- */
+  --ace-bg: #f4bbd3;
+  --ace-text: #472836;
+  --ace-gutter-bg: #f4bbd3;
+  --ace-gutter-text: #6f4058;
+  --ace-gutter-cell: #472836;
+  --ace-gutter-active-bg: #fce4ee;
+  --ace-gutter-active-text: #2c0703;
+  --ace-cursor: #aeafad;
+  --ace-invisible: #404040;
+  --ace-print-margin: #333333;
+
+  /* ----- ace: layers ----- */
+  --ace-selection: #264f7859;
+  --ace-active-line: #fce4ee;
+  --ace-selected-word: #add6ff26;
+  --ace-bracket-bg: #0064001a;
+  --ace-bracket-border: #888888;
+  --ace-step: #5a5a00;
+  --ace-stack: #2f5f1a;
+  --ace-indent-guide: #40404033;
+  --ace-fold: #4b4b4b;
+  --ace-fold-border: #f4bbd3;
+
+  /* ----- ace: tokens (Light+ / Latte, darkened for pink) ----- */
+  --ace-keyword: #7209b7;
+  --ace-list: #7209b7;
+  --ace-storage: #3e35c7;
+  --ace-heading: #3e35c7;
+  --ace-operator: #472836;
+  --ace-string: #9d0537;
+  --ace-regex: #8d1c75;
+  --ace-escape: #8d2f00;
+  --ace-comment: #654555;
+  --ace-numeric: #005a36;
+  --ace-function: #724300;
+  --ace-type: #00566a;
+  --ace-variable: #2b3a67;
+  --ace-library: #084c94;
+  --ace-xml-pe: #654555;
+  --ace-invalid: #a30012;
+
+  /* secondary images:
+     --lava-* and --bell are intentionally not set. Love keeps the site's own
+     menu lava and bell images (see the ASSETS section), so only the logo is set. */
+
+  --cf-logo: url("../img/cf/codeforces-logo-love.webp");
+}
+
+/* ======================================================================
+   THEME: BLUE
+   ====================================================================== */
+
+:root[data-theme="blue"] {
+  /* ----- surfaces ----- */
+  --bg: hsl(223, 45%, 8%);
+  --bg-raised: hsl(221, 40%, 13.5%);
+  --bg-control: #202b40;
+  --bg-field: #293750;
+  --bg-muted: #202a3c;
+  --bg-editor: #151d2c;
+  --bg-code: hsl(218, 41.8%, 10%);
+  --bg-tt: hsl(218, 100%, 94%);
+  --bg-sample-hl: hsl(218, 36.5%, 36.3%);
+  --bg-row-rejected: #203b38;
+  --bg-row-accepted: #382b3b;
+  --bg-row-hl: #1b2738;
+  --bg-row-hl-strong: hsl(217, 35%, 20%);
+
+  /* ----- text ----- */
+  --text: #eaeaea;
+  --text-strong: #fefefe;
+  --text-muted: #a6b4cc;
+  --text-notice: #101522;
+  --text-tt: #101522;
+  --text-alert: #101522;
+  --text-pagination-active: #101522;
+
+  /* ----- links ----- */
+  --soft: hsl(176, 100%, 71%);
+  --soft-hover: hsl(176, 100%, 100%);
+  --link-red: #eee;
+  --link-reply: #d5d5d5;
+
+  /* ----- borders ----- */
+  --border: #34435e;
+  --border-control: #3b4b67;
+  --dash-width: 2px;
+
+  /* ----- accents ----- */
+  --accent: #8ab4ff;
+  --accent-link: #75e0f0;
+  --accent-heading: #a7bfff;
+  --accent-active: #78aaff;
+  --accent-soft: #b8c4d9;
+
+  /* ----- activity heatmap ----- */
+  --hm-0: #222c40;
+  --hm-1: hsl(115, 54%, 69%);
+  --hm-2: hsl(115, 54%, 63.5%);
+  --hm-3: hsl(115, 54%, 52%);
+  --hm-4: hsl(115, 54%, 38%);
+  --hm-filter: brightness(0.85);
+
+  /* ----- prettyprint / lstlisting ----- */
+  --pp-bg: #151e2e;
+  --pp-border: #34435e;
+  --pp-pln: #e6edf8;
+  --pp-str: #ffb68d;
+  --pp-kwd: #8ab4ff;
+  --pp-com: #8bd5ca;
+  --pp-typ: #75e0f0;
+  --pp-lit: #e6d38b;
+  --pp-pun: #b9c9e8;
+  --pp-atn: #89ddff;
+  --pp-dec: #d6a6ff;
+  --pp-fun: #f2c6a0;
+
+  /* ----- ace: surface + gutter ----- */
+  --ace-bg: #151e2e;
+  --ace-text: #e6edf8;
+  --ace-gutter-bg: #151e2e;
+  --ace-gutter-text: #a6b4cc;
+  --ace-gutter-cell: #c0cee5;
+  --ace-gutter-active-bg: #263650;
+  --ace-gutter-active-text: #ffffff;
+  --ace-cursor: #75e0f0;
+  --ace-invisible: #596982;
+  --ace-print-margin: #34435e;
+
+  /* ----- ace: layers ----- */
+  --ace-selection: #344e78;
+  --ace-active-line: #263650;
+  --ace-selected-word: #8ab4ff33;
+  --ace-bracket-bg: #65d6a522;
+  --ace-bracket-border: #75e0f0;
+  --ace-step: #62571f;
+  --ace-stack: #254d48;
+  --ace-indent-guide: #34435e;
+  --ace-fold: #657797;
+  --ace-fold-border: #263650;
+
+  /* ----- ace: tokens ----- */
+  --ace-keyword: #c3a6ff;
+  --ace-list: #c3a6ff;
+  --ace-storage: #8ab4ff;
+  --ace-heading: #89ddff;
+  --ace-operator: #b9c9e8;
+  --ace-string: #ffb68d;
+  --ace-regex: #ff9eae;
+  --ace-escape: #e6d38b;
+  --ace-comment: #8bd5ca;
+  --ace-numeric: #a6da95;
+  --ace-function: #f2c6a0;
+  --ace-type: #75e0f0;
+  --ace-variable: #b9d1ff;
+  --ace-library: #89ddff;
+  --ace-xml-pe: #a6b4cc;
+  --ace-invalid: #ff6b81;
+
+  /* secondary images */
+  --lava-right: var(--img-lava-right-dark);
+  --lava-left: var(--img-lava-left-dark);
+  --bell: var(--img-bell-dark);
+
+  --cf-logo: url("../img/cf/codeforces-logo-blue.webp");
+}
+
+/* ======================================================================
+   THEME: LIGHT
+   Almost nothing is set here on purpose: the wrapper below switches every rule
+   off for this theme, so the site's own CSS shows through. Only --soft is
+   defined.
+   ====================================================================== */
+
+:root[data-theme="light"] {
+  --soft: #000;
+}
+
+/* ======================================================================
+   RULES (theme-agnostic, variables only)
+   Everything from here to the closing brace at the very end of the file is
+   inside the wrapper. A leading `&` means <html>.
+   ====================================================================== */
+
+:root:not([data-theme="light"]) {
+  /* ===== Backgrounds ===== */
+
+  &,
+  body,
+  .datatable,
+  .datatable .dark,
+  div:has(.llt),
+  div:has(.irt) {
+    background-color: var(--bg) !important;
+  }
+
+  .roundbox,
+  & body .roundbox .tag-box,
+  ._catalogNode,
+  .problemindexholder,
+  .sidebar-menu ul li,
+  th,
+  td,
+  div.popup .content,
+  .drafts-popup,
+  .SumoSelect > .optWrapper,
+  .comment-table.highlight-blue,
+  #pageContent > div[style*="margin-bottom:2em;"],
+  div#pageContent > div[style="margin-top:0;"],
+  div#pageContent > div[style="margin-top:0em;"] > div[style*="margin-top:"],
+  textarea:is([name="input"], [name="output"]) {
+    background-color: var(--bg-raised) !important;
+  }
+
+  & body .roundbox .dark,
+  .setting-value div p,
+  .setting-value input,
+  .drafts-entry-body,
+  .SumoSelect > .optWrapper > .options li.opt:hover {
+    background-color: var(--bg-field) !important;
+  }
+
+  .spoiler-content {
+    background-color: var(--bg-muted) !important;
+  }
+
+  .bottom-links {
+    background-color: transparent !important;
+  }
+
+  .lang-chooser
+    div[style*="background-color: #EAF4FF; padding: 1px 3px; font-size: 1.1rem; margin-top: 3px"] {
+    border-radius: var(--r-sm);
+    background-color: var(--bg-raised) !important;
+  }
+
+  /* ===== Text ===== */
+
+  div,
+  h1,
+  h2,
+  h3,
+  h4,
+  table,
+  .table-form,
+  ._EduCoursesViewPage_courses,
+  & body div.ttypography,
+  div.ttypography table,
+  div.ttypography thead th,
+  & body .comments label.show-archived,
+  & body .comments label.show-archived *,
+  .userbox input,
+  div.popup .content,
+  .drafts-entry-body,
+  body > p,
+  body > ul > li {
+    color: var(--text) !important;
+  }
+
+  /* problem-related text */
+  .title,
+  .problemindexholder div.section-title,
+  .problem-statement div p,
+  .problem-statement .test-example-line,
+  div.ttypography pre,
+  div.ttypography code,
+  & body div.ttypography .MathJax {
+    color: var(--text-strong) !important;
+  }
+
+  & body div.ttypography .MathJax {
+    font-weight: 200 !important;
+  }
+
+  & body .roundbox .dark .contest-state-regular,
+  ul li ._catalogNode ._catalogBlogEntry ._name i[class^="icon-"],
+  &
+    body
+    div#pageContent
+    div.second-level-menu
+    ul.second-level-menu-list
+    a[href^="/contest/"] {
+    color: var(--soft) !important;
+  }
+
+  .roundbox .caption,
+  .contest-state-phase {
+    color: var(--accent) !important;
+  }
+
+  & body .topic .title * {
+    font-size: 2.4rem !important;
+    color: var(--accent-heading) !important;
+  }
+
+  .lang-chooser div a {
+    color: var(--accent-link) !important;
+  }
+
+  div.ttypography .tt {
+    color: var(--text-tt) !important;
+    background-color: var(--bg-tt) !important;
+    border: none !important;
+  }
+
+  & body .comment-table .reply a,
+  & body .comment-table .info .item a {
+    color: var(--link-reply) !important;
+  }
+
+  div.alert-warning,
+  div.alert-error {
+    color: var(--text-alert) !important;
+  }
+
+  .pagination ul li span.active a {
+    color: var(--text-pagination-active) !important;
+  }
+
+  & body div[style="margin-top: 1em; text-align: left; font-size: 1.2rem;"] {
+    color: var(--text-notice) !important;
+  }
+
+  .roundbox.sidebox span.countdown,
+  .roundbox.sidebox div.smaller {
+    color: var(--text-muted) !important;
+  }
+
+  div#tooltip {
+    color: revert !important;
+  }
+
+  .comment-indent span {
+    opacity: 0.2 !important;
+  }
+
+  /* ===== Links ===== */
+
+  a:not(.rated-user) {
+    border-radius: var(--r-sm);
+    color: var(--soft) !important;
+    text-decoration: none !important;
+  }
+
+  a:focus-visible {
+    outline: 2px solid var(--soft) !important;
+    outline-offset: 1px;
+  }
+
+  & body a:not(:has(img)):hover {
+    filter: brightness(1.36) !important;
+  }
+
+  /* contest links, and the blue wrong-answer verdict on the submission page */
+  a[href^="/contest/"],
+  a[href^="/gym/"],
+  a[href$="/virtual"],
+  .verdict-rejected {
+    color: var(--accent-active) !important;
+  }
+
+  a.red-link {
+    color: var(--link-red) !important;
+  }
+
+  table.problems tr td a {
+    color: var(--text) !important;
+  }
+
+  li.current {
+    border-bottom: 3px solid var(--accent-active) !important;
+  }
+
+  .SumoSelect > .CaptionCont > span.placeholder {
+    color: var(--text) !important;
+  }
+
+  body > ul > li > a:not(.rated-user) {
+    text-decoration: underline !important;
+  }
+
+  a[href*="/blog/"] {
+    -webkit-text-fill-color: var(--soft) !important;
+  }
+
+  /* ===== Borders ===== */
+  .roundbox,
+  .sidebar-menu ul li,
+  .problemindexholder div.ttypography table td,
+  form._EduCourseEnrollPage_enroll table td,
+  form.customtest table td,
+  form.contestRegistration table td,
+  form.submit-form.submitFrameForm table td,
+  form#settings-form table td,
+  .send-talk-form table td,
+  .roundbox.sidebox div table :is(td, th),
+  .roundbox.sidebox .rtable tbody :is(th, td),
+  .comment-table table tr td,
+  table.comment-table :is(td, th),
+  #pageContent
+    > div[style*="margin-bottom:2em;"]:has(div[style*="margin:3em 1em;"])
+    .comment-table,
+  .spoiler-content,
+  .roundbox form table tbody td,
+  .roundbox form table tbody th,
+  div.bottom-links table tr td,
+  div.bottom-links table tr th {
+    border: none !important;
+  }
+
+  .menu-box,
+  .drafts-popup,
+  .SumoSelect > .optWrapper,
+  & body .roundbox .tag-box,
+  div.title-photo > div:first-child,
+  form._UserTalkFilterFrame_filterForm
+    table
+    tbody
+    tr:first-child
+    td:last-child {
+    border: 1px solid var(--border) !important;
+  }
+
+  & body .roundbox .dark {
+    border: 1px solid var(--bg-raised) !important;
+  }
+
+  .SumoSelect > .optWrapper > .options li.opt {
+    border-bottom: 1px solid var(--border) !important;
+  }
+
+  .content {
+    border-left: 4px solid var(--border) !important;
+  }
+
+  & body table.bordertable {
+    border: 1px solid transparent !important;
+  }
+
+  .comment-table {
+    padding: 8px !important;
+    border: var(--dash-width) dashed var(--soft) !important;
+  }
+
+  .comment-table.highlight-blue {
+    border: var(--dash-width) dashed var(--accent-soft) !important;
+  }
+
+  div._CatalogViewFrame_catalog > div._catalogNode,
+  .problemindexholder,
+  #pageContent > div[style*="margin-bottom:2em;"],
+  div#pageContent > div[style="margin-top:0;"] {
+    border: 1px solid var(--border-control);
+  }
+
+  /* ===== Cards & spacing ===== */
+
+  & body #sidebar {
+    padding-top: 16px !important;
+  }
+
+  .sidebox {
+    padding-top: 4px;
+    padding-bottom: 1px;
+  }
+
+  & body .roundbox .tag-box {
+    padding: 2px 6px;
+    margin-inline: -1px !important;
+  }
+
+  .problemindexholder {
+    margin-top: 1em;
+    padding: 0.125em 0.75em 0.75em;
+  }
+
+  ._catalogNode {
+    padding: 2px !important;
+    margin-bottom: 14px;
+  }
+
+  /* page-content wrappers */
+  #pageContent
+    > div[style*="margin-bottom:2em;"]:not(:has(div[style*="margin:3em 1em;"])),
+  div#pageContent > div[style="margin-top:0;"],
+  div#pageContent > div[style="margin-top:0em;"] > div[style*="margin-top:"] {
+    padding: 12px 12px 4px !important;
+  }
+
+  #pageContent
+    > div[style*="margin-bottom:2em;"]:has(div[style*="margin:3em 1em;"]) {
+    padding: 1px !important;
+  }
+
+  #pageContent > div[style="margin:3em 1em;"] {
+    margin: 2em 1em !important;
+
+    & table,
+    & table td {
+      border: none !important;
+    }
+    & table td,
+    & table:not([class]) {
+      padding: 1em !important;
+    }
+    & table tbody tr:first-child td:first-child {
+      border-top-left-radius: var(--r-lg);
+    }
+    & table tbody tr:first-child td:last-child {
+      border-top-right-radius: var(--r-lg);
+    }
+  }
+
+  div#pageContent
+    > div[style="margin-bottom:2em;"]
+    > div[style="margin:3em 1em;"] {
+    margin: 1em !important;
+  }
+
+  .shiftUp {
+    top: 0 !important;
+  }
+
+  /* ===== Tables ===== */
+
+  table {
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+  }
+
+  th,
+  td {
+    border: solid var(--border) !important;
+    border-width: 0 1px 1px 0 !important;
+  }
+
+  th {
+    border-top-width: 1px !important;
+  }
+
+  th:first-child,
+  td:first-child {
+    border-left-width: 1px !important;
+  }
+
+  th:first-child {
+    border-top-left-radius: var(--r-lg) !important;
+  }
+
+  th:last-child {
+    border-top-right-radius: var(--r-lg) !important;
+  }
+
+  tr:last-child td:first-child {
+    border-bottom-left-radius: var(--r-lg) !important;
+  }
+
+  tr:last-child td:last-child {
+    border-bottom-right-radius: var(--r-lg) !important;
+  }
+
+  /* login box */
+  div.roundbox[style="width: 30em;margin: 2em auto;"] {
+    padding: 0.5em 0.375em;
+    border-radius: var(--r-lg) !important;
+  }
+
+  .datatable td,
+  .datatable th {
+    padding: 10px !important;
+  }
+
+  .datatable :is(.lt, .rt, .lb, .rb, .irt, .ilt) {
+    background: none !important;
+  }
+
+  /* top corners of tables that start with a td row */
+  :is(
+      .problemindexholder div.ttypography,
+      form._EduCourseEnrollPage_enroll,
+      form.customtest,
+      form.submit-form.submitFrameForm
+    )
+    table
+    tr:first-child
+    td:first-child {
+    border-top-left-radius: var(--r-lg) !important;
+  }
+
+  :is(
+      .problemindexholder div.ttypography,
+      form._EduCourseEnrollPage_enroll,
+      form.customtest,
+      form.submit-form.submitFrameForm
+    )
+    table
+    tr:first-child
+    td:last-child,
+  .table-form tr:first-child td:last-child {
+    border-top-right-radius: var(--r-lg) !important;
+  }
+
+  /* form paddings */
+  :is(
+      form._EduCourseEnrollPage_enroll,
+      form.submit-form.submitFrameForm,
+      form.contestRegistration
+    )
+    table
+    tr:first-child
+    td {
+    padding-top: 1em !important;
+  }
+
+  :is(
+      form._EduCourseEnrollPage_enroll,
+      form.submit-form.submitFrameForm,
+      form.contestRegistration
+    )
+    table
+    tr:last-child
+    td {
+    padding-bottom: 1em !important;
+  }
+
+  :is(form._EduCourseEnrollPage_enroll, form.submit-form.submitFrameForm)
+    table
+    tr
+    td:last-child {
+    padding-right: 1em !important;
+  }
+
+  /* contest problems list */
+  & body table.problems .rejected-problem td.act {
+    background-color: var(--bg-row-rejected) !important;
+  }
+
+  & body table.problems .rejected-problem td.id {
+    border-left: 6px solid var(--bg-row-rejected) !important;
+  }
+
+  & body table.problems .accepted-problem td.act {
+    background-color: var(--bg-row-accepted) !important;
+  }
+
+  & body table.problems .accepted-problem td.id {
+    border-left: 6px solid var(--bg-row-accepted) !important;
+  }
+
+  /* the rgb() below is a selector matching the site's inline style, not a theme color */
+  & body .datatable table td[style="background-color: rgb(221, 238, 255);"] {
+    background-color: var(--bg-row-hl) !important;
+  }
+
+  & body table.status-frame-datatable tbody .highlighted-row td {
+    background-color: var(--bg-row-hl-strong) !important;
+  }
+
+  /* ===== Buttons & fields ===== */
+
+  input[type="submit"],
+  input[type="file"]::file-selector-button,
+  select {
+    background: var(--bg-control) !important;
+    border: 1px solid var(--border-control) !important;
+    cursor: pointer;
+    color: var(--text) !important;
+    padding: 0.375rem 0.75rem !important;
+    border-radius: var(--r-md);
+  }
+
+  input[type="submit"]:hover,
+  input[type="file"]::file-selector-button:hover,
+  select:hover {
+    background: var(--bg-field) !important;
+  }
+
+  input.search,
+  .handleBox.ac_input,
+  input:is([name="minDifficulty"], [name="maxDifficulty"]),
+  input._CatalogViewFrame_filter,
+  input#searchByNameOrIdQueryBox,
+  form#settings-form .table-form input:not(.submit),
+  input[name="submittedProblemCode"],
+  span.filter input,
+  input#tabSizeInput {
+    background-color: var(--bg-field) !important;
+    color: var(--text) !important;
+    border: 2px solid transparent !important;
+    border-radius: var(--r-md);
+  }
+
+  input.search,
+  .handleBox.ac_input,
+  input:is([name="minDifficulty"], [name="maxDifficulty"]),
+  input._CatalogViewFrame_filter,
+  input#searchByNameOrIdQueryBox {
+    font-size: small;
+  }
+
+  input:is([name="minDifficulty"], [name="maxDifficulty"]) {
+    padding: 1px;
+  }
+
+  input#searchByNameOrIdQueryBox {
+    border-width: 1px !important;
+  }
+
+  .setting-value div p,
+  .setting-value input {
+    border: 1px solid transparent !important;
+  }
+
+  .setting-value input {
+    color: var(--text) !important;
+    padding: 5px !important;
+  }
+
+  .markItUpEditor,
+  .markItUpContainer {
+    background-color: var(--bg-editor) !important;
+    color: var(--text) !important;
+  }
+
+  .pagination span.active {
+    background-color: var(--soft) !important;
+    border: 1px solid var(--soft) !important;
+  }
+
+  textarea:is([name="input"], [name="output"]) {
+    color: var(--text) !important;
+    overflow: auto !important;
+  }
+
+  /* Firefox */
+  textarea:is([name="input"], [name="output"]) {
+    scrollbar-width: thin;
+    scrollbar-color: var(--soft) var(--border); /* thumb, track */
+  }
+
+  /* Chrome / Edge / Safari */
+  textarea:is([name="input"], [name="output"])::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  textarea:is([name="input"], [name="output"])::-webkit-scrollbar-track {
+    background: var(--border);
+  }
+
+  textarea:is([name="input"], [name="output"])::-webkit-scrollbar-thumb {
+    background: var(--soft);
+    border: 2px solid var(--border);
+    border-radius: var(--r-xl);
+  }
+
+  textarea:is([name="input"], [name="output"])::-webkit-scrollbar-thumb:hover {
+    background: var(--soft-hover);
+  }
+
+  /* ===== Problem statement ===== */
+
+  .problem-statement :is(.test-example-line-even, .test-example-line-odd) {
+    padding-left: 0.25em;
+  }
+
+  .problem-statement .test-example-line-even {
+    background-color: var(--bg-control) !important;
+  }
+
+  .problem-statement .test-example-line-odd {
+    background-color: var(--bg-field) !important;
+  }
+
+  .problem-statement
+    :is(.test-example-line-even, .test-example-line-odd)[style^="b"] {
+    background-color: var(--bg-sample-hl) !important;
+  }
+
+  .problem-statement .sample-tests pre {
+    background-color: transparent !important;
+    padding: 0 !important;
+  }
+
+  .problem-statement .sample-tests .input {
+    margin-bottom: 8px !important;
+  }
+
+  .problem-statement .sample-tests :is(.input, .output) {
+    overflow: hidden !important;
+  }
+
+  /* ===== Activity heatmap ===== */
+
+  rect.day {
+    rx: 1px !important;
+    ry: 1px !important;
+  }
+
+  rect.day[fill="#EBEDF0"] {
+    fill: var(--hm-0) !important;
+  }
+
+  rect.day[fill="#91DA9E"] {
+    fill: var(--hm-1) !important;
+  }
+
+  rect.day[fill="#40C463"] {
+    fill: var(--hm-2) !important;
+  }
+
+  rect.day[fill="#30A14E"] {
+    fill: var(--hm-3) !important;
+  }
+
+  rect.day[fill="#216E39"] {
+    fill: var(--hm-4) !important;
+  }
+
+  rect.day:not([fill="#EBEDF0"]) {
+    filter: var(--hm-filter);
+  }
+
+  /* ===== Source popup ===== */
+
+  .source-popup
+    :is(
+      pre[style="background-color: #eff0f1;"],
+      pre.input,
+      pre.output,
+      pre.checker,
+      pre.answer
+    ) {
+    background-color: var(--bg-code) !important;
+    border: none !important;
+    padding: 8px !important;
+  }
+
+  .source-popup .copier-small {
+    padding: 1px 2px !important;
+  }
+
+  .source-popup .copier-small:hover {
+    color: var(--bg-raised) !important;
+    background-color: var(--text) !important;
+  }
+
+  /* ===== Radius scale ===== */
+
+  textarea#terms,
+  div#editor,
+  textarea:is([name="input"], [name="output"]),
+  .markItUpEditor,
+  .markItUpContainer,
+  .problem-statement .sample-tests :is(.input, .output),
+  .comment-table,
+  .pagination span.active,
+  .source-popup .copier-small,
+  td a {
+    border-radius: var(--r-sm) !important;
+  }
+
+  input[name="submittedProblemCode"],
+  span.filter input,
+  input#tabSizeInput,
+  .setting-value input {
+    border-radius: var(--r-sm) !important;
+  }
+
+  & body img,
+  & body table.bordertable,
+  div.title-photo > div:first-child,
+  .source-popup
+    :is(
+      pre[style="background-color: #eff0f1;"],
+      pre.input,
+      pre.output,
+      pre.checker,
+      pre.answer
+    ) {
+    border-radius: var(--r-md) !important;
+  }
+
+  #pageContent > div[style*="margin-bottom:2em;"],
+  div#pageContent > div[style="margin-top:0;"],
+  div#pageContent > div[style="margin-top:0em;"] > div[style*="margin-top:"],
+  ._catalogNode {
+    border-radius: var(--r-lg) !important;
+  }
+
+  .sidebox,
+  .problemindexholder,
+  & body .roundbox .tag-box {
+    border-radius: var(--r-xl) !important;
+  }
+
+  /* ===== Prettyprint ===== */
+
+  @media screen {
+    /* prettyprint + lstlisting share one palette */
+    :is(.prettyprint, .lstlisting) {
+      & .pln {
+        color: var(--pp-pln) !important;
+      }
+      & :is(.str, .atv) {
+        color: var(--pp-str) !important;
+      }
+      & :is(.kwd, .tag) {
+        color: var(--pp-kwd) !important;
+      }
+      & .com {
+        color: var(--pp-com) !important;
+        font-style: italic;
+      }
+      & .typ {
+        color: var(--pp-typ) !important;
+      }
+      & .lit {
+        color: var(--pp-lit) !important;
+      }
+      & :is(.pun, .opn, .clo) {
+        color: var(--pp-pun) !important;
+      }
+      & :is(.atn, .var) {
+        color: var(--pp-atn) !important;
+      }
+      & .dec {
+        color: var(--pp-dec) !important;
+      }
+      & .fun {
+        color: var(--pp-fun) !important;
+      }
+      & :is(.str, .atv, .kwd, .tag, .com, .typ) {
+        font-weight: normal !important;
+      }
+    }
+
+    /* code block frame */
+    pre.prettyprint {
+      background: var(--pp-bg) !important;
+      border-color: var(--pp-border) !important;
+    }
+  }
+
+  /* ===== Ace "chrome" theme ===== */
+
+  /* surface + gutter */
+  .ace-chrome {
+    background-color: var(--ace-bg) !important;
+    color: var(--ace-text) !important;
+  }
+  .ace-chrome .ace_gutter {
+    background: var(--ace-gutter-bg) !important;
+    color: var(--ace-gutter-text) !important;
+    border: 0 !important;
+  }
+  .ace_gutter-cell {
+    color: var(--ace-gutter-cell) !important;
+  }
+  .ace-chrome .ace_gutter-active-line {
+    background-color: var(--ace-gutter-active-bg) !important;
+    color: var(--ace-gutter-active-text) !important;
+  }
+  .ace-chrome .ace_cursor {
+    color: var(--ace-cursor) !important;
+  }
+  .ace-chrome .ace_invisible {
+    color: var(--ace-invisible) !important;
+  }
+  .ace-chrome .ace_print-margin {
+    background: var(--ace-print-margin) !important;
+  }
+
+  /* layers / highlights */
+  .ace-chrome .ace_marker-layer .ace_selection {
+    background: var(--ace-selection) !important;
+  }
+  .ace-chrome .ace_marker-layer .ace_active-line {
+    background: var(--ace-active-line) !important;
+  }
+  .ace-chrome .ace_marker-layer .ace_selected-word {
+    background: var(--ace-selected-word) !important;
+    border: 1px solid transparent !important;
+  }
+  .ace-chrome .ace_marker-layer .ace_bracket {
+    background: var(--ace-bracket-bg) !important;
+    border: 1px solid var(--ace-bracket-border) !important;
+  }
+  .ace-chrome .ace_marker-layer .ace_step {
+    background: var(--ace-step) !important;
+  }
+  .ace-chrome .ace_marker-layer .ace_stack {
+    background: var(--ace-stack) !important;
+  }
+  .ace-chrome .ace_indent-guide {
+    background: none !important;
+    box-shadow: inset -1px 0 0 var(--ace-indent-guide);
+  }
+  .ace-chrome .ace_fold {
+    background-color: var(--ace-fold) !important;
+    border-color: var(--ace-fold-border) !important;
+  }
+
+  /* tokens */
+  /* control keywords, #include / #define */
+  .ace-chrome .ace_keyword,
+  .ace-chrome .ace_meta.ace_preprocessor {
+    color: var(--ace-keyword) !important;
+  }
+
+  .ace-chrome .ace_list {
+    color: var(--ace-list) !important;
+  }
+
+  /* int, long, const, static, class, template, this, <html tags> */
+  .ace-chrome .ace_storage,
+  .ace-chrome .ace_meta.ace_tag,
+  .ace-chrome .ace_variable.ace_language,
+  .ace-chrome .ace_constant.ace_language {
+    color: var(--ace-storage) !important;
+  }
+
+  .ace-chrome .ace_heading {
+    color: var(--ace-heading) !important;
+    font-weight: bold;
+  }
+
+  /* symbol operators (+ == << ...) */
+  .ace-chrome .ace_keyword.ace_operator {
+    color: var(--ace-operator) !important;
+  }
+
+  /* strings, <bits/stdc++.h> include paths */
+  .ace-chrome .ace_string,
+  .ace-chrome .ace_constant.ace_other {
+    color: var(--ace-string) !important;
+  }
+  .ace-chrome .ace_string.ace_regex {
+    color: var(--ace-regex) !important;
+  }
+  .ace-chrome .ace_constant.ace_language.ace_escape,
+  .ace-chrome .ace_constant.ace_character.ace_escape,
+  .ace-chrome .ace_constant.ace_escape {
+    color: var(--ace-escape) !important;
+  }
+
+  /* comments */
+  .ace-chrome .ace_comment,
+  .ace-chrome .ace_comment.ace_doc,
+  .ace-chrome .ace_comment.ace_doc.ace_tag {
+    color: var(--ace-comment) !important;
+  }
+
+  /* numbers */
+  .ace-chrome .ace_constant.ace_numeric {
+    color: var(--ace-numeric) !important;
+  }
+
+  /* functions */
+  .ace-chrome .ace_entity.ace_name.ace_function,
+  .ace-chrome .ace_support.ace_function {
+    color: var(--ace-function) !important;
+  }
+
+  /* types / classes */
+  .ace-chrome .ace_support.ace_type,
+  .ace-chrome .ace_support.ace_class,
+  .ace-chrome .ace_entity.ace_name.ace_type {
+    color: var(--ace-type) !important;
+  }
+
+  /* variables */
+  .ace-chrome .ace_variable {
+    color: var(--ace-variable) !important;
+  }
+
+  /* library / built-in constants */
+  .ace-chrome .ace_constant.ace_library,
+  .ace-chrome .ace_constant.ace_buildin,
+  .ace-chrome .ace_support.ace_constant {
+    color: var(--ace-library) !important;
+  }
+
+  .ace-chrome .ace_xml-pe {
+    color: var(--ace-xml-pe) !important;
+  }
+
+  .ace-chrome .ace_invalid {
+    background-color: transparent !important;
+    color: var(--ace-invalid) !important;
+    text-decoration: underline wavy var(--ace-invalid);
+  }
+
+  /* ======================================================================
+   ASSETS (every theme except light)
+   Logos are swapped for all of them. The menu lava and the bell are swapped
+   for every theme except love, which keeps the site's originals.
+   ====================================================================== */
+
+  &:not([data-theme="love"]) .second-level-menu-list li.backLava {
+    background: var(--lava-right) no-repeat top right !important;
+  }
+
+  &:not([data-theme="love"]) .second-level-menu-list li.backLava .leftLava {
+    background: var(--lava-left) no-repeat top left !important;
+  }
+
+  &:not([data-theme="love"]) .header-bell__img {
+    background-image: var(--bell) !important;
+  }
+
+  img[alt="Codeforces"] {
+    content: var(--cf-logo) !important;
+  }
+
+  img[alt="Telegram"] {
+    content: var(--tele-logo) !important;
+  }
+
+  /* ======================================================================
+   DARK-ONLY EXTRAS
+   Brightness dimming, not wanted on the light pink theme ("love").
+   ====================================================================== */
+
+  &:not([data-theme="love"]) canvas {
+    filter: brightness(0.88);
+  }
+
+  /* send message inner box */
+  &:not([data-theme="love"]) div.wysiwyg iframe {
+    filter: brightness(0.9);
+  }
+} /* end of :root:not([data-theme="light"]) wrapper */
+
+/* ======================================================================
+   FOCUS MODE
+   Toggled by content.js through <html data-focus-mode="true">.
+   Not part of the theme wrapper, so it applies to every theme including light.
+   The sidebar is hidden but keeps its space (opacity, not display), and the
+   content gets equal side margins to take up the room.
+   ====================================================================== */
+
+html[data-focus-mode="true"] {
+  #sidebar {
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  div.content-with-sidebar {
+    margin: 1em 11.625em !important;
+  }
+}
+
+/* Unused: turning Focus Mode off just removes the rules above, so this
+   explicit "off" block isn't needed. Kept for reference.
+html[data-focus-mode="false"] {
+  #sidebar {
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  div.content-with-sidebar {
+    margin: 1em 22em 1em 1em !important;
+  }
+} */
