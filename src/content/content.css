@@ -672,7 +672,8 @@
   }
 
   div.alert-warning,
-  div.alert-error {
+  div.alert-error,
+  div.alert-success {
     color: var(--text-alert) !important;
   }
 
