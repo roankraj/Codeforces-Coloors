@@ -68,6 +68,7 @@
   --bg-row-accepted: #332d2d; /* contest problem row */
   --bg-row-hl: #212426; /* highlighted datatable row */
   --bg-row-hl-strong: #2c3033; /* highlighted status row */
+  --bg-copy: #444444; /* backgrounf color of copy button on hover */
 
   /* ----- text ----- */
   --text: #eeeeee;
@@ -189,6 +190,7 @@
   --bg-row-accepted: #332d2d; /* contest problem row */
   --bg-row-hl: #212426; /* highlighted datatable row */
   --bg-row-hl-strong: #2c3033; /* highlighted status row */
+  --bg-copy: #444444; /* backgrounf color of copy button on hover */
 
   /* ----- text ----- */
   --text: #eeeeee;
@@ -310,6 +312,7 @@
   --bg-row-accepted: #bdb2ff;
   --bg-row-hl: #dcf2f9;
   --bg-row-hl-strong: #e7c6ff;
+  --bg-copy: #ff8fa3;
 
   /* ----- text ----- */
   --text: #472836;
@@ -428,6 +431,7 @@
   --bg-row-accepted: #382b3b;
   --bg-row-hl: #1b2738;
   --bg-row-hl-strong: hsl(217, 35%, 20%);
+  --bg-copy: #34435e;
 
   /* ----- text ----- */
   --text: #eaeaea;
@@ -627,7 +631,9 @@
   .problem-statement .test-example-line,
   div.ttypography pre,
   div.ttypography code,
-  & body div.ttypography .MathJax {
+  & body div.ttypography .MathJax,
+  .problem-statement .interaction-log .direction,
+  .interactionLog .direction {
     color: var(--text-strong) !important;
   }
 
@@ -1122,17 +1128,25 @@
     background: var(--soft-hover);
   }
 
+  .input-output-copier:hover {
+    background-color: var(--bg-copy) !important;
+  }
+
   /* ===== Problem statement ===== */
 
   .problem-statement :is(.test-example-line-even, .test-example-line-odd) {
     padding-left: 0.25em;
   }
 
-  .problem-statement .test-example-line-even {
+  .problem-statement .test-example-line-even,
+  .problem-statement .interaction-log .IN,
+  .interactionLog .IN {
     background-color: var(--bg-control) !important;
   }
 
-  .problem-statement .test-example-line-odd {
+  .problem-statement .test-example-line-odd,
+  .problem-statement .interaction-log .OUT,
+  .interactionLog .OUT {
     background-color: var(--bg-field) !important;
   }
 
