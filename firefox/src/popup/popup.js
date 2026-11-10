@@ -5,11 +5,10 @@
   const text = document.getElementById("dd-text");
   const swatches = document.getElementById("dd-swatches");
   const opts = [...list.querySelectorAll(".dd-opt")];
-  const utils = document.querySelector(".utils");
   const focusMode = document.querySelector('[data-util="focus-mode"]');
 
   // name the shortcuts
-  chrome.commands.getAll(function (commands) {
+  browser.commands.getAll().then((commands) => {
     commands.forEach((command) => {
       const el = document.querySelector(
         `.shortcut[data-command="${command.name}"]`,
@@ -26,14 +25,14 @@
   const optNameMap = new Map(opts.map((opt) => [opt.dataset.value, opt]));
 
   // Create colour circles for each theme
-  opts.forEach(function (opt) {
+  opts.forEach((opt) => {
     const dots = document.createElement("span");
     dots.className = "swatches";
 
     (opt.dataset.colors || "")
       .split(",")
       .slice(0, 3)
-      .forEach(function (color) {
+      .forEach((color) => {
         const dot = document.createElement("i");
         dot.style.setProperty("--c", color.trim());
         dots.appendChild(dot);
@@ -46,25 +45,22 @@
     const theme = opt.dataset.value || "dark";
 
     if (theme === "light") {
-      chrome.storage.local.get("theme", async function (result) {
-        const currTheme = result.theme || "dark";
-        if (currTheme === "light") return;
+      const result = await browser.storage.local.get("theme");
+      const currTheme = result.theme || "dark";
+      if (currTheme === "light") return;
 
-        await chrome.storage.local.set({
-          prevTheme: currTheme,
-          theme: "light",
-        });
+      await browser.storage.local.set({
+        prevTheme: currTheme,
+        theme: "light",
       });
     } else {
-      await chrome.storage.local.set({ theme });
+      await browser.storage.local.set({ theme });
     }
   }
 
   // Select a theme and update the dropdown button
   function select(opt) {
-    opts.forEach(function (o) {
-      o.classList.toggle("selected", o === opt);
-    });
+    opts.forEach((o) => o.classList.toggle("selected", o === opt));
 
     text.textContent = opt.textContent.trim().split(/\s+/)[0];
 
@@ -78,21 +74,17 @@
   }
 
   // Set the initial settings
-  chrome.storage.local.get(["theme", "focus"], function (result) {
+  browser.storage.local.get(["theme", "focus"]).then((result) => {
     const theme = result.theme || "dark";
     const focus = result.focus || "false";
 
-    focusMode.checked = focus == "true";
+    focusMode.checked = focus === "true";
 
-    select(
-      opts.find(function (opt) {
-        return opt.dataset.value === theme;
-      }) || opts[0],
-    );
+    select(opts.find((opt) => opt.dataset.value === theme) || opts[0]);
   });
 
   // Open or close the dropdown
-  btn.addEventListener("click", function () {
+  btn.addEventListener("click", () => {
     const isOpen = !list.hidden;
 
     list.hidden = isOpen;
@@ -100,41 +92,38 @@
   });
 
   // Select a theme when clicked
-  opts.forEach(function (opt) {
-    opt.addEventListener("click", function () {
+  opts.forEach((opt) => {
+    opt.addEventListener("click", () => {
       select(opt);
       setOptStorage(opt);
     });
   });
 
   // Close the dropdown when clicking outside
-  document.addEventListener("click", function (e) {
+  document.addEventListener("click", (e) => {
     if (!root.contains(e.target)) {
       list.hidden = true;
       root.classList.remove("open");
     }
   });
 
-  // Utilites
-  focusMode.addEventListener("change", async function () {
-    if (focusMode.checked) {
-      await chrome.storage.local.set({ focus: "true" });
-    } else {
-      await chrome.storage.local.set({ focus: "false" });
-    }
+  // Utilities
+  focusMode.addEventListener("change", async () => {
+    await browser.storage.local.set({
+      focus: focusMode.checked ? "true" : "false",
+    });
   });
 
-  chrome.storage.onChanged.addListener(function (changes, storageArea) {
-    if (storageArea === "local" && changes.focus) {
+  browser.storage.onChanged.addListener((changes, area) => {
+    if (area !== "local") return;
+
+    if (changes.focus) {
       const focus = changes.focus.newValue || "false";
-
-      if (focusMode) focusMode.checked = focus === "true";
+      focusMode.checked = focus === "true";
     }
-    if (storageArea === "local" && changes.theme) {
+    if (changes.theme) {
       const theme = changes.theme.newValue || "dark";
-
-      const optSelected = optNameMap.get(theme) ?? optNameMap.get("dark");
-      select(optSelected);
+      select(optNameMap.get(theme) ?? optNameMap.get("dark"));
     }
   });
 })();

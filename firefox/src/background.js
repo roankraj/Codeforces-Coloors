@@ -1,28 +1,23 @@
 if (browser.commands) {
-  chrome.commands.onCommand.addListener(async function (command) {
+  browser.commands.onCommand.addListener(async (command) => {
     if (command === "toggle-focus-mode") {
-      chrome.storage.local.get("focus", async function (result) {
-        const focus = result.focus || "false";
-        const newFocus = focus === "true" ? "false" : "true";
+      const { focus = "false" } = await browser.storage.local.get("focus");
 
-        await chrome.storage.local.set({ focus: newFocus });
+      await browser.storage.local.set({
+        focus: focus === "true" ? "false" : "true",
       });
     } else if (command === "toggle-light-theme") {
-      chrome.storage.local.get("theme", async function (result) {
-        const currTheme = result.theme || "dark";
+      const { theme: currTheme = "dark", prevTheme = "dark" } =
+        await browser.storage.local.get(["theme", "prevTheme"]);
 
-        if (currTheme === "light") {
-          chrome.storage.local.get("prevTheme", async function (prevResult) {
-            const prevTheme = prevResult.prevTheme || "dark";
-            await chrome.storage.local.set({ theme: prevTheme });
-          });
-        } else if (currTheme !== "light") {
-          await chrome.storage.local.set({
-            theme: "light",
-            prevTheme: currTheme,
-          });
-        }
-      });
+      if (currTheme === "light") {
+        await browser.storage.local.set({ theme: prevTheme });
+      } else {
+        await browser.storage.local.set({
+          theme: "light",
+          prevTheme: currTheme,
+        });
+      }
     }
   });
 }
