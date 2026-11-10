@@ -8,6 +8,23 @@
   const utils = document.querySelector(".utils");
   const focusMode = document.querySelector('[data-util="focus-mode"]');
 
+  // name the shortcuts
+  chrome.commands.getAll(function (commands) {
+    commands.forEach((command) => {
+      const el = document.querySelector(
+        `.shortcut[data-command="${command.name}"]`,
+      );
+
+      if (!el) return;
+
+      if (command.shortcut) el.textContent = command.shortcut;
+      else el.hidden = true;
+    });
+  });
+
+  // create theme_name to element dictionary
+  const optNameMap = new Map(opts.map((opt) => [opt.dataset.value, opt]));
+
   // Create colour circles for each theme
   opts.forEach(function (opt) {
     const dots = document.createElement("span");
@@ -28,7 +45,19 @@
   async function setOptStorage(opt) {
     const theme = opt.dataset.value || "dark";
 
-    await chrome.storage.local.set({ theme });
+    if (theme === "light") {
+      chrome.storage.local.get("theme", async function (result) {
+        const currTheme = result.theme || "dark";
+        if (currTheme === "light") return;
+
+        await chrome.storage.local.set({
+          prevTheme: currTheme,
+          theme: "light",
+        });
+      });
+    } else {
+      await chrome.storage.local.set({ theme });
+    }
   }
 
   // Select a theme and update the dropdown button
@@ -37,7 +66,7 @@
       o.classList.toggle("selected", o === opt);
     });
 
-    text.textContent = opt.textContent.trim();
+    text.textContent = opt.textContent.trim().split(/\s+/)[0];
 
     swatches.replaceChildren(
       ...opt.querySelector(".swatches").cloneNode(true).childNodes,
@@ -100,6 +129,12 @@
       const focus = changes.focus.newValue || "false";
 
       if (focusMode) focusMode.checked = focus === "true";
+    }
+    if (storageArea === "local" && changes.theme) {
+      const theme = changes.theme.newValue || "dark";
+
+      const optSelected = optNameMap.get(theme) ?? optNameMap.get("dark");
+      select(optSelected);
     }
   });
 })();

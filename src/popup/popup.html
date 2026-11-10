@@ -56,11 +56,14 @@
           Black
         </button>
         <button
-          class="dd-opt"
+          class="dd-opt dd-opt-shortcut"
           data-value="light"
           data-colors="#ffffff,#e1e1e1,#3b5998"
         >
           Light
+          <div class="shortcut" data-command="toggle-light-theme">
+            Alt + Shift + L
+          </div>
         </button>
         <button
           class="dd-opt"
@@ -77,7 +80,9 @@
       <label class="util">
         <input type="checkbox" data-util="focus-mode" />
         <span>Focus Mode</span>
-        <div class="shortcut">Ctrl + Shift + F</div>
+        <div class="shortcut" data-command="toggle-focus-mode">
+          Alt + Shift + F
+        </div>
       </label>
     </fieldset>
 

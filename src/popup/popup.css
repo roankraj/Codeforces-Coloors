@@ -196,4 +196,17 @@ body {
   background-color: var(--panel);
   padding: 0 6px;
   font-size: 11px;
+  margin-left: 10px;
+}
+
+.dd-opt-shortcut {
+  display: flex;
+  align-items: center;
+}
+
+.dd-opt-shortcut .shortcut {
+  background-color: var(--hover);
+  margin-left: 16px;
+  padding: 2px 6px;
+  font-weight: normal;
 }
