@@ -8,19 +8,28 @@
   const utils = document.querySelector(".utils");
   const focusMode = document.querySelector('[data-util="focus-mode"]');
 
-  // name the shortcuts
-  chrome.commands.getAll(function (commands) {
-    commands.forEach((command) => {
-      const el = document.querySelector(
-        `.shortcut[data-command="${command.name}"]`,
-      );
+  // Display keyboard shortcuts where supported
+  if (chrome.commands && chrome.commands.getAll) {
+    chrome.commands.getAll(function (commands) {
+      commands.forEach(function (command) {
+        const el = document.querySelector(
+          `.shortcut[data-command="${command.name}"]`,
+        );
 
-      if (!el) return;
+        if (!el) return;
 
-      if (command.shortcut) el.textContent = command.shortcut;
-      else el.hidden = true;
+        if (command.shortcut) {
+          el.textContent = command.shortcut;
+        } else {
+          el.hidden = true;
+        }
+      });
     });
-  });
+  } else {
+    document.querySelectorAll(".shortcut").forEach(function (el) {
+      el.hidden = true;
+    });
+  }
 
   // create theme_name to element dictionary
   const optNameMap = new Map(opts.map((opt) => [opt.dataset.value, opt]));
