@@ -557,7 +557,9 @@
   .datatable,
   .datatable .dark,
   div:has(.llt),
-  div:has(.irt) {
+  div:has(.irt),
+  #sidebar,
+  #swipe-sidebar {
     background-color: var(--bg) !important;
   }
 
@@ -575,7 +577,10 @@
   #pageContent > div[style*="margin-bottom:2em;"],
   div#pageContent > div[style="margin-top:0;"],
   div#pageContent > div[style="margin-top:0em;"] > div[style*="margin-top:"],
-  textarea:is([name="input"], [name="output"]) {
+  textarea:is([name="input"], [name="output"]),
+  .menu-box,
+  .mobile-toolbar-internals,
+  .mobile-toolbar {
     background-color: var(--bg-raised) !important;
   }
 
@@ -1493,6 +1498,14 @@
 
   img[alt="Telegram"] {
     content: var(--tele-logo) !important;
+  }
+
+  img.mobile-toolbar-menu {
+    content: url("../img/mobile/menu-hamburger-64.png") !important;
+  }
+
+  img.mobile-toolbar-sidebar {
+    content: url("../img/mobile/menu-dots-64.png") !important;
   }
 
   /* ======================================================================
